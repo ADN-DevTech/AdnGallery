@@ -203,7 +203,7 @@ angular.module('AdnGallery.viewer',
 
             window.onresize = fitLayoutToWindow;
 
-            sfitLayoutToWindow();
+            fitLayoutToWindow();
 
             var mainLayout = $('#mainLayoutId').layout({
 
