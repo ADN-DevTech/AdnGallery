@@ -109,9 +109,15 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             var history = $('#chatHistoryId');
 
-            var text = '\n> from ' + $scope.socketId + ':\n' + data.message;
+            var text = '> from ' +
+                $scope.socketId + ':\n' +
+                data.message + '\n\n';
 
             history.val(history.val() + text);
+
+            // scroll to bottom
+            $('#chatHistoryId').scrollTop(
+                $('#chatHistoryId')[0].scrollHeight);
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -152,22 +158,33 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 }
             );
 
-            $('#btnSendMessageId').unbind().click(
-                function() {
+            $('#chatMessageId').on('keyup', function (e) {
 
-                    var message = $('#chatMessageId').val();
+                    var code = (e.keyCode ? e.keyCode : e.which);
 
-                    if (message.length === 0) {
-                        return;
+                    // Enter key
+                    if(code == 13) {
+
+                        var message = $('#chatMessageId').val();
+
+                        var breaks = (message.match(/\n/g)||[]).length;
+
+                        if(!(breaks > 0 && message.length === 1)) {
+
+                            if (message.length > 0) {
+
+                                console.log('breaks: ' + breaks);
+
+                                var data = {
+                                    message: message
+                                };
+
+                                socket.emit('sendMessage', data);
+                            }
+                        }
+
+                        $('#chatMessageId').val('');
                     }
-
-                    var data = {
-                        message: message
-                    };
-
-                    socket.emit('sendMessage', data);
-
-                    $('#chatMessageId').val('');
                 }
             );
         }
