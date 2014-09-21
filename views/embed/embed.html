@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>ADN Gallery Embedded</title>
+
+    <link rel="shortcut icon" href="public/images/favicon.png" type="image/x-icon" />
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // JQuery
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <script type="text/javascript" src="components/jquery/js/jquery.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+   // Viewer
+   //
+   ////////////////////////////////////////////////////////////////////////-->
+    <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js"></script>
+    <script src="components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js"></script>
+    <script src="components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+
+    <style>
+
+        #bGalleryButton {
+            background-image: url('public/images/adsk.24x24.png');
+        }
+
+    </style>
+
+    <script>
+
+        var urn;
+
+        var adnViewerMng;
+
+        function getToken() {
+
+            var tokenUrl = 'http://54.191.41.170:3000/api/token';
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("GET", tokenUrl, false);
+            xhr.send(null);
+
+            return xhr.responseText;
+        }
+
+        function addToolbar() {
+
+            var div = document.createElement("div");
+
+            var parent = document.getElementById(
+                    adnViewerMng.getViewerDivId());
+
+            parent.appendChild(div);
+
+            div.style.top = '11%';
+            div.style.left = "1%";
+            div.style.zIndex = "2";
+            div.style.position = "absolute";
+
+            var toolbar = new Autodesk.Viewing.UI.ToolBar(div);
+
+            var subToolbar = toolbar.addSubToolbar('sub1', false);
+
+            var bEmbed = Autodesk.Viewing.UI.ToolBar.createMenuButton(
+                    "bGallery",
+                    "ADN Gallery",
+                    function (e) {
+                        window.open('http://' +
+                            window.location.host +
+                            '/#/viewer?urn=' + encodeURIComponent(urn),
+                            '_blank');
+                    });
+
+            toolbar.addToSubToolbar("sub1", bEmbed);
+        }
+
+        $(document).ready(function () {
+
+            adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
+                    getToken,
+                    document.getElementById('ViewerDiv'));
+
+            urn = Autodesk.Viewing.Private.getParameterByName("urn");
+
+            if (urn !== '') {
+                adnViewerMng.loadDocument(
+                        urn,
+                        function (viewer) {
+                            viewer.impl.setLightPreset(8);
+                            addToolbar();
+                        });
+            };
+        });
+
+    </script>
+
+</head>
+
+<body style="margin:0">
+    <div id="ViewerDiv" class="viewer"></div>
+</body>
+
+</html>

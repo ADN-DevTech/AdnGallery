@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="AdnGallery" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="AdnGallery" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="AdnGallery" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="AdnGallery" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ADN Gallery</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+    <link rel="stylesheet" href="app.css"/>
+    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+
+    <script type="text/javascript" src="socket.io/socket.io.js" ></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+   // JQuery
+   //
+   ////////////////////////////////////////////////////////////////////////-->
+    <script type="text/javascript" src="components/jquery/js/jquery.js"></script>
+    <script type="text/javascript" src="components/jquery/js/jquery.ui.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+   // JQuery Layout
+   //
+   ////////////////////////////////////////////////////////////////////////-->
+    <link type="text/css" rel="stylesheet" href="components/layout/css/layout.css"/>
+    <script type="text/javascript" src="components/layout/js/jquery.layout.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // Bootstrap
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"> </script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+   // JsTree
+   //
+   ////////////////////////////////////////////////////////////////////////-->
+    <link type="text/css" rel="Stylesheet" href="components/jsTree/themes/default/style.min.css"/>
+    <script type="text/javascript" src="components/jsTree/js/jstree.min.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // Date
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <script type="text/javascript" src="components/date/js/date.js"> </script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // SlickGrid
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <link rel="stylesheet" href="components/slickgrid/slick.grid.css" type="text/css"/>
+    <link rel="stylesheet" href="components/slickgrid/slick.grid.custom.css" type="text/css"/>
+    <script type="text/javascript" src="components/slickgrid/lib/jquery.event.drag-2.2.js"></script>
+    <script type="text/javascript" src="components/slickgrid/slick.core.js"></script>
+    <script type="text/javascript" src="components/slickgrid/slick.grid.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // Viewer
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
+    <script  type="text/javascript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js"></script>
+    <script type="text/javascript" src="components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js"></script>
+    <script type="text/javascript" src="components/viewer/js/raphael.js"></script>
+    <script type="text/javascript" src="components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+
+    <style type="text/css">
+        .dropZone {
+            background-color: rgba(117, 206, 246, 0.5);
+            border: black dashed 1px;
+            width: 100%;
+            height: 150px;
+            padding: 50px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+
+</head>
+<body ng-controller="appController">
+
+<!--///////////////////////////////////////////////////////////////////////
+// Bootstrap NavBar
+//
+////////////////////////////////////////////////////////////////////////-->
+<div id="BootstrapDiv">
+
+<nav id="navBarId" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+
+            <button type="button"
+                    class="navbar-toggle"
+                    data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+
+            </button>
+
+            <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">
+
+                <adn-spinning-img
+                        step="5.0"
+                        period="100"
+                        height="32"
+                        width="32"
+                        src="public/images/adsk.32x32.png"
+                        style="position:relative; bottom:5px;"/>
+            </a>
+            <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">Autodesk View & Data API</a>
+        </div>
+
+
+
+        <div class="collapse navbar-collapse" style="float:left;">
+
+            <ul class="nav navbar-nav">
+
+                <li class="divider-vertical"></li>
+
+                <li id="menuDocId" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        Documents <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li>
+                            <a href="#/gallery">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                                &nbsp; Gallery
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnLoadUrnId">
+                                <span class="glyphicon glyphicon-flash"></span>
+                                &nbsp; Load from urn
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnUploadDocId">
+                                <span class="glyphicon glyphicon-upload"></span>
+                                &nbsp; Upload
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="menuViewId" class="dropdown" style="visibility:collapse;">
+                    <a class="dropdown-toggle" id="dropdownViews" data-toggle="dropdown">Views <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a id="btnSaveViewId">
+                                <span class="glyphicon glyphicon-floppy-open"></span>
+                                &nbsp; Save
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnLoadViewId">
+                                <span class="glyphicon glyphicon-floppy-save"></span>
+                                &nbsp; Load
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnSuppressViewId">
+                                <span class="glyphicon glyphicon-floppy-remove"></span>
+                                &nbsp; Delete
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnExplodeMotionId">
+                                <span class="glyphicon glyphicon-certificate"></span>
+                                &nbsp; Explode Motion
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnRotateMotionId">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                                &nbsp; Rotate Motion
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnStopMotionId">
+                                <span class="glyphicon glyphicon-stop"></span>
+                                &nbsp; Stop Motions
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="menuUiId" class="dropdown" style="visibility:collapse;">
+                    <a class="dropdown-toggle" id="A1" data-toggle="dropdown">UI <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            &nbsp; <input id="cbBrowser" type="checkbox"/> &nbsp; Browser
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            &nbsp; <input id="cbProperties" type="checkbox"/> &nbsp; Properties
+                        </li>
+                    </ul>
+                </li>
+
+                <div id="menuSearchId" class="navbar-form navbar-left" role="search" style="visibility:collapse;">
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search by property ..."/>
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="onSearch()">Find!</button>
+                      </span>
+
+                    </div>
+
+                </div>
+            </ul>
+
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">Community <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li><a href="http://developer.autodesk.com" target="_blank">
+                                <span class="glyphicon glyphicon-user"></span>
+                                &nbsp; Developer
+                            </a>
+                            </li>
+                            <li><a href="http://www.autodesk.com" target="_blank">
+                                <span class="glyphicon glyphicon-font"></span>
+                                &nbsp; Autodesk
+                            </a>
+                            </li>
+                            <li><a href="http://forums.autodesk.com/t5/Web-Services-API/ct-p/94" target="_blank">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                &nbsp; Support
+                            </a>
+                            </li>
+                            <li><a href="#/blog">
+                                <span class="glyphicon glyphicon-leaf"></span>
+                                &nbsp; Blog
+                            </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a id="btnAboutId">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                &nbsp; About
+                            </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+    </div>
+</nav>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Upoad Document Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div ng-controller="uploadController"
+     id="uploadDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="uploadDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Upload your documents</h4>
+            </div>
+
+            <div id="uploadDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+                <input type="file" id="fileInput" multiple/>
+
+                <div id="dropZoneId" class="dropZone">
+                    Drop your files here or click to select from disk ...
+                </div>
+
+                <br/>
+
+                <div class="input-group">
+                    <span class="input-group-addon">Username:</span>
+                    <input id="user" type="text" class="form-control" style="width:140px"/>
+
+                    <span class="input-group-addon">email:</span>
+                    <input id="email" type="text" class="form-control" style="width:265px"/>
+                </div>
+
+                <br/>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btnUploadOkId" class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Suppress Item Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div id="itemSuppressDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="itemSuppressDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title" id="itemSuppressDlgTitle">Items to suppress</h4>
+            </div>
+
+            <div id="itemSuppressDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="itemSuppressOk" type="button" class="btn btn-default">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+//  Load View Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div ng-controller="modelViewsController"
+     id="loadViewDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="itemSelectDlgFrame">
+
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Load view</h4>
+            </div>
+
+            <div id="loadViewDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Save view Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div ng-controller="modelViewsController"
+     id="saveViewDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="saveViewDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Save view</h4>
+            </div>
+
+            <div id="saveViewDlgBody" class="modal-body">
+
+                <div class="input-group">
+                    <span class="input-group-addon">View Name:</span>
+                    <input id="viewName" type="text" class="form-control"/>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnSaveViewOkId" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Load URN Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div id="loadUrnDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="loadUrnDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Load from URN</h4>
+            </div>
+
+            <div id="loadUrnDlgBody" class="modal-body">
+
+                <div class="input-group">
+                    <span class="input-group-addon">URN:</span>
+                    <input id="urn" type="text" class="form-control" placeholder="Document URN ..."/>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button id=btnLoadUrnOkId type="button" class="btn btn-default" data-dismiss="modal">Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// About Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div id="aboutDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="aboutDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">
+                    <img  height="24" width="24" src="public/images/adsk.24x24.png"/>
+                    About that sample
+                </h4>
+            </div>
+
+            <div id="aboutDlgBody" class="modal-body">
+
+                Written by
+                <a href="http://adndevblog.typepad.com/cloud_and_mobile/philippe-leefsma.html" target="_blank">
+                    Philippe Leefsma
+                </a>
+
+                <br/>
+                <br/>
+                <b>Autodesk Developer Network</b>
+                <br/>
+                July 2014
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Got it</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Password Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div id="pwdDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="pwdDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">This feature is password protected … </h4>
+            </div>
+
+            <div id="pwdDlgBody" class="modal-body">
+
+                <div class="input-group">
+                    <span class="input-group-addon">Password:</span>
+                    <input id="pwd" type="password" class="form-control" autofocus/>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="onPwdOK">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Embed code Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div id="embedDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="embedDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title" id="H1">Share your 3D model</h4>
+            </div>
+
+            <div id="embedDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Embed code</h3>
+                    </div>
+                    <div class="panel-body" style="overflow:auto">
+                        <textarea rows="6" cols="60" id="embedCode" readonly="readonly">
+
+                        </textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser.
+Please <a href="http://browsehappy.com/">upgrade your browser</a>
+to improve your experience.</p>
+<![endif]-->
+
+<div ng-view> </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="app.js"></script>
+
+<script src="views/blog/blog.js"></script>
+<script src="views/viewer/viewer.js"></script>
+<script src="views/gallery/gallery.js"></script>
+<script src="views/showcase/showcase.js"></script>
+<script src="components/version/version.js"></script>
+
+<script src="controllers/uploadController.js"></script>
+<script src="controllers/modelViewsController.js"></script>
+
+<script src="directives/adn-directives.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
+
+</body>
+</html>

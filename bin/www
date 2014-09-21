@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+var showcase = require('../routes/showcase');
+var debug = require('debug')('AdnGallery');
+var server = require('../server');
+
+server.set('port', process.env.PORT || 3000);
+
+var serverApp = server.listen(
+    server.get('port'),
+    function() {
+        console.log('Express server listening on port ' + serverApp.address().port);
+    });
+
+showcase.initializeSocket(serverApp);

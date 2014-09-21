@@ -1,0 +1,63 @@
+
+<div style="padding-top: 100px;">
+
+    <nav id="navbarGalleryId" class="navbar navbar-default navbar-fixed-top" role="navigation" style="z-index:999; top:50px">
+        <div class="container-fluid">
+
+            <div class="collapse navbar-collapse collapse" style="float:left;">
+
+                <ul class="nav navbar-nav">
+
+                    <div id="menuSearchGalleryId" class="navbar-form navbar-left" role="search">
+                        <div class="input-group">
+
+                            <input type="text"
+                                   id="searchInput"
+                                   ng-model="galleryFilterValue"
+                                   class="form-control"
+                                   placeholder="Search Gallery ..."/>
+
+                            <div class="input-group-btn">
+
+                                <button
+                                        id="btnFilterId"
+                                        type="button"
+                                        class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    Filter by
+                                    &nbsp; <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a id="filterAuthorId">Author</a></li>
+                                    <li><a id="filterModelId">Model name</a></li>
+                                    <li><a id="filterUrnId">Model urn</a></li>
+                                    <li class="divider"></li>
+                                    <li><a id="filterDisableId">Disable filter</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <a class="list-group-item"
+       ng-repeat="model in models | filter: gallerySearchFilter | orderBy:'name'"
+       href="#/viewer?urn={{model.encodedUrn}}"
+       style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
+        <div >
+            <img ng-src={{model.src}} style="float:left; margin-right: 20px">
+            <div>
+                <b>{{model.name}}</b>
+                <br> <br>
+                <b>Author:</b> {{model.author.name}}
+                <br>
+                <b>Type:</b> {{model.type}}
+            </div>
+            <div style="clear:both;"> </div>
+        </div>
+    </a>
+</div>

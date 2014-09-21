@@ -1,0 +1,271 @@
+'use strict';
+
+///////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////
+angular.module('AdnGallery.upload',[])
+
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////
+    .controller('uploadController', function($scope) {
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeDropzone() {
+
+            //Dropzone
+            $('#dropZoneId').on('dragenter',
+                function () {
+                    $('#dropZoneId').addClass(
+                        'hovered');
+                });
+
+            $('#dropZoneId').on('dragleave',
+                function () {
+                    $('#dropZoneId').removeClass(
+                        'hovered');
+                });
+
+            $('#dropZoneId').on('dragover',
+                function (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                });
+
+            $('#dropZoneId').on('drop',
+                function (event) {
+
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    $('#dropZoneId').removeClass(
+                        'hovered');
+
+                    var files = event.originalEvent.dataTransfer.files;
+
+                    for (var i = 0; i < files.length; ++i) {
+                        $scope.addUploadItem(files[i]);
+                    };
+                });
+
+            $("#fileInput").css('opacity', '0');
+
+            $("#fileInput").on('change',
+                function (event) {
+
+                    var files = event.target.files;
+
+                    for (var i = 0; i < files.length; i++) {
+                        $scope.addUploadItem(files[i]);
+                    }
+                });
+
+            $("#dropZoneId").click(function () {
+                $("#fileInput").trigger('click');
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        $scope.addUploadItem = function (file) {
+
+            console.log("File: " + file.name + ' (' + file.type + ')');
+
+            var item = document.createElement('a');
+
+            var id = 'uploadElement' + $scope.newGUID();
+
+            item.id = id;
+            item.file = file;
+            item.innerHTML = file.name;
+            item.className = 'list-group-item';
+
+            var parent = document.getElementById(
+                'uploadDlgBodyContent');
+
+            parent.appendChild(item);
+
+            $scope.setHoverStyle(id,
+                'rgba(136, 180, 221, 0.5)',
+                'rgba(136, 180, 221, 1.0)');
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function doUpload() {
+
+            var content = document.getElementById(
+                'uploadDlgBodyContent');
+
+            var author = {
+                name: $('#user').val(),
+                email: $('#email').val()
+            };
+
+            var modelInfo = {
+                author: author,
+                name: '',
+                fileId: '',
+                urn: '',
+                views: []
+            };
+
+            for (var i = 0; i < content.children.length; ++i) {
+
+                var file = content.children[i].file;
+
+                $scope.viewDataClient.uploadFileAsync(
+                    file,
+                    'adn-viewer-gallery',
+                        $scope.newGUID() + '.' + getFileExt(file),
+
+                    function (response) {
+
+                        var fileId = response.objects[0].id;
+
+                        console.log("Upload successful: " + response.file.name);
+
+                        var registerResponse =
+                            $scope.viewDataClient.register(fileId);
+
+                        if (registerResponse.Result === "Success") {
+
+                            console.log("Registration result: " +
+                                registerResponse.Result);
+
+                            checkTranslationStatus(
+                                fileId,
+                                1000 * 60 * 60, //60 mins timeout
+                                function (viewable) {
+
+                                    console.log("Translation successful: " +
+                                        response.file.name);
+
+                                    modelInfo.urn = $scope.viewDataClient.toBase64(fileId);
+                                    modelInfo.name = getFileName(response.file);
+                                    modelInfo.fileId = fileId;
+
+                                    postModel(modelInfo);
+                                });
+                        }
+                    },
+                    function(error){
+                        console.log("Upload error: " + error);
+                    });
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function checkTranslationStatus(fileId, timeout, onSuccess) {
+
+            var startTime = new Date().getTime();
+
+            var timer = setInterval(function () {
+                var dt = (new Date().getTime() - startTime) / timeout;
+
+                if (dt >= 1.0) {
+
+                    clearInterval(timer);
+                }
+                else {
+
+                    $scope.viewDataClient.getViewableAsync(
+                        fileId,
+                        function (response) {
+
+                            console.log(
+                                    'Progress ' +
+                                    fileId + ': ' +
+                                    response.progress);
+
+                            if (response.progress === 'complete') {
+                                clearInterval(timer);
+                                onSuccess(response);
+                            }
+                        },
+                        function (error) {
+
+                        });
+                }
+            }, 2000);
+        };
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function postModel(modelInfo) {
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST',
+                "http://" + window.location.host + '/api/model',
+                true);
+
+            xhr.setRequestHeader(
+                'Content-Type',
+                'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("Posting new model to DB: " +
+                        xhr.responseText);
+                }
+            }
+
+            xhr.send(JSON.stringify(modelInfo));
+        }
+
+        ///////////////////////////////////////////////////////////////////////////
+        // Utilities
+        //
+        ///////////////////////////////////////////////////////////////////////////
+
+        function getFileExt(file) {
+
+            var res = file.name.split('.');
+
+            return res[res.length - 1];
+        }
+
+        function getFileName(file) {
+
+            var ext = getFileExt(file);
+
+            var name = file.name.substring(0,
+                    file.name.length - ext.length - 1);
+
+            return name;
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        initializeDropzone();
+
+        $('#btnUploadDocId').unbind().click(
+            function() {
+                $scope.clearContent('uploadDlgBody');
+                $('#uploadDlg').modal('show');
+            }
+        );
+
+        $('#btnUploadOkId').unbind().click(
+            function() {
+                doUpload();
+            }
+        );
+    });
