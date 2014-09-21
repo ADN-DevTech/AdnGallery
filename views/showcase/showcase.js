@@ -105,6 +105,15 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
             }
         });
 
+        socket.on('chatMessage', function (data) {
+
+            var history = $('#chatHistoryId');
+
+            var text = '\n> from ' + $scope.socketId + ':\n' + data.message;
+
+            history.val(history.val() + text);
+        });
+
         ///////////////////////////////////////////////////////////////////////
         //
         //
@@ -140,6 +149,25 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 function() {
 
                     socket.emit('requestControl', null);
+                }
+            );
+
+            $('#btnSendMessageId').unbind().click(
+                function() {
+
+                    var message = $('#chatMessageId').val();
+
+                    if (message.length === 0) {
+                        return;
+                    }
+
+                    var data = {
+                        message: message
+                    };
+
+                    socket.emit('sendMessage', data);
+
+                    $('#chatMessageId').val('');
                 }
             );
         }

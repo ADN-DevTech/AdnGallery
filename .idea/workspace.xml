@@ -43,10 +43,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewer.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="viewer.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/viewer/viewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6651786" vertical-offset="2777" max-vertical-offset="6750">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2777" max-vertical-offset="6750">
               <caret line="205" column="12" selection-start-line="205" selection-start-column="12" selection-end-line="205" selection-end-column="12" />
               <folding />
             </state>
@@ -76,8 +76,8 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="10125">
-              <caret line="67" column="41" selection-start-line="67" selection-start-column="41" selection-end-line="67" selection-end-column="113" />
+            <state vertical-scroll-proportion="-4.62" vertical-offset="3249" max-vertical-offset="10125">
+              <caret line="232" column="26" selection-start-line="226" selection-start-column="20" selection-end-line="232" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -86,8 +86,8 @@
       <file leaf-file-name="showcase.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/showcase.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="1170">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="650" max-vertical-offset="1320">
+              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -106,18 +106,24 @@
       <file leaf-file-name="showcase.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/showcase/showcase.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="495">
-              <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-              <folding />
+            <state vertical-scroll-proportion="-12.541667" vertical-offset="59" max-vertical-offset="645">
+              <caret line="24" column="47" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="47" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="showcase.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="showcase.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/showcase/showcase.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2518" max-vertical-offset="3225">
-              <caret line="93" column="40" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.21311475" vertical-offset="1550" max-vertical-offset="3645">
+              <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -161,12 +167,12 @@
         <option value="$PROJECT_DIR$/routes/embed.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/views/showcase/showcase.html" />
         <option value="$PROJECT_DIR$/bin/www" />
-        <option value="$PROJECT_DIR$/routes/showcase.js" />
-        <option value="$PROJECT_DIR$/views/showcase/showcase.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/views/viewer/viewer.js" />
+        <option value="$PROJECT_DIR$/views/showcase/showcase.html" />
+        <option value="$PROJECT_DIR$/routes/showcase.js" />
+        <option value="$PROJECT_DIR$/views/showcase/showcase.js" />
       </list>
     </option>
   </component>
@@ -436,11 +442,11 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27554616" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1952079" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19897959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39285713" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18622449" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -570,6 +576,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
           <caret line="6" column="37" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -584,6 +591,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -598,6 +606,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -647,6 +656,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.05940594" vertical-offset="0" max-vertical-offset="505">
           <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -682,6 +692,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
           <caret line="19" column="44" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -710,6 +721,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2673" max-vertical-offset="4710">
           <caret line="192" column="25" selection-start-line="192" selection-start-column="25" selection-end-line="192" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -738,6 +750,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5012" max-vertical-offset="10695">
           <caret line="373" column="0" selection-start-line="373" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -745,6 +758,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4155">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -773,6 +787,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -795,38 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1875" max-vertical-offset="4275">
           <caret line="156" column="19" selection-start-line="156" selection-start-column="17" selection-end-line="156" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="10125">
-          <caret line="67" column="41" selection-start-line="67" selection-start-column="41" selection-end-line="67" selection-end-column="113" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/showcase/showcase.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="495">
-          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/showcase.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="307" max-vertical-offset="1170">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/showcase/showcase.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2518" max-vertical-offset="3225">
-          <caret line="93" column="40" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -857,8 +840,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/viewer/viewer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6651786" vertical-offset="2777" max-vertical-offset="6750">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2777" max-vertical-offset="6750">
           <caret line="205" column="12" selection-start-line="205" selection-start-column="12" selection-end-line="205" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.62" vertical-offset="3249" max-vertical-offset="10125">
+          <caret line="232" column="26" selection-start-line="226" selection-start-column="20" selection-end-line="232" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/showcase.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="650" max-vertical-offset="1320">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/showcase/showcase.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.541667" vertical-offset="59" max-vertical-offset="645">
+          <caret line="24" column="47" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="47" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/showcase/showcase.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21311475" vertical-offset="1550" max-vertical-offset="3645">
+          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
           <folding />
         </state>
       </provider>

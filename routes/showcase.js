@@ -63,6 +63,16 @@ router.initializeSocket = function(serverApp) {
             }
         });
 
+        socket.on('sendMessage', function (data) {
+
+            for (var key in tracker) {
+
+                tracker[key].socket.emit(
+                    'chatMessage',
+                    data);
+            }
+        });
+
         socket.on('disconnect', function () {
             console.log('Socket disconnection: ' + socket.id);
             delete tracker[socket.id];
