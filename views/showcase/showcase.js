@@ -111,7 +111,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             var text = '> from ' +
                 $scope.socketId + ':\n' +
-                data.message + '\n\n';
+                data.message + '\n';
 
             history.val(history.val() + text);
 
