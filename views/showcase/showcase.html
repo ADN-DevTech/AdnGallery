@@ -22,18 +22,38 @@
     <div id="layoutWestId" class="ui-layout-west">
 
         <div class="ui-layout-center">
-            <div id="usersDivId" class="ui-layout-element" style="height:100%; width:100%;">
+            <div id="usersDivId"
+                 class="ui-layout-element"
+                 style="height:100%; width:100%;background-color:#C3DBFA">
+
                 <button id="btnControlId" type="button" style="width:100%;">Request control</button>
+
+                <a class="list-group-item"
+                   href=""
+                   ng-repeat="user in users | orderBy:'name'"
+                   style="background-color:#C3DBFA">
+                    <div >
+                        <img ng-src={{user.avatar}} style="float:left; margin-right: 20px">
+                        <div>
+                            <b>{{user.name}}</b>
+                        </div>
+                        <div style="clear:both;"> </div>
+                    </div>
+                </a>
+
             </div>
         </div>
 
         <div id="gridLayoutDiv" class="ui-layout-south">
-            <div id="chatDivId" class="ui-layout-element" style="width:100%;height:100%">
+
+            <div id="chatDivId"
+                 class="ui-layout-element"
+                 style="width:100%;height:100%;background-color:#C3DBFA">
 
                 <div style="height:80%">
                     <textarea id="chatHistoryId"
                               class="form-control"
-                              style="height:100%;font-size:12px;"
+                              style="height:100%;font-size:11px;"
                               readonly/>
                 </div>
 

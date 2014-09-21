@@ -18,6 +18,13 @@ var io = null;
 
 var tracker = {};
 
+function broadcastAll(id, data) {
+
+    for (var key in tracker) {
+        tracker[key].socket.emit(id, data);
+    }
+}
+
 router.initializeSocket = function(serverApp) {
 
     io = socketio.listen(serverApp, { log: false });
@@ -40,12 +47,13 @@ router.initializeSocket = function(serverApp) {
 
             console.log('Control request from: ' + socket.id);
 
-            for (var key in tracker) {
+            broadcastAll('controlGranted', socket.id);
 
-                tracker[key].socket.emit(
-                    'controlGranted',
-                    socket.id);
-            }
+            var data = {
+                message: '> ' + socket.id + ' has taken control' + '\n\n'
+            };
+
+            broadcastAll('chatMessage', data);
         });
 
         socket.on('cameraChanged', function (data) {
@@ -65,12 +73,11 @@ router.initializeSocket = function(serverApp) {
 
         socket.on('sendMessage', function (data) {
 
-            for (var key in tracker) {
+            data.message = '> from ' +
+                socket.id + ':\n' +
+                data.message + '\n\n';
 
-                tracker[key].socket.emit(
-                    'chatMessage',
-                    data);
-            }
+            broadcastAll('chatMessage', data);
         });
 
         socket.on('disconnect', function () {

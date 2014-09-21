@@ -19,6 +19,12 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
     .controller('ShowcaseController', function($scope, $http) {
 
+        $scope.users = [
+            {
+                name: 'phil'
+            }
+        ];
+
         var socket = io.connect(location.hostname);
 
         socket.on('connected', function (id) {
@@ -109,11 +115,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             var history = $('#chatHistoryId');
 
-            var text = '> from ' +
-                $scope.socketId + ':\n' +
-                data.message + '\n';
-
-            history.val(history.val() + text);
+            history.val(history.val() + data.message);
 
             // scroll to bottom
             $('#chatHistoryId').scrollTop(
@@ -158,7 +160,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 }
             );
 
-            $('#chatMessageId').on('keyup', function (e) {
+            $('#chatMessageId').on('keydown', function (e) {
 
                     var code = (e.keyCode ? e.keyCode : e.which);
 
@@ -169,7 +171,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
                         var breaks = (message.match(/\n/g)||[]).length;
 
-                        if(!(breaks > 0 && message.length === 1)) {
+                        if(breaks !== message.length) {
 
                             if (message.length > 0) {
 
@@ -184,9 +186,22 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                         }
 
                         $('#chatMessageId').val('');
+                        $('#chatMessageId').scrollTop(0);
                     }
                 }
             );
+
+            $('#chatMessageId').on('keyup', function (e) {
+
+                var code = (e.keyCode ? e.keyCode : e.which);
+
+                // Enter key
+                if(code == 13) {
+
+                    $('#chatMessageId').val('');
+                    $('#chatMessageId').scrollTop(0);
+                }
+            });
         }
 
         ///////////////////////////////////////////////////////////////////////
