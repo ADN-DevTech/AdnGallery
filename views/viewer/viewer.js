@@ -201,9 +201,9 @@ angular.module('AdnGallery.viewer',
         ///////////////////////////////////////////////////////////////////////
         function initializeLayout() {
 
-            window.onresize = $scope.fitLayoutToWindow;
+            window.onresize = fitLayoutToWindow;
 
-            $scope.fitLayoutToWindow();
+            sfitLayoutToWindow();
 
             var mainLayout = $('#mainLayoutId').layout({
 
