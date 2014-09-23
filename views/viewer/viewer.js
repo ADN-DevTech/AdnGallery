@@ -193,6 +193,13 @@ angular.module('AdnGallery.viewer',
                     $scope.adnViewerMng.stopRotateMotion();
                 }
             );
+
+            $('#btnLoadUrnOkId').unbind().click(
+                function() {
+                    var urn = $('#urn').val();
+                    $location.path('/viewer').search({urn: urn});
+                }
+            );
         }
 
         ///////////////////////////////////////////////////////////////////////

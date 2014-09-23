@@ -5,6 +5,10 @@ var path = require('path');
 
 var router = express.Router();
 
+///////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////
 router.get('/', function(req, res) {
 
     var rootPath = path.join(
@@ -14,76 +18,184 @@ router.get('/', function(req, res) {
     res.sendFile('showcase.html', { root: rootPath });
 });
 
-var io = null;
-
-var tracker = {};
-
-function broadcastAll(id, data) {
-
-    for (var key in tracker) {
-        tracker[key].socket.emit(id, data);
-    }
-}
-
+///////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////
 router.initializeSocket = function(serverApp) {
 
-    io = socketio.listen(serverApp, { log: false });
+    var io = socketio.listen(serverApp, { log: false });;
 
-    tracker = {};
+    var tracker = {};
+
+    var showcaseData = {
+        controller: null,
+        urn: ''
+    };
 
     io.sockets.on('connection', function (socket) {
 
         tracker[socket.id] = {
-
             socket: socket,
-            user: ''
+            user: null
         };
+
+        //init data
+
+        var users = [];
+
+        for (var key in tracker) {
+
+            if(tracker[key].user)
+                users.push(tracker[key].user);
+        }
+
+        var initData = {
+            users: users,
+            socketId: socket.id,
+            currentShowcase: showcaseData
+        };
+
+        socket.emit('connected', initData);
 
         console.log('Incoming socket connection: ' + socket.id);
 
-        socket.emit('connected', socket.id);
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('requestControl', function (user) {
 
-        socket.on('requestControl', function () {
+            // grants control with no further check
+            user.hasControl = true;
 
-            console.log('Control request from: ' + socket.id);
+            emitAll('controlGranted', user);
 
-            broadcastAll('controlGranted', socket.id);
-
-            var data = {
-                message: '> ' + socket.id + ' has taken control' + '\n\n'
+            var msg = {
+                text: '> ' + user.name +
+                    ' has taken control' + '\n\n'
             };
 
-            broadcastAll('chatMessage', data);
+            emitAll('chatMessage', msg);
         });
 
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
         socket.on('cameraChanged', function (data) {
 
-            console.log('cameraChanged (' + socket.id + '): ' + data.camera);
+            emitExclude('cameraChanged', data);
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('sendMessage', function (msg) {
+
+            msg.text = '> ' + msg.user.name + ' says:\n' +
+                msg.text + '\n\n';
+
+            emitAll('chatMessage', msg);
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('addUser', function (user) {
+
+            tracker[socket.id].user = user;
+
+            emitAll('addUser', user);
+
+            var msg = {
+                user: user,
+                text: '> ' + user.name + ' joined the showcase\n\n'
+            }
+
+            emitAll('chatMessage', msg);
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('removeUser', function (user) {
+
+            removeUser(user);
+        });
+
+        socket.on('disconnect', function () {
+
+            console.log('Socket disconnection: ' + socket.id);
+
+            if(tracker[socket.id].user) {
+                removeUser(tracker[socket.id].user);
+            }
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('loadDocument', function (urn) {
+
+            showcaseData.urn = urn;
+
+            emitExclude('loadDocument', urn);
+
+            var msg = {
+                text: '> Loading document...\n\n'
+            }
+
+            emitAll('chatMessage', msg);
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function removeUser(user) {
+
+            emitAll('removeUser', user);
+
+            var msg = {
+                user: user,
+                text: '> ' + user.name + ' left the showcase\n\n'
+            }
+
+            emitAll('chatMessage', msg);
+
+            tracker[socket.id].user = null;
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function emitAll(id, data) {
+
+            for (var key in tracker) {
+                tracker[key].socket.emit(id, data);
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function emitExclude(id, data) {
 
             for (var key in tracker) {
 
                 if(key !== socket.id) {
 
-                    tracker[key].socket.emit(
-                        'cameraChanged',
-                        data);
+                    tracker[key].socket.emit(id, data);
                 }
             }
-        });
-
-        socket.on('sendMessage', function (data) {
-
-            data.message = '> from ' +
-                socket.id + ':\n' +
-                data.message + '\n\n';
-
-            broadcastAll('chatMessage', data);
-        });
-
-        socket.on('disconnect', function () {
-            console.log('Socket disconnection: ' + socket.id);
-            delete tracker[socket.id];
-        });
+        }
     });
 }
 

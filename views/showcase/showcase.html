@@ -24,14 +24,31 @@
         <div class="ui-layout-center">
             <div id="usersDivId"
                  class="ui-layout-element"
-                 style="height:100%; width:100%;background-color:#C3DBFA">
+                 style="height:100%; width:100%;background-color:#DEDEDE">
 
-                <button id="btnControlId" type="button" style="width:100%;">Request control</button>
+                <div class="input-group" style="width:100%;">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-hide="showcaseActive"><a id="btnJoinShowcaseId">Join showcase</a></li>
+                            <li ng-show="showcaseActive && !currentUser.hasControl"><a id="btnRequestControlId">Request control</a></li>
+                            <li ng-show="showcaseActive && !currentUser.hasControl" class="divider"></li>
+                            <li ng-show="showcaseActive"><a id="btnQuitShowcaseId">Quit showcase</a></li>
+                        </ul>
+                    </div>
+                    <input type="text"
+                           id="showcaseUsernameId"
+                           class="form-control"
+                           placeholder="Username (required)"
+                           ng-readonly="showcaseActive">
+                </div>
 
                 <a class="list-group-item"
                    href=""
-                   ng-repeat="user in users | orderBy:'name'"
-                   style="background-color:#C3DBFA">
+                   ng-repeat="user in userArray | orderBy:'name'"
+                   style="background-color:#FFFFFF">
                     <div >
                         <img ng-src={{user.avatar}} style="float:left; margin-right: 20px">
                         <div>
@@ -48,7 +65,7 @@
 
             <div id="chatDivId"
                  class="ui-layout-element"
-                 style="width:100%;height:100%;background-color:#C3DBFA">
+                 style="width:100%;height:100%;background-color:#DEDEDE">
 
                 <div style="height:80%">
                     <textarea id="chatHistoryId"
@@ -58,7 +75,10 @@
                 </div>
 
                 <div style="height:20%">
-                    <textarea id="chatMessageId" class="form-control"/>
+                    <textarea id="chatMessageId"
+                              class="form-control"
+                              ng-readonly="!showcaseActive"
+                              placeholder="Type your message here..."/>
                 </div>
             </div>
         </div>

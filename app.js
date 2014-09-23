@@ -78,19 +78,6 @@ angular.module('AdnGallery',
                     $('#loadUrnDlg').modal('show');
                 }
             );
-
-            $('#btnLoadUrnOkId').unbind().click(
-                function() {
-                    loadFromUrn();
-                }
-            );
-        }
-
-        function loadFromUrn() {
-
-            var urn = $('#urn').val();
-
-            $location.path('/viewer').search({urn: urn});
         }
 
         ///////////////////////////////////////////////////////////////////////////

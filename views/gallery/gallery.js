@@ -149,6 +149,20 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         }
 
         ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function initializeMenu() {
+
+            $('#btnLoadUrnOkId').unbind().click(
+                function() {
+                    var urn = $('#urn').val();
+                    $location.path('/viewer').search({urn: urn});
+                }
+            );
+        }
+
+        ///////////////////////////////////////////////////////////////////////
         // performs view initializations
         //
         ///////////////////////////////////////////////////////////////////////
@@ -159,6 +173,8 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         $('#navBarId').addClass("navbar-fixed-top");
 
         initializeFilter();
+
+        initializeMenu();
 
         loadModels();
     });

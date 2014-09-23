@@ -197,6 +197,8 @@ Autodesk.ADN.Toolkit.Viewer.AdnViewerManager = function (
 
             viewerDiv.parentNode.removeChild(viewerDiv);
         }
+
+        _viewer = null;
     }
 
     ///////////////////////////////////////////////////////////////////////////

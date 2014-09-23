@@ -97,18 +97,6 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
 
-            <button type="button"
-                    class="navbar-toggle"
-                    data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-
-            </button>
-
             <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">
 
                 <adn-spinning-img
@@ -119,10 +107,11 @@
                         src="public/images/adsk.32x32.png"
                         style="position:relative; bottom:5px;"/>
             </a>
-            <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">Autodesk View & Data API</a>
+
+            <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">
+                Autodesk View & Data API
+            </a>
         </div>
-
-
 
         <div class="collapse navbar-collapse" style="float:left;">
 
@@ -144,8 +133,15 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a id="btnLoadUrnId">
+                            <a id="btnQuickLoadId">
                                 <span class="glyphicon glyphicon-flash"></span>
+                                &nbsp; Quick load
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnLoadUrnId">
+                                <span class="glyphicon glyphicon-barcode"></span>
                                 &nbsp; Load from urn
                             </a>
                         </li>
@@ -226,10 +222,9 @@
 
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" placeholder="Search by property ..."/>
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="onSearch()">Find!</button>
-                      </span>
-
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="onSearch()">Find!</button>
+                        </span>
                     </div>
 
                 </div>

@@ -111,14 +111,6 @@ angular.module('AdnGallery.upload',[])
                 email: $('#email').val()
             };
 
-            var modelInfo = {
-                author: author,
-                name: '',
-                fileId: '',
-                urn: '',
-                views: []
-            };
-
             for (var i = 0; i < content.children.length; ++i) {
 
                 var file = content.children[i].file;
@@ -150,9 +142,13 @@ angular.module('AdnGallery.upload',[])
                                     console.log("Translation successful: " +
                                         response.file.name);
 
-                                    modelInfo.urn = $scope.viewDataClient.toBase64(fileId);
-                                    modelInfo.name = getFileName(response.file);
-                                    modelInfo.fileId = fileId;
+                                    var modelInfo = {
+                                        author: author,
+                                        name: getFileName(response.file),
+                                        fileId: fileId,
+                                        urn: $scope.viewDataClient.toBase64(fileId),
+                                        views: []
+                                    };
 
                                     postModel(modelInfo);
                                 });
@@ -173,6 +169,7 @@ angular.module('AdnGallery.upload',[])
             var startTime = new Date().getTime();
 
             var timer = setInterval(function () {
+
                 var dt = (new Date().getTime() - startTime) / timeout;
 
                 if (dt >= 1.0) {
@@ -199,7 +196,7 @@ angular.module('AdnGallery.upload',[])
 
                         });
                 }
-            }, 2000);
+            }, 10000);
         };
 
         ///////////////////////////////////////////////////////////////////
