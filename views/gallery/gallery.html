@@ -44,20 +44,21 @@
         </div>
     </nav>
 
-    <a class="list-group-item"
-       ng-repeat="model in models | filter: gallerySearchFilter | orderBy:'name'"
-       href="#/viewer?urn={{model.encodedUrn}}"
-       style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
-        <div >
-            <img ng-src={{model.src}} style="float:left; margin-right: 20px">
-            <div>
-                <b>{{model.name}}</b>
-                <br> <br>
-                <b>Author:</b> {{model.author.name}}
-                <br>
-                <b>Type:</b> {{model.type}}
+    <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'">
+        <a class="list-group-item"
+           href="#/viewer?urn={{model.encodedUrn}}"
+           style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
+            <div >
+                <img ng-src={{model.src}} style="float:left; margin-right: 20px">
+                <div style="float:left;">
+                    <b>{{model.name}}</b>
+                    <br> <br>
+                    <b>Author:</b> {{model.author.name}}
+                    <br>
+                    <b>Type:</b> {{model.type}}
+                </div>
+                <div style="clear:both;"> </div>
             </div>
-            <div style="clear:both;"> </div>
-        </div>
-    </a>
+        </a>
+    </div>
 </div>

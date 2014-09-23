@@ -398,16 +398,18 @@ Autodesk.ADN.Toolkit.Viewer.AdnViewerManager = function (
             var table = document.getElementById(
                 "propertygrid");
 
-            if (table.rows.length !== 0) {
+            if(table) {
 
-                clearInterval(interval);
+                if (table.rows.length !== 0) {
 
-                callback(table);
+                    clearInterval(interval);
+
+                    callback(table);
+                }
+                else if ((--maxRetry) === 0) {
+                    clearInterval(interval);
+                }
             }
-            else if ((--maxRetry) === 0) {
-                clearInterval(interval);
-            }
-
         }, 100);
     }
 

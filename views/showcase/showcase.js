@@ -29,28 +29,54 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
         $scope.users = {};
 
-        $scope.currentUser = {
-            name:'',
-            socketId: '',
-            hasControl: false,
-            urn: ''
-        };
-
         var socket = io.connect(location.hostname);
 
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        $scope.showCloseDocMenu = function() {
+
+            return $scope.showcaseActive &&
+                   $scope.currentUser.hasControl &&
+                   $scope.currentUser.showcaseData.urn !== '';
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
         socket.on('connected', function (data) {
 
-            console.log('Socket connected: ' + data.socketId);
+            //console.log('Socket connected: ' + data.socketId);
+
+            initializeUser();
 
             $scope.currentUser.socketId = data.socketId;
 
-            $scope.currentUser.urn = data.currentShowcase.urn;
+            $scope.currentUser.showcaseData = data.showcaseData;
 
             for(var i = 0; i < data.users.length; ++i)
                 $scope.users[data.users[i].socketId] = data.users[i];
 
             updateUserArray();
         });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeUser() {
+
+            if(typeof $scope.currentUser === 'undefined')
+
+                $scope.currentUser = {
+                    name:'',
+                    socketId: '',
+                    hasControl: false,
+                    showcaseData: null
+                };
+        }
 
         ///////////////////////////////////////////////////////////////////
         //
@@ -76,19 +102,16 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             if(name.length > 0) {
 
+                initializeUser();
+
                 $scope.showcaseActive = true;
 
-                $scope.currentUser = {
-                    name: name,
-                    hasControl: false,
-                    urn: $scope.currentUser.urn,
-                    socketId: $scope.currentUser.socketId
-                };
+                $scope.currentUser.name = name;
 
                 socket.emit('addUser', $scope.currentUser);
 
-                if($scope.currentUser.urn !== '')
-                    loadFromUrn($scope.currentUser.urn);
+                if($scope.currentUser.showcaseData)
+                    loadFromUrn($scope.currentUser.showcaseData.urn);
             }
         }
 
@@ -125,9 +148,14 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        function requestControl() {
+        function requestControl(control) {
 
-            socket.emit('requestControl', $scope.currentUser);
+            // clone user
+            var user = JSON.parse(JSON.stringify($scope.currentUser));
+
+            user.hasControl = control;
+
+            socket.emit('requestControl', user);
         }
 
         ///////////////////////////////////////////////////////////////////
@@ -136,34 +164,38 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         function setControl(user) {
 
-            $scope.userArray = [];
+            $scope.users[user.socketId].hasControl = user.hasControl;
 
-            for (var key in $scope.users) {
+            var user = $scope.users[$scope.currentUser.socketId];
 
-                $scope.users[key].hasControl = (key === user.socketId);
-
-                $scope.userArray.push($scope.users[key]);
-            }
-
-            $scope.currentUser = $scope.users[$scope.currentUser.socketId];
+            if(typeof user !== 'undefined')
+                $scope.currentUser = user;
 
             if($scope.adnViewerMng.getViewer()) {
 
-                setupEvents();
+                setupViewerEvents();
             }
+
+            updateUserArray();
         }
 
         ///////////////////////////////////////////////////////////////////
         //
         //
         ///////////////////////////////////////////////////////////////////
-        function setupEvents() {
+        function setupViewerEvents() {
+
+            var viewer = $scope.adnViewerMng.getViewer();
 
             if($scope.currentUser.hasControl) {
 
-                $scope.adnViewerMng.getViewer().addEventListener(
+                viewer.addEventListener(
                     Autodesk.Viewing.CAMERA_CHANGE_EVENT,
                     onCameraChanged);
+
+                viewer.addEventListener(
+                    Autodesk.Viewing.ISOLATE_EVENT,
+                    onIsolate);
 
                 // enable mouse on viewer div
                 $('#' + $scope.adnViewerMng.getViewerDivId()).css(
@@ -171,14 +203,27 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
             }
             else {
 
-                $scope.adnViewerMng.getViewer().removeEventListener(
+                viewer.removeEventListener(
                     Autodesk.Viewing.CAMERA_CHANGE_EVENT,
                     onCameraChanged);
+
+                viewer.removeEventListener(
+                    Autodesk.Viewing.ISOLATE_EVENT,
+                    onIsolate);
 
                 // disable mouse on viewer div
                 $('#' + $scope.adnViewerMng.getViewerDivId()).css(
                     'pointer-events', 'none');
             }
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function closeDocument() {
+
+            socket.emit('closeDocument', $scope.currentUser);
         }
 
         ///////////////////////////////////////////////////////////////////
@@ -198,7 +243,13 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
                 function (viewer) {
 
-                    setupEvents();
+                    var data = $scope.currentUser.showcaseData;
+
+                    if(data) {
+
+                        if(data.isolateIds)
+                            viewer.isolateById(data.isolateIds);
+                    }
                 });
 
             var urn = decodeURIComponent(
@@ -215,6 +266,8 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             if (urn !== '') {
 
+                $scope.currentUser.showcaseData.urn = urn;
+
                 $scope.adnViewerMng.loadDocument(
                     urn,
                     function (viewer) {
@@ -225,6 +278,16 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
                         if($scope.currentUser.hasControl) {
                             socket.emit('loadDocument', urn);
+                        }
+
+                        setupViewerEvents();
+
+                        var data = $scope.currentUser.showcaseData;
+
+                        if(data) {
+
+                            if(data.view)
+                                $scope.adnViewerMng.setView(data.view);
                         }
                     },
                     function(error) {
@@ -262,13 +325,31 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////////
         function onCameraChanged(event) {
 
-            //console.log('onCameraChanged emit: ' + event);
-
             var data = {
                 view: $scope.adnViewerMng.getCurrentView('current')
             };
 
             socket.emit('cameraChanged', data);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function onIsolate(event) {
+
+            var ids = [];
+
+            for(var i=0; i<event.nodeIdArray.length; ++i) {
+
+                ids.push(event.nodeIdArray[i].dbId);
+            }
+
+            var data = {
+                isolateIds: ids
+            };
+
+            socket.emit('isolate', data);
         }
 
         ///////////////////////////////////////////////////////////////////
@@ -277,16 +358,33 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         socket.on('cameraChanged', function (data) {
 
-            //console.log('onCameraChanged received: ' + data.view);
+            var viewer = $scope.adnViewerMng.getViewer();
 
-            $scope.adnViewerMng.setView(data.view);
+            if(viewer) {
+
+                $scope.adnViewerMng.setView(data.view);
+            }
         });
 
         ///////////////////////////////////////////////////////////////////
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('controlGranted', function (user) {
+        socket.on('isolate', function (data) {
+
+            var viewer = $scope.adnViewerMng.getViewer();
+
+            if(viewer) {
+                console.log(data);
+                viewer.isolateById(data.isolateIds)
+            }
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('controlEvent', function (user) {
 
             setControl(user);
         });
@@ -297,17 +395,18 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         socket.on('chatMessage', function (msg) {
 
-            /*var history = $('#chatHistoryId');
-
-            history.val(history.val() + msg.text);
-
-            // scroll to bottom
-            $('#chatHistoryId').scrollTop(
-                $('#chatHistoryId')[0].scrollHeight);*/
-
             var history = $scope.chatHistory.getValue();
 
             $scope.chatHistory.setValue(history + msg.text, true);
+
+            //console.log('height: ' + $scope.chatHistory.composer.element.scrollHeight);
+            //console.log('top: ' + $scope.chatHistory.composer.element.scrollTop);
+
+            $scope.chatHistory.composer.element.scrollTop =
+                $scope.chatHistory.composer.element.scrollHeight;
+
+            // scroll to bottom
+            $('#chatHistoryId').scrollTop($scope.chatHistory.composer.element.scrollHeight);
         });
 
         ///////////////////////////////////////////////////////////////////
@@ -338,10 +437,21 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         socket.on('loadDocument', function (urn) {
 
-            $scope.currentUser.urn = urn;
+            $scope.currentUser.showcaseData.urn = urn;
 
             if($scope.showcaseActive)
                 loadFromUrn(urn);
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('closeDocument', function () {
+
+            $scope.currentUser.showcaseData.urn = '';
+
+            $scope.adnViewerMng.closeDocument();
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -364,7 +474,19 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             $('#btnRequestControlId').unbind().click(
                 function() {
-                    requestControl();
+                    requestControl(true);
+                }
+            );
+
+            $('#btnDropControlId').unbind().click(
+                function() {
+                    requestControl(false);
+                }
+            );
+
+            $('#btnCloseShowcaseDocId').unbind().click(
+                function() {
+                    closeDocument();
                 }
             );
 
@@ -454,7 +576,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 south__size: 300,
 
                 south__onresize: function () {
-                    $scope.propertyGrid.resizeCanvas();
+
                 }
             });
         }
@@ -494,6 +616,21 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
             $scope.chatHistory.on('load', onLoad);
         }
 
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeEvents() {
+
+            $scope.$on('broadcast-modelSelected', function(event, urn) {
+
+                if($scope.currentUser.hasControl ) {
+
+                    loadFromUrn(urn);
+                }
+            });
+        }
+
         ///////////////////////////////////////////////////////////////////////
         //
         //
@@ -501,9 +638,13 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
         initializeChatWindow();
 
+        initializeEvents();
+
         initializeLayout();
 
         initializeViewer();
 
         initializeMenu();
+
+        initializeUser();
     });

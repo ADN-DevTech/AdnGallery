@@ -3,6 +3,7 @@
 
     textarea {
         resize: none;
+        overflow:scroll;
     }
 
 </style>
@@ -32,10 +33,40 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-hide="showcaseActive"><a id="btnJoinShowcaseId">Join showcase</a></li>
-                            <li ng-show="showcaseActive && !currentUser.hasControl"><a id="btnRequestControlId">Request control</a></li>
-                            <li ng-show="showcaseActive && !currentUser.hasControl" class="divider"></li>
-                            <li ng-show="showcaseActive"><a id="btnQuitShowcaseId">Quit showcase</a></li>
+                            <li ng-hide="showcaseActive">
+                                <a id="btnJoinShowcaseId">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                    &nbsp; Join showcase
+                                </a>
+                            </li>
+                            <li ng-show="showcaseActive && !currentUser.hasControl">
+                                <a id="btnRequestControlId">
+                                    <span class="glyphicon glyphicon-screenshot"></span>
+                                    &nbsp; Request control
+                                </a>
+                            </li>
+                            <li ng-show="showcaseActive && currentUser.hasControl">
+                                <a id="btnDropControlId">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                    &nbsp; Drop control
+                                </a>
+                            </li>
+
+                            <li ng-show="showCloseDocMenu()" class="divider"></li>
+                            <li ng-show="showCloseDocMenu()">
+                                <a id="btnCloseShowcaseDocId">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    &nbsp; Close document
+                                </a>
+                            </li>
+
+                            <li ng-show="showcaseActive" class="divider"></li>
+                            <li ng-show="showcaseActive">
+                                <a id="btnQuitShowcaseId">
+                                    <span class="glyphicon glyphicon-stop"></span>
+                                    &nbsp; Quit showcase
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <input type="text"
@@ -48,11 +79,11 @@
                 <a class="list-group-item"
                    href=""
                    ng-repeat="user in userArray | orderBy:'name'"
-                   style="background-color:#FFFFFF">
+                   ng-style="{'background-color': user.hasControl ? '#95CAF5' : '#FFFFFF'}">
                     <div >
                         <img ng-src={{user.avatar}} style="float:left; margin-right: 20px">
                         <div>
-                            <b>{{user.name}}</b>
+                            <b>{{user.name + (user.hasControl ? ' (controller)':'')}}</b>
                         </div>
                         <div style="clear:both;"> </div>
                     </div>
@@ -67,10 +98,10 @@
                  class="ui-layout-element"
                  style="width:100%;height:100%;background-color:#DEDEDE">
 
-                <div style="height:80%">
+                <div style="height:80%;">
                     <textarea id="chatHistoryId"
                               class="form-control"
-                              style="height:100%;font-size:11px;"
+                              style="width:100%;height:100%;font-size:11px;"
                               readonly>
                     </textarea>
                 </div>

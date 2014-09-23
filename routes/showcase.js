@@ -24,41 +24,50 @@ router.get('/', function(req, res) {
 ///////////////////////////////////////////////////////////////////////////
 router.initializeSocket = function(serverApp) {
 
-    var io = socketio.listen(serverApp, { log: false });;
+    var io = socketio.listen(serverApp, { log: false });
 
     var tracker = {};
 
     var showcaseData = {
-        controller: null,
-        urn: ''
+        controllingUser: null,
+        urn: '',
+        view: null,
+        isolateIds: null
     };
 
     io.sockets.on('connection', function (socket) {
+
+        //console.log('Incoming socket connection: ' + socket.id);
 
         tracker[socket.id] = {
             socket: socket,
             user: null
         };
 
-        //init data
+        socket.emit('connected', buildInitData());
 
-        var users = [];
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function buildInitData() {
 
-        for (var key in tracker) {
+            var users = [];
 
-            if(tracker[key].user)
-                users.push(tracker[key].user);
+            for (var key in tracker) {
+
+                if(tracker[key].user)
+                    users.push(tracker[key].user);
+            }
+
+            var initData = {
+                users: users,
+                socketId: socket.id,
+                showcaseData: showcaseData
+            };
+
+            return initData;
         }
-
-        var initData = {
-            users: users,
-            socketId: socket.id,
-            currentShowcase: showcaseData
-        };
-
-        socket.emit('connected', initData);
-
-        console.log('Incoming socket connection: ' + socket.id);
 
         ///////////////////////////////////////////////////////////////////
         //
@@ -67,16 +76,37 @@ router.initializeSocket = function(serverApp) {
         socket.on('requestControl', function (user) {
 
             // grants control with no further check
-            user.hasControl = true;
 
-            emitAll('controlGranted', user);
+            if(user.hasControl) {
 
-            var msg = {
-                text: '> ' + '<b>' + user.name + '</b>' +
-                    ' has taken control' + '<br><br>'
-            };
+                if(showcaseData.controllingUser) {
 
-            emitAll('chatMessage', msg);
+                    //current controlling user looses control
+                    showcaseData.controllingUser.hasControl = false;
+
+                    emitAll('controlEvent', showcaseData.controllingUser);
+                }
+
+                showcaseData.controllingUser = user;
+
+                var msg = {
+                    text: '> ' + '<b>' + user.name + '</b>' +
+                        ' has taken control' + '<br><br>'
+                };
+
+                emitAll('chatMessage', msg);
+            }
+            else {
+                if(showcaseData.controllingUser) {
+                    if(showcaseData.controllingUser.socketId === user.socketId) {
+                        showcaseData.controllingUser = null;
+                    }
+                }
+            }
+
+            tracker[user.socketId].user = user;
+
+            emitAll('controlEvent', user);
         });
 
         ///////////////////////////////////////////////////////////////////
@@ -85,7 +115,20 @@ router.initializeSocket = function(serverApp) {
         ///////////////////////////////////////////////////////////////////
         socket.on('cameraChanged', function (data) {
 
+            showcaseData.view = data.view;
+
             emitExclude('cameraChanged', data);
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        socket.on('isolate', function (data) {
+
+            showcaseData.isolateIds = data.isolateIds;
+
+            emitExclude('isolate', data);
         });
 
         ///////////////////////////////////////////////////////////////////
@@ -158,13 +201,23 @@ router.initializeSocket = function(serverApp) {
         //
         //
         ///////////////////////////////////////////////////////////////////
+        socket.on('closeDocument', function () {
+
+            emitAll('closeDocument');
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
         function removeUser(user) {
 
             emitAll('removeUser', user);
 
             var msg = {
                 user: user,
-                text: '> ' + '<b>' + user.name + '</b>' + ' left the showcase<br><br>'
+                text: '> ' + '<b>' + user.name + '</b>' +
+                    ' left the showcase<br><br>'
             }
 
             emitAll('chatMessage', msg);

@@ -375,6 +375,94 @@
 </div>
 
 <!--///////////////////////////////////////////////////////////////////////
+//  Quick Load Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div ng-controller="quickLoadController"
+     id="quickLoadDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="quickLoadDlgFrame">
+
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Load document</h4>
+            </div>
+
+            <div id="quickLoadDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+                <div class="input-group">
+                    <input type="text"
+                           id="quickLoad-searchInput"
+                           ng-model="filterValue"
+                           class="form-control"
+                           placeholder="Search Models ..."/>
+
+                    <div class="input-group-btn">
+
+                        <button
+                                id="quickLoad-btnFilterId"
+                                type="button"
+                                class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown">
+                            Filter by
+                            &nbsp; <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a id="quickLoad-filterAuthorId">Author</a></li>
+                            <li><a id="quickLoad-filterModelId">Model name</a></li>
+                            <li><a id="quickLoad-filterUrnId">Model urn</a></li>
+                            <li class="divider"></li>
+                            <li><a id="quickLoad-filterDisableId">Disable filter</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <br>
+
+                <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'">
+                    <a class="list-group-item"
+                       href=""
+                       style="background-color:#C3DBFA"
+                       ng-click="onModelSelected(model.urn)">
+                        <div >
+                            <img ng-src={{model.src}} style="width:56px; height:56px; float:left; margin-right:20px">
+                            <div style="float:left;">
+                                <b>{{model.name}}</b>
+                                <br>
+                                <b>Author:</b> {{model.author.name}}
+                                <br>
+                                <b>Type:</b> {{model.type}}
+                            </div>
+                            <div style="clear:both;"> </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--///////////////////////////////////////////////////////////////////////
 //  Load View Dialog
 //
 ////////////////////////////////////////////////////////////////////////-->
@@ -662,6 +750,7 @@ to improve your experience.</p>
 <script src="components/version/version.js"></script>
 
 <script src="controllers/uploadController.js"></script>
+<script src="controllers/quickLoadController.js"></script>
 <script src="controllers/modelViewsController.js"></script>
 
 <script src="directives/adn-directives.js"></script>

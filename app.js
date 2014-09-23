@@ -13,7 +13,8 @@ angular.module('AdnGallery',
       'AdnGallery.blog',
       'AdnGallery.version',
       'AdnGallery.upload',
-      'AdnGallery.showcase'
+      'AdnGallery.showcase',
+      'AdnGallery.quickLoad'
     ]).
 
     ///////////////////////////////////////////////////////////////////////
@@ -26,12 +27,41 @@ angular.module('AdnGallery',
         //
         //
         ///////////////////////////////////////////////////////////////////
+        function initializeMenu() {
+
+            $('#btnAboutId').unbind().click(
+                function() {
+                    $('#aboutDlg').modal('show');
+                }
+            );
+
+            $('#btnLoadUrnId').unbind().click(
+                function() {
+                    $('#loadUrnDlg').modal('show');
+                }
+            );
+
+            $('#btnQuickLoadId').unbind().click(
+                function() {
+                    $('#quickLoadDlg').modal('show');
+                }
+            );
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
         function initializeDialogs() {
 
             //Bootstrap Dialogs
 
             var dlgClr = 'rgba(209, 211, 212, 0.5)';
             var dlgClrHover = 'rgba(209, 211, 212, 1.0)';
+
+            $scope.setHoverStyle('quickLoadDlgFrame',
+                dlgClr,
+                dlgClrHover);
 
             $scope.setHoverStyle('itemSelectDlgFrame',
                 dlgClr,
@@ -64,20 +94,6 @@ angular.module('AdnGallery',
             $scope.setHoverStyle('embedDlgFrame',
                 dlgClr,
                 dlgClrHover);
-
-            // menu buttons
-
-            $('#btnAboutId').unbind().click(
-                function() {
-                    $('#aboutDlg').modal('show');
-                }
-            );
-
-            $('#btnLoadUrnId').unbind().click(
-                function() {
-                    $('#loadUrnDlg').modal('show');
-                }
-            );
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -192,7 +208,28 @@ angular.module('AdnGallery',
         //
         //
         ///////////////////////////////////////////////////////////////////
+        function initializeEvents() {
+
+            var onModelSelected = $scope.$on('emit-modelSelected',
+
+                function(event, urn) {
+                    $scope.$broadcast('broadcast-modelSelected', urn);
+                });
+
+            $scope.$on('$destroy', function() {
+                onModelSelected();
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
         initializeDialogs();
+
+        initializeEvents();
+
+        initializeMenu();
     }).
 
     ///////////////////////////////////////////////////////////////////////

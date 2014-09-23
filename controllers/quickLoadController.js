@@ -4,33 +4,28 @@
 //
 //
 ///////////////////////////////////////////////////////////////////////////
-angular.module('AdnGallery.gallery', ['ngRoute'])
-
-    .config(['$routeProvider', function($routeProvider) {
-      $routeProvider.when('/gallery', {
-        templateUrl: 'views/gallery/gallery.html',
-        controller: 'GalleryController'
-      });
-    }]).
+angular.module('AdnGallery.quickLoad',[]).
 
     ///////////////////////////////////////////////////////////////////////
     //
     //
     ///////////////////////////////////////////////////////////////////////
-    controller('GalleryController', function($scope, $http) {
-
-        $scope.models = [];
+    controller('quickLoadController', function($scope, $http) {
 
         var filterFunc = null;
 
-        $scope.galleryFilterValue = null;
+        $scope.filterValue = null;
 
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
         $scope.searchFilter = function (model) {
 
-            var re = new RegExp($scope.galleryFilterValue, 'i');
+            var re = new RegExp($scope.filterValue, 'i');
 
             return !filterFunc ||
-                !$scope.galleryFilterValue ||
+                !$scope.filterValue ||
                 re.test(filterFunc(model));
         };
 
@@ -94,11 +89,11 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         function initializeFilter() {
 
             function setFilterName(name) {
-                $('#btnFilterId').html(name +
+                $('#quickLoad-btnFilterId').html(name +
                     '&nbsp; <span class="caret"></span>');
             }
 
-            $('#filterAuthorId').unbind().click(
+            $('#quickLoad-filterAuthorId').unbind().click(
                 function() {
                     setFilterName('By author');
                     filterFunc = function(model){
@@ -110,7 +105,7 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                 }
             );
 
-            $('#filterEmailId').unbind().click(
+            $('#quickLoad-filterEmailId').unbind().click(
                 function() {
                     setFilterName('By email');
                     filterFunc = function(model){
@@ -122,7 +117,7 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                 }
             );
 
-            $('#filterModelId').unbind().click(
+            $('#quickLoad-filterModelId').unbind().click(
                 function() {
                     setFilterName('By model name');
                     filterFunc = function(model){
@@ -131,7 +126,7 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                 }
             );
 
-            $('#filterUrnId').unbind().click(
+            $('#quickLoad-filterUrnId').unbind().click(
                 function() {
                     setFilterName('By model urn');
                     filterFunc = function(model){
@@ -140,7 +135,7 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                 }
             );
 
-            $('#filterDisableId').unbind().click(
+            $('#quickLoad-filterDisableId').unbind().click(
                 function() {
                     setFilterName('Filter by');
                     filterFunc = null;
@@ -152,29 +147,32 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function initializeMenu() {
+        $scope.onModelSelected = function (urn) {
 
-            $('#btnLoadUrnOkId').unbind().click(
-                function() {
-                    var urn = $('#urn').val();
-                    $location.path('/viewer').search({urn: urn});
-                }
-            );
+            $('#quickLoadDlg').modal('hide');
+
+            $scope.urn = urn;
         }
 
+        $('#quickLoadDlg').on('hidden.bs.modal', function () {
+
+            if($scope.urn !== '') {
+                $scope.$emit('emit-modelSelected', $scope.urn);
+            }
+
+            $scope.urn = '';
+
+            $scope.models = [];
+        })
+
         ///////////////////////////////////////////////////////////////////////
-        // performs view initializations
+        //
         //
         ///////////////////////////////////////////////////////////////////////
+        $('#quickLoadDlg').on('shown.bs.modal', function () {
 
-        $('#menuSearchId').css({"visibility": "collapse"});
-        $('#menuViewId').css({"visibility": "collapse"});
-        $('#menuUiId').css({"visibility": "collapse"});
-        $('#navBarId').addClass("navbar-fixed-top");
+            loadModels();
+        })
 
         initializeFilter();
-
-        initializeMenu();
-
-        loadModels();
     });

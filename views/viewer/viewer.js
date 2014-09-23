@@ -154,13 +154,31 @@ angular.module('AdnGallery.viewer',
 
                             var properties = result.properties;
 
-                            $.merge(properties, customProperties);
+                            //$.merge(properties, customProperties);
 
                             $scope.propertyGrid.setData(properties);
                             $scope.propertyGrid.render();
                         }
                     });
             }
+
+            // Properties table hook
+
+            $scope.adnViewerMng.onDisplayPropertiesTable(
+
+                function(table) {
+
+                    var properties = [{
+                        //index: 0,
+                        displayName: 'Developer',
+                        displayValue: 'Philippe Leefsma'
+                    }, {
+                        displayName: 'Company',
+                        displayValue: 'ADN'
+                    }];
+
+                    //$scope.adnViewerMng.insertProperties(properties, table);
+                });
         }
 
         ///////////////////////////////////////////////////////////////////////
