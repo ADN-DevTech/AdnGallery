@@ -297,13 +297,17 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         socket.on('chatMessage', function (msg) {
 
-            var history = $('#chatHistoryId');
+            /*var history = $('#chatHistoryId');
 
             history.val(history.val() + msg.text);
 
             // scroll to bottom
             $('#chatHistoryId').scrollTop(
-                $('#chatHistoryId')[0].scrollHeight);
+                $('#chatHistoryId')[0].scrollHeight);*/
+
+            var history = $scope.chatHistory.getValue();
+
+            $scope.chatHistory.setValue(history + msg.text, true);
         });
 
         ///////////////////////////////////////////////////////////////////
@@ -473,6 +477,29 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////////
+        function initializeChatWindow() {
+
+            $scope.chatHistory = new wysihtml5.Editor(
+                "chatHistoryId", {
+                    parserRules:  wysihtml5ParserRules
+                });
+
+            function onLoad() {
+
+                this.composer.element.setAttribute(
+                    'contenteditable',
+                    false);
+            }
+
+            $scope.chatHistory.on('load', onLoad);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+
+        initializeChatWindow();
 
         initializeLayout();
 

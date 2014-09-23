@@ -72,8 +72,8 @@ router.initializeSocket = function(serverApp) {
             emitAll('controlGranted', user);
 
             var msg = {
-                text: '> ' + user.name +
-                    ' has taken control' + '\n\n'
+                text: '> ' + '<b>' + user.name + '</b>' +
+                    ' has taken control' + '<br><br>'
             };
 
             emitAll('chatMessage', msg);
@@ -94,8 +94,8 @@ router.initializeSocket = function(serverApp) {
         ///////////////////////////////////////////////////////////////////
         socket.on('sendMessage', function (msg) {
 
-            msg.text = '> ' + msg.user.name + ' says:\n' +
-                msg.text + '\n\n';
+            msg.text = '> ' + '<b>' + msg.user.name + '</b>' + ' says:<br>' +
+                msg.text + '<br><br>';
 
             emitAll('chatMessage', msg);
         });
@@ -112,7 +112,8 @@ router.initializeSocket = function(serverApp) {
 
             var msg = {
                 user: user,
-                text: '> ' + user.name + ' joined the showcase\n\n'
+                text: '> ' + '<b>' + user.name + '</b>' +
+                    ' joined the showcase<br><br>'
             }
 
             emitAll('chatMessage', msg);
@@ -147,7 +148,7 @@ router.initializeSocket = function(serverApp) {
             emitExclude('loadDocument', urn);
 
             var msg = {
-                text: '> Loading document...\n\n'
+                text: '> Loading document...<br><br>'
             }
 
             emitAll('chatMessage', msg);
@@ -163,7 +164,7 @@ router.initializeSocket = function(serverApp) {
 
             var msg = {
                 user: user,
-                text: '> ' + user.name + ' left the showcase\n\n'
+                text: '> ' + '<b>' + user.name + '</b>' + ' left the showcase<br><br>'
             }
 
             emitAll('chatMessage', msg);
