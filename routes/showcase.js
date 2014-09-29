@@ -203,6 +203,12 @@ router.initializeSocket = function(serverApp) {
             if(tracker[socket.id].user) {
                 removeUser(tracker[socket.id].user);
             }
+
+            delete tracker[socket.id];
+
+            // clear showcase data when last user disconnects
+            //if(tracker.length)
+            
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -212,6 +218,8 @@ router.initializeSocket = function(serverApp) {
         socket.on('loadDocument', function (urn) {
 
             showcaseData.urn = urn;
+            showcaseData.view = null;
+            showcaseData.isolateIds = null;
 
             emitExclude('loadDocument', urn);
 
@@ -227,6 +235,10 @@ router.initializeSocket = function(serverApp) {
         //
         ///////////////////////////////////////////////////////////////////////
         socket.on('closeDocument', function () {
+
+            showcaseData.urn = '';
+            showcaseData.view = null;
+            showcaseData.isolateIds = null;
 
             emitAll('closeDocument');
         });
