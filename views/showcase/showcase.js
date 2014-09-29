@@ -1,15 +1,32 @@
+///////////////////////////////////////////////////////////////////////////////
+// Copyright (c) Autodesk, Inc. All rights reserved
+// Written by Philippe Leefsma 2014 - ADN/Developer Technical Services
+//
+// Permission to use, copy, modify, and distribute this software in
+// object code form for any purpose and without fee is hereby granted,
+// provided that the above copyright notice appears in all copies and
+// that both that copyright notice and the limited warranty and
+// restricted rights notice below appear in all supporting
+// documentation.
+//
+// AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
+// AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
+// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC.
+// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+///////////////////////////////////////////////////////////////////////////////
 'use strict';
 
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 //
-///////////////////////////////////////////////////////////////////////////
-angular.module('AdnGallery.showcase', ['ngRoute'])
+///////////////////////////////////////////////////////////////////////////////
+angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     //
     //
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/showcase', {
             templateUrl: 'views/showcase/showcase.html',
@@ -17,10 +34,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         });
     }])
 
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     //
     //
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     .controller('ShowcaseController', function($scope, $http) {
 
         $scope.showcaseActive = false;
@@ -29,12 +46,14 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
         $scope.users = {};
 
-        var socket = io.connect(location.hostname);
+        $scope.socket = io.connect(location.hostname);
 
-        ///////////////////////////////////////////////////////////////////
+        $scope.socket.emit('requestData');
+
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         $scope.showCloseDocMenu = function() {
 
             return $scope.showcaseActive &&
@@ -42,30 +61,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                    $scope.currentUser.showcaseData.urn !== '';
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
-        socket.on('connected', function (data) {
-
-            //console.log('Socket connected: ' + data.socketId);
-
-            initializeUser();
-
-            $scope.currentUser.socketId = data.socketId;
-
-            $scope.currentUser.showcaseData = data.showcaseData;
-
-            for(var i = 0; i < data.users.length; ++i)
-                $scope.users[data.users[i].socketId] = data.users[i];
-
-            updateUserArray();
-        });
-
-        ///////////////////////////////////////////////////////////////////
-        //
-        //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function initializeUser() {
 
             if(typeof $scope.currentUser === 'undefined')
@@ -76,12 +75,15 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                     hasControl: false,
                     showcaseData: null
                 };
+
+            $scope.currentUser.name = '';
+            $scope.currentUser.hasControl = false;
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function updateUserArray() {
 
             $scope.userArray = [];
@@ -92,10 +94,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
             }
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function joinShowcase() {
 
             var name = $('#showcaseUsernameId').val();
@@ -108,32 +110,32 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
                 $scope.currentUser.name = name;
 
-                socket.emit('addUser', $scope.currentUser);
+                $scope.socket.emit('addUser', $scope.currentUser);
 
                 if($scope.currentUser.showcaseData)
                     loadFromUrn($scope.currentUser.showcaseData.urn);
             }
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function quitShowcase() {
 
             $('#showcaseUsernameId').val('');
 
             $scope.showcaseActive = false;
 
-            socket.emit('removeUser', $scope.currentUser);
+            $scope.socket.emit('removeUser', $scope.currentUser);
 
             $scope.adnViewerMng.closeDocument();
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function sendMessage(message) {
 
             var msg = {
@@ -141,13 +143,13 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 text: message
             };
 
-            socket.emit('sendMessage', msg);
+            $scope.socket.emit('sendMessage', msg);
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function requestControl(control) {
 
             // clone user
@@ -155,13 +157,13 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
             user.hasControl = control;
 
-            socket.emit('requestControl', user);
+            $scope.socket.emit('requestControl', user);
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function setControl(user) {
 
             $scope.users[user.socketId].hasControl = user.hasControl;
@@ -179,10 +181,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
             updateUserArray();
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function setupViewerEvents() {
 
             var viewer = $scope.adnViewerMng.getViewer();
@@ -197,6 +199,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                     Autodesk.Viewing.ISOLATE_EVENT,
                     onIsolate);
 
+                viewer.addEventListener(
+                    Autodesk.Viewing.EXPLODE_CHANGE_EVENT,
+                    onExplode);
+
                 // enable mouse on viewer div
                 $('#' + $scope.adnViewerMng.getViewerDivId()).css(
                     'pointer-events', 'auto');
@@ -208,6 +214,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                     onCameraChanged);
 
                 viewer.removeEventListener(
+                    Autodesk.Viewing.EXPLODE_CHANGE_EVENT,
+                    onExplode);
+
+                viewer.removeEventListener(
                     Autodesk.Viewing.ISOLATE_EVENT,
                     onIsolate);
 
@@ -217,19 +227,19 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
             }
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function closeDocument() {
 
-            socket.emit('closeDocument', $scope.currentUser);
+            $scope.socket.emit('closeDocument', $scope.currentUser);
         }
 
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         //
         //
-        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////
         function initializeViewer() {
 
             $scope.adnViewerMng =
@@ -251,11 +261,6 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                             viewer.isolateById(data.isolateIds);
                     }
                 });
-
-            var urn = decodeURIComponent(
-                Autodesk.Viewing.Private.getParameterByName("urn"));
-
-            loadFromUrn(urn);
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -277,7 +282,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                         viewer.impl.setLightPreset(8);
 
                         if($scope.currentUser.hasControl) {
-                            socket.emit('loadDocument', urn);
+                            $scope.socket.emit('loadDocument', urn);
                         }
 
                         setupViewerEvents();
@@ -329,7 +334,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 view: $scope.adnViewerMng.getCurrentView('current')
             };
 
-            socket.emit('cameraChanged', data);
+            $scope.socket.emit('cameraChanged', data);
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -349,14 +354,47 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 isolateIds: ids
             };
 
-            socket.emit('isolate', data);
+            $scope.socket.emit('isolate', data);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function onExplode() {
+
+            var viewer = $scope.adnViewerMng.getViewer();
+
+            var explode = viewer.getExplodeScale();
+
+            console.log('Explode: ' + explode);
+
+            //$scope.socket.emit('explode', data);
         }
 
         ///////////////////////////////////////////////////////////////////
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('cameraChanged', function (data) {
+        $scope.socket.on('showcaseData', function (data) {
+
+            initializeUser();
+
+            $scope.currentUser.socketId = data.socketId;
+
+            $scope.currentUser.showcaseData = data.showcaseData;
+
+            for(var i = 0; i < data.users.length; ++i)
+                $scope.users[data.users[i].socketId] = data.users[i];
+
+            updateUserArray();
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        $scope.socket.on('cameraChanged', function (data) {
 
             var viewer = $scope.adnViewerMng.getViewer();
 
@@ -370,7 +408,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('isolate', function (data) {
+        $scope.socket.on('isolate', function (data) {
 
             var viewer = $scope.adnViewerMng.getViewer();
 
@@ -384,7 +422,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('controlEvent', function (user) {
+        $scope.socket.on('controlEvent', function (user) {
 
             setControl(user);
         });
@@ -393,27 +431,29 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('chatMessage', function (msg) {
+        $scope.socket.on('chatMessage', function (msg) {
 
-            var history = $scope.chatHistory.getValue();
+            /*var history = $('#chatHistoryId').val();
 
-            $scope.chatHistory.setValue(history + msg.text, true);
-
-            //console.log('height: ' + $scope.chatHistory.composer.element.scrollHeight);
-            //console.log('top: ' + $scope.chatHistory.composer.element.scrollTop);
-
-            $scope.chatHistory.composer.element.scrollTop =
-                $scope.chatHistory.composer.element.scrollHeight;
+            $('#chatHistoryId').val(history + msg.text);
 
             // scroll to bottom
-            $('#chatHistoryId').scrollTop($scope.chatHistory.composer.element.scrollHeight);
+            $('#chatHistoryId').scrollTop(
+                $('#chatHistoryId')[0].scrollHeight);*/
+
+
+            $scope.htmlcontent += msg.text;
+
+            // scroll to bottom
+            var ed = $('#chatHistoryId');
+            ed.scrollTop(ed.prop('scrollHeight'));
         });
 
         ///////////////////////////////////////////////////////////////////
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('addUser', function (user) {
+        $scope.socket.on('addUser', function (user) {
 
             $scope.users[user.socketId] = user;
 
@@ -424,7 +464,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('removeUser', function (user) {
+        $scope.socket.on('removeUser', function (user) {
 
             delete $scope.users[user.socketId];
 
@@ -435,7 +475,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('loadDocument', function (urn) {
+        $scope.socket.on('loadDocument', function (urn) {
 
             $scope.currentUser.showcaseData.urn = urn;
 
@@ -447,7 +487,7 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        socket.on('closeDocument', function () {
+        $scope.socket.on('closeDocument', function () {
 
             $scope.currentUser.showcaseData.urn = '';
 
@@ -561,15 +601,17 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                 west__size: 300,
 
                 center__onresize: function () {
-                    $scope.viewer.resize();
+                    if($scope.adnViewerMng.getViewer())
+                        $scope.viewer.resize();
                 },
 
                 west__onresize: function () {
-                    $scope.viewer.resize();
+                    if($scope.adnViewerMng.getViewer())
+                        $scope.viewer.resize();
                 }
             });
 
-            var westLayout = $('#layoutWestId').layout({
+            var westLayout = $('#westLayoutId').layout({
 
                 applyDefaultStyles: false,
 
@@ -577,6 +619,10 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
 
                 south__onresize: function () {
 
+                    var h = $('#southLayoutId').height();
+
+                    $('#chatHistoryId').height(h * 0.8);
+                    $('#chatMessageId').height(h * 0.2);
                 }
             });
         }
@@ -601,19 +647,9 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////////
         function initializeChatWindow() {
 
-            $scope.chatHistory = new wysihtml5.Editor(
-                "chatHistoryId", {
-                    parserRules:  wysihtml5ParserRules
-                });
+            $scope.disabled = true;
 
-            function onLoad() {
-
-                this.composer.element.setAttribute(
-                    'contenteditable',
-                    false);
-            }
-
-            $scope.chatHistory.on('load', onLoad);
+            $scope.htmlcontent = '';
         }
 
         ///////////////////////////////////////////////////////////////////
@@ -622,6 +658,11 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         function initializeEvents() {
 
+            $scope.$on('$viewContentLoaded', function () {
+
+
+            });
+
             $scope.$on('broadcast-modelSelected', function(event, urn) {
 
                 if($scope.currentUser.hasControl ) {
@@ -629,6 +670,13 @@ angular.module('AdnGallery.showcase', ['ngRoute'])
                     loadFromUrn(urn);
                 }
             });
+
+            $scope.$on('$destroy', function () {
+
+                if($scope.showcaseActive)
+
+                    $scope.socket.emit('removeUser', $scope.currentUser);
+            })
         }
 
         ///////////////////////////////////////////////////////////////////////

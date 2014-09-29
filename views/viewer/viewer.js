@@ -1,9 +1,26 @@
+///////////////////////////////////////////////////////////////////////////////
+// Copyright (c) Autodesk, Inc. All rights reserved
+// Written by Philippe Leefsma 2014 - ADN/Developer Technical Services
+//
+// Permission to use, copy, modify, and distribute this software in
+// object code form for any purpose and without fee is hereby granted,
+// provided that the above copyright notice appears in all copies and
+// that both that copyright notice and the limited warranty and
+// restricted rights notice below appear in all supporting
+// documentation.
+//
+// AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
+// AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
+// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC.
+// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+///////////////////////////////////////////////////////////////////////////////
 'use strict';
 
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 //
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 angular.module('AdnGallery.viewer',
     [
      'ngRoute',
@@ -21,7 +38,7 @@ angular.module('AdnGallery.viewer',
       });
     }])
 
-    .controller('ViewerController', function($scope, $http) {
+    .controller('ViewerController', function($scope, $http, $location) {
 
         $scope.propertyGrid = null;
 
@@ -33,7 +50,7 @@ angular.module('AdnGallery.viewer',
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    $scope.viewDataClient.getToken,
+                    'http://' + window.location.host + '/api/token',
                     document.getElementById('ViewerDiv'));
 
             $scope.setViewerManager($scope.adnViewerMng);
@@ -187,6 +204,8 @@ angular.module('AdnGallery.viewer',
         ///////////////////////////////////////////////////////////////////////
         function initializeMenu() {
 
+            $('#navBarId').removeClass("navbar-fixed-top");
+
             $('#menuSearchId').css({"visibility": "visible"});
             $('#menuViewId').css({"visibility": "visible"});
             $('#menuUiId').css({"visibility": "visible"});
@@ -248,7 +267,7 @@ angular.module('AdnGallery.viewer',
                 }
             });
 
-            var westLayout = $('#layoutWestId').layout({
+            var westLayout = $('#westLayoutId').layout({
 
                 applyDefaultStyles: false,
 
@@ -453,12 +472,24 @@ angular.module('AdnGallery.viewer',
                 $('#navBarId').height());
         }
 
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeEvents() {
+
+            $scope.$on('broadcast-modelSelected', function(event, urn) {
+
+                $location.path('/viewer').search({urn: urn});
+            });
+        }
+
         ///////////////////////////////////////////////////////////////////////
         //
         //
         ///////////////////////////////////////////////////////////////////////
 
-        $('#navBarId').removeClass("navbar-fixed-top");
+        initializeEvents();
 
         initializeLayout();
 

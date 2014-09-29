@@ -38,6 +38,12 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"> </script>
 
     <!--///////////////////////////////////////////////////////////////////////
+    // Angular
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
    // JsTree
    //
    ////////////////////////////////////////////////////////////////////////-->
@@ -61,11 +67,11 @@
     <script type="text/javascript" src="components/slickgrid/slick.grid.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
-    // wysihtml5 editor
+    // text angular editor
     //
     ////////////////////////////////////////////////////////////////////////-->
-    <script type="text/javascript" src="components/wysihtml5/js/parser_rules/simple.js"></script>
-    <script type="text/javascript" src="components/wysihtml5/js/wysihtml5-0.3.0.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.2/textAngular-sanitize.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.2/textAngular.min.js'></script>
 
     <!--///////////////////////////////////////////////////////////////////////
     // Viewer
@@ -75,7 +81,7 @@
     <script  type="text/javascript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js"></script>
     <script type="text/javascript" src="components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js"></script>
     <script type="text/javascript" src="components/viewer/js/raphael.js"></script>
-    <script type="text/javascript" src="components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
 
     <style type="text/css">
         .dropZone {
@@ -136,6 +142,13 @@
                             <a href="#/gallery">
                                 <span class="glyphicon glyphicon-th-list"></span>
                                 &nbsp; Gallery
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#/showcase">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                &nbsp; Showcase
                             </a>
                         </li>
                         <li class="divider"></li>
@@ -739,7 +752,6 @@ to improve your experience.</p>
 
 <div ng-view> </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="app.js"></script>
 
