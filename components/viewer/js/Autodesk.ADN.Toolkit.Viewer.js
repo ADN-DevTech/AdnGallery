@@ -58,12 +58,7 @@ Autodesk.ADN.Toolkit.Viewer.AdnViewerManager = function (
     ///////////////////////////////////////////////////////////////////////////
     var _validateURL = function(str) {
 
-        var urlregex = new RegExp(
-                "^(http|https|ftp)\:" +
-                "//[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/" +
-                "?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*$");
-
-        return urlregex.test(str);
+        return(str.indexOf('http:') > -1 || str.indexOf('https:') > -1);
     }
 
     ///////////////////////////////////////////////////////////////////////////
