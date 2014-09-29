@@ -663,11 +663,11 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             });
 
-            $scope.$on('broadcast-modelSelected', function(event, urn) {
+            $scope.$on('broadcast-modelSelected', function(event, data) {
 
                 if($scope.currentUser.hasControl ) {
 
-                    loadFromUrn(urn);
+                    loadFromUrn(data.urn);
                 }
             });
 

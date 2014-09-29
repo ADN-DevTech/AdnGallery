@@ -65,12 +65,7 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
 
                 for(var i=0; i<models.length; ++i){
 
-                    var model = models[i];
-
-                    model.encodedUrn =
-                        encodeURIComponent(model.urn);
-
-                    getModelInfo(model);
+                    getModelInfo(models[i]);
                 }
             });
         }
@@ -190,9 +185,9 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////
         function initializeEvents() {
 
-            $scope.$on('broadcast-modelSelected', function(event, urn) {
+            $scope.$on('broadcast-modelSelected', function(event, data) {
 
-                $location.path('/viewer').search({urn: urn});
+                $location.path('/viewer').search({id: data.id});
             });
         }
 

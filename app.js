@@ -249,8 +249,8 @@ angular.module('AdnGallery',
 
             var onModelSelected = $scope.$on('emit-modelSelected',
 
-                function(event, urn) {
-                    $scope.$broadcast('broadcast-modelSelected', urn);
+                function(event, data) {
+                    $scope.$broadcast('broadcast-modelSelected', data);
                 });
 
             $scope.$on('$destroy', function() {

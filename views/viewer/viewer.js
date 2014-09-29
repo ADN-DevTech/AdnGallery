@@ -68,21 +68,53 @@ angular.module('AdnGallery.viewer',
                         onItemSelected);
                 });
 
+            var id =
+                Autodesk.Viewing.Private.getParameterByName("id");
+
             var urn = decodeURIComponent(
                 Autodesk.Viewing.Private.getParameterByName("urn"));
 
-            if (urn !== '') {
-                $scope.adnViewerMng.loadDocument(
-                    urn,
-                    function (viewer) {
-                        viewer.impl.setLightPreset(8);
-                    },
-                    function(error) {
-                        console.log("Error loading document: " + error);
-                    });
+            if(id !== '') {
+                loadFromId(id);
+            }
 
-                getModelByUrn(urn);
-            };
+            else if (urn !== '') {
+                loadFromUrn(urn);
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function loadFromUrn(urn) {
+
+            $scope.adnViewerMng.loadDocument(
+                urn,
+                function (viewer) {
+                    viewer.impl.setLightPreset(8);
+                },
+                function(error) {
+                    console.log("Error loading document: " + error);
+                });
+
+            getModelByUrn(urn);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function loadFromId(id) {
+
+            var url =  "http://" +
+                window.location.host +
+                '/api/model/' + id;
+
+            $http.get(url).success(function(model){
+
+                loadFromUrn(model.urn);
+            });
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -478,9 +510,9 @@ angular.module('AdnGallery.viewer',
         ///////////////////////////////////////////////////////////////////
         function initializeEvents() {
 
-            $scope.$on('broadcast-modelSelected', function(event, urn) {
+            $scope.$on('broadcast-modelSelected', function(event, data) {
 
-                $location.path('/viewer').search({urn: urn});
+                $location.path('/viewer').search({id: data.id});
             });
         }
 

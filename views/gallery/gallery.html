@@ -46,7 +46,7 @@
 
     <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'">
         <a class="list-group-item"
-           href="#/viewer?urn={{model.encodedUrn}}"
+           href="#/viewer?id={{model._id}}"
            style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
             <div >
                 <img ng-src={{model.src}} style="float:left; margin-right: 20px">

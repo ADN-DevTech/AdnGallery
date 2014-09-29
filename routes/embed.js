@@ -42,19 +42,7 @@ router.get('/:id', function(req, res) {
 
     var id = req.params.id;
 
-    var url = 'http://' + req.headers.host + '/api/model/' + id;
-
-    request(url, function (error, response, body) {
-
-        if (!error && response.statusCode == 200) {
-
-            var model = JSON.parse(body);
-
-            var urn = encodeURIComponent(model.urn);
-
-            res.redirect('/embed?urn=' + urn);
-        }
-    })
+    res.redirect('/embed?id=' + id);
 });
 
 module.exports = router;

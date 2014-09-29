@@ -60,12 +60,7 @@ angular.module('AdnGallery.quickLoad',[]).
 
                 for(var i=0; i<models.length; ++i){
 
-                    var model = models[i];
-
-                    model.encodedUrn =
-                        encodeURIComponent(model.urn);
-
-                    getModelInfo(model);
+                    getModelInfo(models[i]);
                 }
             });
         }
@@ -164,20 +159,23 @@ angular.module('AdnGallery.quickLoad',[]).
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        $scope.onModelSelected = function (urn) {
+        $scope.onModelSelected = function (id, urn) {
 
             $('#quickLoadDlg').modal('hide');
 
-            $scope.urn = urn;
+            $scope.data = {
+                id: id,
+                urn: urn
+            };
         }
 
         $('#quickLoadDlg').on('hidden.bs.modal', function () {
 
-            if($scope.urn !== '') {
-                $scope.$emit('emit-modelSelected', $scope.urn);
+            if($scope.data) {
+                $scope.$emit('emit-modelSelected', $scope.data);
             }
 
-            $scope.urn = '';
+            $scope.data = null;
 
             $scope.models = [];
         })

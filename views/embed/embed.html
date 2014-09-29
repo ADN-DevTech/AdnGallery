@@ -32,7 +32,7 @@
 
     <script>
 
-        function addToolbar(parent, urn) {
+        function addToolbar(parent, id) {
 
             var div = document.createElement("div");
 
@@ -53,33 +53,43 @@
                     function (e) {
                         window.open('http://' +
                             window.location.host +
-                            '/#/viewer?urn=' + encodeURIComponent(urn),
+                            '/#/viewer?id=' + id,
                             '_blank');
                     });
 
             toolbar.addToSubToolbar("sub1", bEmbed);
         }
 
-        $(document).ready(function () {
+        function loadFromId(id) {
 
-            var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
+            var url =  'http://54.68.140.45:3000/api/model/' + id;
+
+            $.getJSON(url, function(model){
+
+                var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
                     'http://54.68.140.45:3000/api/token',
                     document.getElementById('ViewerDiv'));
 
-            var urn = Autodesk.Viewing.Private.getParameterByName("urn");
-
-            if (urn !== '') {
                 adnViewerMng.loadDocument(
-                        urn,
-                        function (viewer) {
+                    model.urn,
+                    function (viewer) {
 
-                            viewer.impl.setLightPreset(8);
+                        viewer.impl.setLightPreset(8);
 
-                            var parent = document.getElementById(
+                        var parent = document.getElementById(
                                 adnViewerMng.getViewerDivId());
 
-                            addToolbar(parent, urn);
-                        });
+                        addToolbar(parent, id);
+                    });
+            });
+        }
+
+        $(document).ready(function () {
+
+            var id = Autodesk.Viewing.Private.getParameterByName("id");
+
+            if (id !== '') {
+                loadFromId(id);
             };
         });
 
