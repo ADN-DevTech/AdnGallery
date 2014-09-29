@@ -244,7 +244,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    $scope.viewDataClient.getToken,
+                    'http://' + window.location.host + '/api/token',
                     document.getElementById('ViewerDiv'));
 
             $scope.setViewerManager($scope.adnViewerMng);
