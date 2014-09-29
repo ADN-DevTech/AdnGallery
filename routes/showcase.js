@@ -162,7 +162,7 @@ router.initializeSocket = function(serverApp) {
         ///////////////////////////////////////////////////////////////////////
         socket.on('sendMessage', function (msg) {
 
-            msg.text = '> ' + '<b>' + msg.user.name + '</b>' +  ' says:' +
+            msg.text = '> ' + '<b>' + msg.user.name + '</b>' +  ' says:<br>' +
                 msg.text + '<br><br>';
 
             emitAll('chatMessage', msg);
