@@ -10,16 +10,17 @@
     // JQuery
     //
     ////////////////////////////////////////////////////////////////////////-->
-    <script type="text/javascript" src="components/jquery/js/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
-   // Viewer
-   //
-   ////////////////////////////////////////////////////////////////////////-->
+    // Viewer
+    //
+    ////////////////////////////////////////////////////////////////////////-->
     <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js"></script>
-    <script src="components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js"></script>
-    <script src="components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+    <script  type="text/javascript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.ViewData.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+
 
     <style>
 
@@ -31,28 +32,9 @@
 
     <script>
 
-        var urn;
-
-        var adnViewerMng;
-
-        function getToken() {
-
-            var tokenUrl = 'http://54.191.41.170:3000/api/token';
-
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("GET", tokenUrl, false);
-            xhr.send(null);
-
-            return xhr.responseText;
-        }
-
-        function addToolbar() {
+        function addToolbar(parent, urn) {
 
             var div = document.createElement("div");
-
-            var parent = document.getElementById(
-                    adnViewerMng.getViewerDivId());
 
             parent.appendChild(div);
 
@@ -80,18 +62,23 @@
 
         $(document).ready(function () {
 
-            adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    getToken,
+            var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
+                    'http://54.68.140.45:3000/api/token',
                     document.getElementById('ViewerDiv'));
 
-            urn = Autodesk.Viewing.Private.getParameterByName("urn");
+            var urn = Autodesk.Viewing.Private.getParameterByName("urn");
 
             if (urn !== '') {
                 adnViewerMng.loadDocument(
                         urn,
                         function (viewer) {
+
                             viewer.impl.setLightPreset(8);
-                            addToolbar();
+
+                            var parent = document.getElementById(
+                                adnViewerMng.getViewerDivId());
+
+                            addToolbar(parent, urn);
                         });
             };
         });
