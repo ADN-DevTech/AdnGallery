@@ -269,6 +269,21 @@ angular.module('AdnGallery.viewer',
                     $location.path('/viewer').search({urn: urn});
                 }
             );
+
+            $('#btnSearchId').unbind().click(
+                function() {
+
+                    var value = $('#searchInput').val();
+
+                    if($scope.viewer && value !== '') {
+
+                        $scope.viewer.search(value, function(ids){
+
+                            $scope.viewer.isolateById(ids);
+                        });
+                    }
+                }
+            );
         }
 
         ///////////////////////////////////////////////////////////////////////
