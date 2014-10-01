@@ -42,13 +42,13 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
         $scope.showcaseActive = false;
 
+        $scope.showcaseData = null;
+
         $scope.userArray = [];
 
         $scope.users = {};
 
         $scope.socket = io.connect(location.hostname);
-
-        $scope.socket.emit('requestData');
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -58,7 +58,8 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             return $scope.showcaseActive &&
                    $scope.currentUser.hasControl &&
-                   $scope.currentUser.showcaseData.urn !== '';
+                   $scope.showcaseData !== null &&
+                   $scope.showcaseData.urn !== '';
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -72,8 +73,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                 $scope.currentUser = {
                     name:'',
                     socketId: '',
-                    hasControl: false,
-                    showcaseData: null
+                    hasControl: false
                 };
 
             $scope.currentUser.name = '';
@@ -106,14 +106,11 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
                 initializeUser();
 
-                $scope.showcaseActive = true;
-
                 $scope.currentUser.name = name;
 
                 $scope.socket.emit('addUser', $scope.currentUser);
 
-                if($scope.currentUser.showcaseData)
-                    loadFromUrn($scope.currentUser.showcaseData.urn);
+                $scope.socket.emit('requestData');
             }
         }
 
@@ -253,7 +250,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
                 function (viewer) {
 
-                    var data = $scope.currentUser.showcaseData;
+                    var data = $scope.showcaseData;
 
                     if(data) {
 
@@ -271,7 +268,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             if (urn !== '') {
 
-                $scope.currentUser.showcaseData.urn = urn;
+                $scope.showcaseData.urn = urn;
 
                 $scope.adnViewerMng.loadDocument(
                     urn,
@@ -287,7 +284,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
                         setupViewerEvents();
 
-                        var data = $scope.currentUser.showcaseData;
+                        var data = $scope.showcaseData;
 
                         if(data) {
 
@@ -378,16 +375,18 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
         ///////////////////////////////////////////////////////////////////
         $scope.socket.on('showcaseData', function (data) {
 
-            initializeUser();
+            $scope.showcaseActive = true;
 
             $scope.currentUser.socketId = data.socketId;
 
-            $scope.currentUser.showcaseData = data.showcaseData;
+            $scope.showcaseData = data.showcaseData;
 
             for(var i = 0; i < data.users.length; ++i)
                 $scope.users[data.users[i].socketId] = data.users[i];
 
             updateUserArray();
+
+            loadFromUrn($scope.showcaseData.urn);
         });
 
         ///////////////////////////////////////////////////////////////////
@@ -433,15 +432,6 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
         ///////////////////////////////////////////////////////////////////
         $scope.socket.on('chatMessage', function (msg) {
 
-            /*var history = $('#chatHistoryId').val();
-
-            $('#chatHistoryId').val(history + msg.text);
-
-            // scroll to bottom
-            $('#chatHistoryId').scrollTop(
-                $('#chatHistoryId')[0].scrollHeight);*/
-
-
             $scope.htmlcontent += msg.text;
 
             // scroll to bottom
@@ -477,7 +467,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
         ///////////////////////////////////////////////////////////////////
         $scope.socket.on('loadDocument', function (urn) {
 
-            $scope.currentUser.showcaseData.urn = urn;
+            $scope.showcaseData.urn = urn;
 
             if($scope.showcaseActive)
                 loadFromUrn(urn);
@@ -489,7 +479,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
         ///////////////////////////////////////////////////////////////////
         $scope.socket.on('closeDocument', function () {
 
-            $scope.currentUser.showcaseData.urn = '';
+            $scope.showcaseData.urn = '';
 
             $scope.adnViewerMng.closeDocument();
         });

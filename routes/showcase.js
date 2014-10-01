@@ -41,16 +41,92 @@ router.get('/', function(req, res) {
 ///////////////////////////////////////////////////////////////////////////////
 router.initializeSocket = function(serverApp) {
 
-    var io = socketio.listen(serverApp, { log: false });
-
     var tracker = {};
 
-    var showcaseData = {
-        controllingUser: null,
-        urn: '',
-        view: null,
-        isolateIds: null
-    };
+    var showcaseData = null;
+
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////
+    function initShowcaseData() {
+
+        showcaseData = {
+            controllingUser: null,
+            urn: '',
+            view: null,
+            isolateIds: null
+        };
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////
+    function removeUser(socketId, user) {
+
+        tracker[socketId].user = null;
+
+        emitAll('removeUser', user);
+
+        var msg = {
+            user: user,
+            text: '> ' +  '<b>' + user.name + '</b>' +
+                ' left the showcase<br><br>'
+        }
+
+        var activeUsers = 0;
+
+        for (var key in tracker) {
+
+            if(tracker[key].user)
+                ++activeUsers;
+
+            tracker[key].socket.emit('chatMessage', msg);
+        }
+
+        // clears showcase data if no more active users
+        if(activeUsers == 0) {
+
+            initShowcaseData();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////
+    function emitAll(signalId, data) {
+
+        for (var key in tracker) {
+
+            tracker[key].socket.emit(signalId, data);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////
+    function emitExclude(socketId, signalId, data) {
+
+        for (var key in tracker) {
+
+            if(key !== socketId) {
+
+                tracker[key].socket.emit(signalId, data);
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////////
+
+    initShowcaseData();
+
+    var io = socketio.listen(serverApp, { log: false });
 
     io.sockets.on('connection', function (socket) {
 
@@ -91,7 +167,6 @@ router.initializeSocket = function(serverApp) {
         socket.on('requestData', function () {
 
             socket.emit('showcaseData', buildInitData());
-
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -142,7 +217,7 @@ router.initializeSocket = function(serverApp) {
 
             showcaseData.view = data.view;
 
-            emitExclude('cameraChanged', data);
+            emitExclude(socket.id, 'cameraChanged', data);
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -153,7 +228,7 @@ router.initializeSocket = function(serverApp) {
 
             showcaseData.isolateIds = data.isolateIds;
 
-            emitExclude('isolate', data);
+            emitExclude(socket.id, 'isolate', data);
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -174,6 +249,8 @@ router.initializeSocket = function(serverApp) {
         ///////////////////////////////////////////////////////////////////////
         socket.on('addUser', function (user) {
 
+            user.socketId = socket.id;
+
             tracker[socket.id].user = user;
 
             emitAll('addUser', user);
@@ -193,7 +270,7 @@ router.initializeSocket = function(serverApp) {
         ///////////////////////////////////////////////////////////////////////
         socket.on('removeUser', function (user) {
 
-            removeUser(user);
+            removeUser(socket.id, user);
         });
 
         socket.on('disconnect', function () {
@@ -201,14 +278,10 @@ router.initializeSocket = function(serverApp) {
             //console.log('Socket disconnection: ' + socket.id);
 
             if(tracker[socket.id].user) {
-                removeUser(tracker[socket.id].user);
+                removeUser(socket.id, tracker[socket.id].user);
             }
 
             delete tracker[socket.id];
-
-            // clear showcase data when last user disconnects
-            //if(tracker.length)
-            
         });
 
         ///////////////////////////////////////////////////////////////////////
@@ -221,7 +294,7 @@ router.initializeSocket = function(serverApp) {
             showcaseData.view = null;
             showcaseData.isolateIds = null;
 
-            emitExclude('loadDocument', urn);
+            emitExclude(socket.id, 'loadDocument', urn);
 
             var msg = {
                 text: '> Loading document...<br><br>'
@@ -242,51 +315,6 @@ router.initializeSocket = function(serverApp) {
 
             emitAll('closeDocument');
         });
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //
-        ///////////////////////////////////////////////////////////////////////
-        function removeUser(user) {
-
-            emitAll('removeUser', user);
-
-            var msg = {
-                user: user,
-                text: '> ' +  '<b>' + user.name + '</b>' +
-                    ' left the showcase<br><br>'
-            }
-
-            emitAll('chatMessage', msg);
-
-            tracker[socket.id].user = null;
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //
-        ///////////////////////////////////////////////////////////////////////
-        function emitAll(id, data) {
-
-            for (var key in tracker) {
-                tracker[key].socket.emit(id, data);
-            }
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //
-        ///////////////////////////////////////////////////////////////////////
-        function emitExclude(id, data) {
-
-            for (var key in tracker) {
-
-                if(key !== socket.id) {
-
-                    tracker[key].socket.emit(id, data);
-                }
-            }
-        }
     });
 }
 

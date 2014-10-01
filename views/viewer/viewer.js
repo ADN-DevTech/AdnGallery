@@ -66,6 +66,8 @@ angular.module('AdnGallery.viewer',
                     viewer.addEventListener(
                         Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                         onItemSelected);
+
+                    $scope.adnViewerMng.startAnnotate();
                 });
 
             var id =
@@ -218,7 +220,7 @@ angular.module('AdnGallery.viewer',
                 function(table) {
 
                     var properties = [{
-                        //index: 0,
+                        index: 0,   //optional index position in the table
                         displayName: 'Developer',
                         displayValue: 'Philippe Leefsma'
                     }, {
