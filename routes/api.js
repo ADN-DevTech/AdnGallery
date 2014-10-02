@@ -191,16 +191,26 @@ router.post('/model', function (req, res) {
     }
 
     db.collection('models', function (err, collection) {
+
         collection.insert(
             item,
             { safe: true },
+
             function (err, result) {
+
                 if (err) {
                     res.send({ 'error': 'An error has occurred' });
+
                 } else {
+
                     console.log('Success: ' + JSON.stringify(result[0]));
                     sendMail(email, result[0]);
-                    res.send(result[0]);
+
+                    var response = {
+                        model: result[0]
+                    };
+
+                    res.send(response);
                 }
             });
     });
