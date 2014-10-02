@@ -97,6 +97,16 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                 function(error) {
                     model.src = "public/images/adsk.64x64.png"
                 });
+
+            $scope.viewDataClient.getViewableAsync(
+                fileId,
+                function (viewable) {
+
+                    model.progress = viewable.progress;
+                },
+                function (error) {
+
+                }, 'status');
         }
 
         ///////////////////////////////////////////////////////////////////////

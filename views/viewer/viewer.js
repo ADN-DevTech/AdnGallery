@@ -94,7 +94,7 @@ angular.module('AdnGallery.viewer',
             $scope.adnViewerMng.loadDocument(
                 urn,
                 function (viewer) {
-                    viewer.impl.setLightPreset(8);
+
                 },
                 function(error) {
                     console.log("Error loading document: " + error);

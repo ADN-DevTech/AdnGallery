@@ -146,10 +146,20 @@ angular.module('AdnGallery.upload',[])
                         var registerResponse =
                             $scope.viewDataClient.register(fileId);
 
+                        console.log("Registration result: " +
+                            registerResponse.Result);
+
                         if (registerResponse.Result === "Success") {
 
-                            console.log("Registration result: " +
-                                registerResponse.Result);
+                            var modelInfo = {
+                                author: author,
+                                name: getFileName(response.file),
+                                fileId: fileId,
+                                urn: $scope.viewDataClient.toBase64(fileId),
+                                views: []
+                            };
+
+                            postModel(modelInfo);
 
                             checkTranslationStatus(
                                 fileId,
@@ -158,16 +168,6 @@ angular.module('AdnGallery.upload',[])
 
                                     console.log("Translation successful: " +
                                         response.file.name);
-
-                                    var modelInfo = {
-                                        author: author,
-                                        name: getFileName(response.file),
-                                        fileId: fileId,
-                                        urn: $scope.viewDataClient.toBase64(fileId),
-                                        views: []
-                                    };
-
-                                    postModel(modelInfo);
                                 });
                         }
                     },
@@ -200,9 +200,9 @@ angular.module('AdnGallery.upload',[])
                         function (response) {
 
                             console.log(
-                                    'Progress ' +
-                                    fileId + ': ' +
-                                    response.progress);
+                                'Progress ' +
+                                fileId + ': ' +
+                                response.progress);
 
                             if (response.progress === 'complete') {
                                 clearInterval(timer);

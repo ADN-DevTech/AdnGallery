@@ -164,6 +164,8 @@ Autodesk.ADN.Toolkit.Viewer.AdnViewerManager = function (
                         _viewer.setProgressiveRendering(true);
 
                         _viewer.setQualityLevel(true, true);
+
+                        _viewer.impl.setLightPreset(8);
                     }
 
                     else if (role === '2d'){
@@ -183,8 +185,6 @@ Autodesk.ADN.Toolkit.Viewer.AdnViewerManager = function (
                     _viewer.addEventListener(
                         Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
                         _onGeometryLoaded);
-
-                    _viewer.impl.setLightPreset(8);
 
                     if (onViewerInitialized)
                         onViewerInitialized(_viewer);
