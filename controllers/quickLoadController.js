@@ -54,13 +54,13 @@ angular.module('AdnGallery.quickLoad',[]).
 
             var url =  "http://" + window.location.host + '/api/models';
 
-            $http.get(url).success(function(models){
+            $http.get(url).success(function(response){
 
-                $scope.models = models;
+                $scope.models = response.models;
 
-                for(var i=0; i<models.length; ++i){
+                for(var i=0; i<$scope.models.length; ++i){
 
-                    getModelInfo(models[i]);
+                    getModelInfo($scope.models[i]);
                 }
             });
         }

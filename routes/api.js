@@ -78,8 +78,14 @@ router.get('/models', function (req, res) {
 
     db.collection('models', function (err, collection) {
         collection.find().toArray(
+
             function (err, items) {
-                res.send(items);
+
+                var response = {
+                    models: items
+                };
+
+                res.send(response);
             });
     });
 });

@@ -49,7 +49,7 @@
 
             var bEmbed = Autodesk.Viewing.UI.ToolBar.createMenuButton(
                     "bGallery",
-                    "ADN Gallery",
+                    "View in Gallery",
                     function (e) {
                         window.open('http://' +
                             window.location.host +
@@ -67,7 +67,7 @@
             $.getJSON(url, function(model){
 
                 var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    'http://54.68.140.45:3000/api/token',
+                    'http://' + '54.68.140.45:3000' + '/api/token',
                     document.getElementById('ViewerDiv'));
 
                 adnViewerMng.loadDocument(
