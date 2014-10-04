@@ -242,6 +242,7 @@ angular.module('AdnGallery.viewer',
 
             $('#menuSearchId').css({"visibility": "visible"});
             $('#menuViewId').css({"visibility": "visible"});
+            $('#menuDocId').css({"visibility": "visible"});
             $('#menuUiId').css({"visibility": "visible"});
 
             $('#btnExplodeMotionId').unbind().click(

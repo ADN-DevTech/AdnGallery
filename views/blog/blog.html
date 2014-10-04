@@ -1,7 +1,7 @@
 <div style="padding-top: 45px;">
 
     <div class="list-group-item" ng-repeat="post in recentPosts"
-         style="{{['background-color:#E7FCE7', 'background-color:#E7FCFC'][$index %2]}}">
+         style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
         <img width="52" height="52" ng-src = "{{post.author.avatarLink.url}}" style="float:left; margin-right: 20px">
         <div>
             <b><a href="{{post.permalinkUrl}}" target="_blank">{{post.title}}</a></b>

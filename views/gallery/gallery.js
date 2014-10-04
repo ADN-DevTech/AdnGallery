@@ -178,6 +178,7 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
 
             $('#menuSearchId').css({"visibility": "collapse"});
             $('#menuViewId').css({"visibility": "collapse"});
+            $('#menuDocId').css({"visibility": "collapse"});
             $('#menuUiId').css({"visibility": "collapse"});
             $('#navBarId').addClass("navbar-fixed-top");
 

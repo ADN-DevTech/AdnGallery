@@ -494,6 +494,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             $('#menuSearchId').css({"visibility": "collapse"});
             $('#menuViewId').css({"visibility": "collapse"});
+            $('#menuDocId').css({"visibility": "visible"});
             $('#menuUiId').css({"visibility": "collapse"});
 
             $('#btnJoinShowcaseId').unbind().click(

@@ -1,66 +1,143 @@
 
-<div style="padding-top: 100px;">
+<style>
 
-    <nav id="navbarGalleryId" class="navbar navbar-default navbar-fixed-top" role="navigation" style="z-index:999; top:50px">
-        <div class="container-fluid">
+    #row1{
+        display:flex;
+        flex-direction:row;
+        height: 100%;
+    }
 
-            <div class="collapse navbar-collapse collapse" style="float:left;">
+    #column1{
+        display:flex;
+        flex-direction:column;
+        width:20%;
+        overflow: hidden;
+        background-color: #00004C;
 
-                <ul class="nav navbar-nav">
+    }
 
-                    <div id="menuSearchGalleryId" class="navbar-form navbar-left" role="search">
-                        <div class="input-group">
+    #column2{
+        display:flex;
+        flex-direction:column;
+        width:80%;
+    }
 
-                            <input type="text"
-                                   id="searchInput"
-                                   ng-model="galleryFilterValue"
-                                   class="form-control"
-                                   placeholder="Search Gallery ..."/>
+    .galleryMenuItem{
+        background-color: #00004C;
+        color:#C3DBFA;
+        padding:25px;
+    }
 
-                            <div class="input-group-btn">
+    #navbarMenuId{
+        position:fixed;
+        width:20%
+    }
 
-                                <button
-                                        id="btnFilterId"
-                                        type="button"
-                                        class="btn btn-default dropdown-toggle"
-                                        data-toggle="dropdown">
-                                    Filter by
-                                    &nbsp; <span class="caret"></span>
-                                </button>
+    #navbarGalleryId{
+        position:fixed;
+        width:100%
+    }
 
-                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a id="filterAuthorId">Author</a></li>
-                                    <li><a id="filterModelId">Model name</a></li>
-                                    <li><a id="filterUrnId">Model urn</a></li>
-                                    <li class="divider"></li>
-                                    <li><a id="filterDisableId">Disable filter</a></li>
-                                </ul>
+</style>
+
+<div style="padding-top: 100px; height:100%">
+
+    <div id="row1">
+
+        <div id="column1">
+
+            <nav id="navbarMenuId" class="navbar navbar-default" role="navigation" style="z-index:999; top:50px">
+
+                <a class="list-group-item galleryMenuItem" href="#/showcase" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    &nbsp; Showcase
+                </a>
+
+                <a class="list-group-item galleryMenuItem" href="" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-flash"></span>
+                    &nbsp; Quick load
+                </a>
+
+                <a class="list-group-item galleryMenuItem" href="" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-barcode"></span>
+                    &nbsp; Load from urn
+                </a>
+
+                <a class="list-group-item galleryMenuItem" href="" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-upload"></span>
+                    &nbsp; Upload
+                </a>
+
+            </nav>
+        </div>
+
+        <div id="column2">
+
+            <nav id="navbarGalleryId" class="navbar navbar-default" role="navigation" style="z-index:999; top:50px">
+                <div class="container-fluid">
+
+                    <div class="collapse navbar-collapse collapse" style="float:left;">
+
+                        <ul class="nav navbar-nav">
+
+                            <div id="menuSearchGalleryId" class="navbar-form navbar-right" role="search">
+                                <div class="input-group">
+
+                                    <input type="text"
+                                           id="searchInput"
+                                           ng-model="galleryFilterValue"
+                                           class="form-control"
+                                           placeholder="Search Gallery ..."/>
+
+                                    <div class="input-group-btn">
+
+                                        <button
+                                                id="btnFilterId"
+                                                type="button"
+                                                class="btn btn-default dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            Filter by
+                                            &nbsp; <span class="caret"></span>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a id="filterAuthorId">Author</a></li>
+                                            <li><a id="filterModelId">Model name</a></li>
+                                            <li><a id="filterUrnId">Model urn</a></li>
+                                            <li class="divider"></li>
+                                            <li><a id="filterDisableId">Disable filter</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
                             </div>
-
-                        </div>
+                        </ul>
                     </div>
-                </ul>
+                </div>
+            </nav>
+
+
+            <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'" style="overflow-y: auto;">
+                <a class="list-group-item"
+                   href="#/viewer?id={{model._id}}"
+                   style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
+                    <div >
+                        <img ng-src={{model.src}} style="float:left; margin-right: 20px">
+                        <div style="float:left;">
+                            <b>{{model.name}}</b>
+                            <br> <br>
+                            <b>Author:</b> {{model.author.name}}
+                            <br>
+                            <b>Type:</b> {{model.type}}
+                            <br>
+                            <b>Progress:</b> {{model.progress}}
+                        </div>
+                        <div style="clear:both;"> </div>
+                    </div>
+                </a>
             </div>
         </div>
-    </nav>
 
-    <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'">
-        <a class="list-group-item"
-           href="#/viewer?id={{model._id}}"
-           style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
-            <div >
-                <img ng-src={{model.src}} style="float:left; margin-right: 20px">
-                <div style="float:left;">
-                    <b>{{model.name}}</b>
-                    <br> <br>
-                    <b>Author:</b> {{model.author.name}}
-                    <br>
-                    <b>Type:</b> {{model.type}}
-                    <br>
-                    <b>Progress:</b> {{model.progress}}
-                </div>
-                <div style="clear:both;"> </div>
-            </div>
-        </a>
     </div>
+
 </div>

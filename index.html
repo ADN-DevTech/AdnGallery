@@ -114,7 +114,7 @@
     <div class="container-fluid">
 
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+        <div class="navbar-header" style="width:20%">
 
             <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">
 
@@ -130,15 +130,15 @@
             <a class="navbar-brand" href="http://developer.autodesk.com" target="_blank">
                 Autodesk View & Data API
             </a>
+
+            <div class="divider-vertical"></div>
         </div>
 
         <div class="collapse navbar-collapse" style="float:left;">
 
             <ul class="nav navbar-nav">
 
-                <li class="divider-vertical"></li>
-
-                <li id="menuDocId" class="dropdown">
+                <li id="menuDocId" class="dropdown" style="visibility:collapse;">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         Documents <span class="caret"></span>
                     </a>
@@ -299,7 +299,7 @@
 </nav>
 
 <!--///////////////////////////////////////////////////////////////////////
-// Upoad Document Dialog
+// Upload Document Dialog
 //
 ////////////////////////////////////////////////////////////////////////-->
 <div ng-controller="uploadController"

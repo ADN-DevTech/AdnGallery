@@ -81,6 +81,7 @@ angular.module('AdnGallery.blog', ['ngRoute'])
 
             $('#menuSearchId').css({"visibility": "collapse"});
             $('#menuViewId').css({"visibility": "collapse"});
+            $('#menuDocId').css({"visibility": "visible"});
             $('#menuUiId').css({"visibility": "collapse"});
         }
 
