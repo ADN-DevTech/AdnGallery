@@ -34,7 +34,9 @@ angular.module('AdnGallery.blog', ['ngRoute'])
 
         $scope.title = ' Most recent blog posts from the ADN team ...';
 
-        $scope.recentPosts = [];
+        $scope.displayedPosts = [];
+
+        $scope.bloggers = {};
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -49,6 +51,9 @@ angular.module('AdnGallery.blog', ['ngRoute'])
             var url =
                 "http://api.typepad.com/blogs/" + blogId +
                 "/post-assets/@published/@recent.js";
+
+            var author =
+                Autodesk.Viewing.Private.getParameterByName("author");
 
             $http.get(url).success(function(response){
 
@@ -66,7 +71,18 @@ angular.module('AdnGallery.blog', ['ngRoute'])
 
                     entry.title = $("<div/>").html(entry.title).text();
 
-                    $scope.recentPosts.push(entry);
+                    $scope.displayedPosts.push(entry);
+
+                    if($scope.bloggers[entry.author.displayName] == null) {
+
+                        $scope.bloggers[entry.author.displayName] = {
+
+                            author: entry.author,
+                            posts: []
+                        };
+                    }
+
+                    $scope.bloggers[entry.author.displayName].posts.push(entry);
                 }
             });
         }
@@ -91,9 +107,9 @@ angular.module('AdnGallery.blog', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////////
         function initializeEvents() {
 
-            $scope.$on('broadcast-modelSelected', function(event, urn) {
+            $scope.$on('broadcast-modelSelected', function(event, data) {
 
-                $location.path('/viewer').search({urn: urn});
+                $location.path('/viewer').search({id: data.id});
             });
         }
 
