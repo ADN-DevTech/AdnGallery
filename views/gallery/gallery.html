@@ -22,7 +22,7 @@
         width:80%;
     }
 
-    .galleryMenuItem{
+    .list-group-item{
         background-color: #0B487A;
         color:#C3DBFA;
         padding:25px;
@@ -48,28 +48,29 @@
 
             <nav id="navbarMenuId" class="navbar navbar-default" role="navigation" style="z-index:999; top:50px">
 
-                <a class="list-group-item galleryMenuItem" href="#/showcase" style="color:#C3DBFA">
+                <a class="list-group-item" href="/showcase" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-eye-open"></span>
                     &nbsp; Showcase
                 </a>
 
-                <a class="list-group-item galleryMenuItem" href="" style="color:#C3DBFA">
+                <a id="btnGalleryQuickLoadId" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-flash"></span>
                     &nbsp; Quick load
                 </a>
 
-                <a class="list-group-item galleryMenuItem" href="" style="color:#C3DBFA">
+                <a id="btnGalleryLoadUrnId" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-barcode"></span>
                     &nbsp; Load from urn
                 </a>
 
-                <a class="list-group-item galleryMenuItem" href="" style="color:#C3DBFA">
+                <a id="btnGalleryUploadDocId" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-upload"></span>
                     &nbsp; Upload
                 </a>
 
             </nav>
         </div>
+
 
         <div id="column2">
 
@@ -119,7 +120,7 @@
 
             <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'" style="overflow-y: auto;">
                 <a class="list-group-item"
-                   href="#/viewer?id={{model._id}}"
+                   href="/viewer?id={{model._id}}"
                    style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
                     <div >
                         <img ng-src={{model.src}} style="float:left; margin-right: 20px">

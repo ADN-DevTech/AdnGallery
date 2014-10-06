@@ -319,10 +319,15 @@ angular.module('AdnGallery',
     //
     //
     ///////////////////////////////////////////////////////////////////////////
-    config(['$routeProvider', function($routeProvider) {
+    config(['$routeProvider', '$locationProvider',
 
-      $routeProvider.otherwise({redirectTo: '/gallery'});
+        function($routeProvider, $locationProvider) {
 
+            $routeProvider.otherwise({redirectTo: '/gallery'});
+
+            $locationProvider.html5Mode(true);
     }]);
+
+
 
 

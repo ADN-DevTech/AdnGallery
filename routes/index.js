@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-router.get('/adngallery', function(req, res) {
+router.get('/gallery', function(req, res) {
 
     res.redirect('/');
 });

@@ -188,6 +188,25 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                     $location.path('/viewer').search({urn: urn});
                 }
             );
+
+            $('#btnGalleryLoadUrnId').unbind().click(
+                function() {
+                    $('#loadUrnDlg').modal('show');
+                }
+            );
+
+            $('#btnGalleryQuickLoadId').unbind().click(
+                function() {
+                    $('#quickLoadDlg').modal('show');
+                }
+            );
+
+            $('#btnGalleryUploadDocId').unbind().click(
+                function() {
+                    $scope.clearContent('uploadDlgBody');
+                    $('#uploadDlg').modal('show');
+                }
+            );
         }
 
         ///////////////////////////////////////////////////////////////////
