@@ -38,7 +38,7 @@
 
             parent.appendChild(div);
 
-            div.style.top = '11%';
+            div.style.top = '18%';
             div.style.left = "1%";
             div.style.zIndex = "2";
             div.style.position = "absolute";
@@ -62,12 +62,12 @@
 
         function loadFromId(id) {
 
-            var url =  'http://54.68.140.45:3000/api/model/' + id;
+            var url =  'http://' + window.location.host + '/api/model/' + id;
 
             $.getJSON(url, function(model){
 
                 var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    'http://' + '54.68.140.45:3000' + '/api/token',
+                    'http://' + window.location.host + '/api/token',
                     document.getElementById('ViewerDiv'));
 
                 adnViewerMng.loadDocument(

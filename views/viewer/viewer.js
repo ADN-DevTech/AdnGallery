@@ -67,7 +67,7 @@ angular.module('AdnGallery.viewer',
                         Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                         onItemSelected);
 
-                    $scope.adnViewerMng.startAnnotate();
+                    //$scope.adnViewerMng.startAnnotate();
                 });
 
             var id =
