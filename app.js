@@ -324,8 +324,6 @@ angular.module('AdnGallery',
         function($routeProvider, $locationProvider) {
 
             $routeProvider.otherwise({redirectTo: '/gallery'});
-
-            $locationProvider.html5Mode(true);
     }]);
 
 

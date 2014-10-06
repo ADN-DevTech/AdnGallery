@@ -31,11 +31,14 @@ angular.module('AdnGallery.viewer',
     //
     //
     ///////////////////////////////////////////////////////////////////////
-    .config(['$routeProvider', function($routeProvider) {
-      $routeProvider.when('/viewer', {
-            templateUrl: 'views/viewer/viewer.html',
-            controller: 'ViewerController'
-      });
+    .config(['$routeProvider', '$locationProvider',
+
+        function($routeProvider, $locationProvider) {
+
+            $routeProvider.when('/viewer', {
+                templateUrl: 'views/viewer/viewer.html',
+                controller: 'ViewerController'
+          });
     }])
 
     .controller('ViewerController', function($scope, $http, $location) {

@@ -48,7 +48,7 @@
 
             <nav id="navbarMenuId" class="navbar navbar-default" role="navigation" style="z-index:999; top:50px">
 
-                <a class="list-group-item" href="/showcase" style="color:#C3DBFA">
+                <a class="list-group-item" href="#/showcase" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-eye-open"></span>
                     &nbsp; Showcase
                 </a>
@@ -120,7 +120,7 @@
 
             <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'" style="overflow-y: auto;">
                 <a class="list-group-item"
-                   href="/viewer?id={{model._id}}"
+                   href="#/viewer?id={{model._id}}"
                    style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
                     <div >
                         <img ng-src={{model.src}} style="float:left; margin-right: 20px">
