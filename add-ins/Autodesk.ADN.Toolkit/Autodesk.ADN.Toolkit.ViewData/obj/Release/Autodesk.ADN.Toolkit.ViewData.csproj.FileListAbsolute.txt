@@ -1,0 +1,9 @@
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\bin\Release\Autodesk.ADN.Toolkit.ViewData.dll
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\bin\Release\Autodesk.ADN.Toolkit.ViewData.pdb
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\bin\Release\Newtonsoft.Json.dll
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\bin\Release\RestSharp.dll
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\bin\Release\Newtonsoft.Json.xml
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\bin\Release\RestSharp.xml
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\obj\Release\Autodesk.ADN.Toolkit.ViewData.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\obj\Release\Autodesk.ADN.Toolkit.ViewData.dll
+C:\Users\Administrator\Dropbox\Autodesk.ADN.CloudAPI\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\obj\Release\Autodesk.ADN.Toolkit.ViewData.pdb
