@@ -224,11 +224,11 @@ router.post('/model', function (req, res) {
 
 function sendMail(email, modelInfo) {
 
-    var transporter = nodemailer.createTransport({
+    var transporter = nodemailer.createTransport("SMTP", {
         service: 'gmail',
         auth: {
             user: 'adn.autodesk@gmail.com',
-            pass: 'autodesk912'
+            pass: 'autodesk913'
         }
     });
 
@@ -244,6 +244,8 @@ function sendMail(email, modelInfo) {
         subject: "Model upload notification",
         text: text
     });
+
+    transporter.close();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -280,7 +282,10 @@ router.put('/model/:id', function (req, res) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-router.delete('/model/:id', function (req, res) {
+
+//disabled delete
+
+/*router.delete('/model/:id', function (req, res) {
 
     var id = req.params.id;
 
@@ -309,4 +314,4 @@ router.delete('/model/:id', function (req, res) {
                 }
             });
     });
-});
+});*/
