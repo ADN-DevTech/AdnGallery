@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ApplicationPackage SchemaVersion="1.0" 
+<ApplicationPackage 
+ SchemaVersion="1.0" 
  AutodeskProduct="AutoCAD" 
  ProductType="Application" 
  Name="GalleryUploader" 
@@ -8,21 +9,17 @@
  Description="Upload utility for ADN Gallery" 
  Author="Philippe Leefsma" 
  Icon="./Contents/resources/icon.png"  
- ProductCode="{BBBEB716-07F7-45AC-B97C-30D419E8DC53}" 
- UpgradeCode="{3CF54374-32E5-4F9B-9A9E-8C8594059BC6}">
- 
-  <CompanyDetails Name="Autodesk" Url="http://labs.autodesk.com/utilities/ADN_plugins/" Email="labs.plugins@autodesk.com" />
+ ProductCode="{20262849-E9EC-4CA8-90FE-ABC31EBDD581}" 
+ UpgradeCode="{CEEAEA6C-AA74-4FD3-BFF0-2096A2E0B3DB}">
+
+  <CompanyDetails Name="Autodesk" Url="http://www.autodesk.com"/>
   
   <Components>
-    
-    <RuntimeRequirements OS="Win64" Platform="AutoCAD*|AutoCAD" SeriesMin="R20" SeriesMax="R20"/>
-    
-    <ComponentEntry AppName="GalleryUploader" ModuleName="./Contents/bin/Autodesk.ADN.AcadGalleryUploader.dll">
-      <Commands GroupName="ADN">
-        <Command Local="UploadToGallery" Global="UploadToGallery"/>
-      </Commands>
+    <RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R19.0" SeriesMax="R20.0"/>
+    <ComponentEntry 
+          AppName="GalleryUploader" 
+          ModuleName="./Contents/bin/Autodesk.ADN.AcadGalleryUploader.dll" 
+          LoadOnAutoCADStartup="True">
     </ComponentEntry>
- 
   </Components>
-  
 </ApplicationPackage>
