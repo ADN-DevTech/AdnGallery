@@ -29,8 +29,6 @@ var nodemailer = require('nodemailer');
 var express = require('express');
 var request = require('request');
 var mongo = require('mongodb');
-var urlparser = require('url');
-var fs = require('fs');
 
 var Server = mongo.Server,
     Db = mongo.Db,

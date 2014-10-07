@@ -15,7 +15,8 @@
     "debug": "~1.0.4",
     "hjs": "~0.0.6",
     "request": "*",
-    "mongodb": "*",
+    "bson":"*",
+    "mongodb": "1.x",
     "socket.io": "*"
   }
 }
