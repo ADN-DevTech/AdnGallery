@@ -8,9 +8,6 @@ namespace Autodesk.ADN.AcadGalleryUploader
             public readonly static string CONSUMER_SECRET = "q2LwUFg3MrYngc8l";
 
             public readonly static string BASE_URL = "https://developer.api.autodesk.com";
-
-            public readonly static string GALLERY_URL = "http://54.68.100.140:3000"; //statging
-            //public readonly static string GALLERY_URL = "http://54.68.100.140:3000"; //prod
     }
 
     //class UserSettings

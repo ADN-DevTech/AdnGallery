@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using Autodesk.ADN.Toolkit.Gallery;
@@ -16,7 +17,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
     public class Commands
     {
         [CommandMethod("ListGalleryModels")]
-        async static public void ListGalleryModelsCmd()
+        async static public void ListGalleryModels()
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
             Database db = doc.Database;
@@ -36,20 +37,31 @@ namespace Autodesk.ADN.AcadGalleryUploader
             }
         }
 
-        [CommandMethod("UploadToGallery")]
-        async static public void UploadToGalleryCmd()
+        [CommandMethod("ADN", "UploadToGallery", CommandFlags.Transparent)]
+        async static public void UploadToGallery()
         {
-            FileUploadForm fUp = new FileUploadForm();
-
-            var dialogResult = Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(fUp);
-
-            if (dialogResult != System.Windows.Forms.DialogResult.OK)
-                return;
-
-
             Document doc = Application.DocumentManager.MdiActiveDocument;
             Database db = doc.Database;
             Editor ed = doc.Editor;
+
+            //FileUploadForm fUp = new FileUploadForm();
+
+            //var dialogResult = Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(fUp);
+
+            //if (dialogResult != System.Windows.Forms.DialogResult.OK)
+            //    return;  
+
+            var psr = ed.GetString("\nEnter username:");
+
+            if (psr.Status != PromptStatus.OK)
+                return;
+
+            var userName = psr.StringResult;
+
+            psr = ed.GetString("\nEnter email:");
+
+            var eMail = psr.StringResult;
+
 
             var bucketKey = "GalleryStagingTemp";
 
@@ -80,6 +92,8 @@ namespace Autodesk.ADN.AcadGalleryUploader
             if (!tokenResult.IsOk())
             {
                 Utils.LogError("Authentication failed: " + tokenResult.Error.Reason);
+
+                System.IO.File.Delete(filename);
                 return;
             }
 
@@ -95,6 +109,8 @@ namespace Autodesk.ADN.AcadGalleryUploader
             if (!response.IsOk())
             {
                 Utils.LogError("Error: " + response.Error.Reason);
+
+                System.IO.File.Delete(filename);
                 return;
             }
 
@@ -105,6 +121,8 @@ namespace Autodesk.ADN.AcadGalleryUploader
                 if (registerResponse.Result.ToLower() != "success")
                 {
                     Utils.LogError("Registration failed: " + registerResponse.Result);
+
+                    System.IO.File.Delete(filename);
                     return;
                 }
 
@@ -115,7 +133,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
                 var modelName = info.Name.Substring(0, info.Name.Length - 4);
 
                 var dbModel = new DBModel(
-                    new Author("leefsmp", "philippe.leefsma@autodesk.com"),
+                    new Author(userName, eMail),
                     modelName,
                     fileId,
                     fileId.ToBase64());
@@ -125,14 +143,18 @@ namespace Autodesk.ADN.AcadGalleryUploader
                 if (!modelResponse.IsOk())
                 {
                     Utils.LogError("Error: " + modelResponse.Error.ToString());
+
+                    System.IO.File.Delete(filename);
                     return;
                 }
 
                 ed.WriteMessage("\nYou successfully uploaded a new model to the gallery!");
                 ed.WriteMessage("\nYour model is viewable at the following url:");
 
-                ed.WriteMessage("\n" + UserSettings.GALLERY_URL + "/#/viewer?id=" + 
+                ed.WriteMessage("\n" + Utils.GetGalleryUrl() + "/#/viewer?id=" + 
                     modelResponse.Model.Id + "\n");
+
+                System.IO.File.Delete(filename);
             }
         }
     }
@@ -151,7 +173,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
             DBModel model)
         {
             AdnGalleryClient galleryClient = new AdnGalleryClient(
-                UserSettings.GALLERY_URL);
+                GetGalleryUrl());
 
             return await galleryClient.AddModelAsync(model);
         }
@@ -159,9 +181,26 @@ namespace Autodesk.ADN.AcadGalleryUploader
         async public static Task <DBModelListResponse> GetModelsAsync()
         {
             AdnGalleryClient galleryClient = new AdnGalleryClient(
-                UserSettings.GALLERY_URL);
+                GetGalleryUrl());
 
             return await galleryClient.GetModelsAsync();
+        }
+
+        public static string GetGalleryUrl()
+        {     
+            FileInfo fi = new FileInfo(
+                System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            string configPath = fi.DirectoryName + "\\" + "addin.config";
+
+            Configuration config =
+                ConfigurationManager.OpenMappedExeConfiguration(
+                    new ExeConfigurationFileMap { ExeConfigFilename = configPath },
+                    ConfigurationUserLevel.None);
+
+            var url = config.AppSettings.Settings["GalleryUrl"].Value;
+
+            return url;
         }
     }
 }
