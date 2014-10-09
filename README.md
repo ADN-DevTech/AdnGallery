@@ -12,3 +12,4 @@ Run 'npm install' to resolve node dependencies.
 
 Then 'run server.bat' if you are on Windows, updating path if needed.
 
+Hello
