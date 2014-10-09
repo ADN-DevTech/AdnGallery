@@ -5,8 +5,11 @@ npm-debug.log
 # Compiled source #
 ###################
 *.suo
-Autodesk.ADN.AddIns/Autodesk.ADN.RvtGalleryUploader/bin/**
-Autodesk.ADN.AddIns/Autodesk.ADN.RvtGalleryUploader/obj/**
+add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.AcadGalleryUploader/obj/**
+add-ins/Autodesk.ADN.Toolkit/Autodesk.ADN.Toolkit.Gallery/obj/**
+add-ins/Autodesk.ADN.Toolkit/Autodesk.ADN.Toolkit.ViewData/obj/**
+add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.RvtGalleryUploader/bin/**
+add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.RvtGalleryUploader/obj/**
 
 # OS generated files #
 ######################
