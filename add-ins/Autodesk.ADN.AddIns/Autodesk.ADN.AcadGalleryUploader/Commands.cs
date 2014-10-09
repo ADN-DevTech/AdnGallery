@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Autodesk.ADN.Toolkit.Gallery;
 using Autodesk.ADN.Toolkit.Gallery.Dialogs;
@@ -16,7 +17,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 {
     public class Commands
     {
-        [CommandMethod("ListGalleryModels")]
+        [CommandMethod("ADN", "ListGalleryModels", CommandFlags.Transparent)]
         async static public void ListGalleryModels()
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -44,35 +45,29 @@ namespace Autodesk.ADN.AcadGalleryUploader
             Database db = doc.Database;
             Editor ed = doc.Editor;
 
-            //FileUploadForm fUp = new FileUploadForm();
-
-            //var dialogResult = Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(fUp);
-
-            //if (dialogResult != System.Windows.Forms.DialogResult.OK)
-            //    return;  
-
-            var psr = ed.GetString("\nEnter username:");
-
-            if (psr.Status != PromptStatus.OK)
-                return;
-
-            var userName = psr.StringResult;
-
-            psr = ed.GetString("\nEnter email:");
-
-            var eMail = psr.StringResult;
-
-
-            var bucketKey = "GalleryStagingTemp";
-
             // validates if file has name (ie saved at least once)
             FileInfo info = new FileInfo(db.Filename);
 
-            if(info.Extension == ".dwt")
+            if (info.Extension == ".dwt")
             {
                 Utils.LogError("Please save the drawing before uploading to the gallery, aborting...");
                 return;
             }
+
+            var syncContext = SynchronizationContext.Current;
+
+            FileUploadForm fUp = new FileUploadForm();
+
+            var dialogResult = Application.ShowModalDialog(fUp);
+
+            if (dialogResult != System.Windows.Forms.DialogResult.OK)
+                return;  
+
+            SynchronizationContext.SetSynchronizationContext(
+                syncContext);
+
+            // the gallery bucket
+            var bucketKey = "adn-viewer-gallery";
 
             // Generates unique file key
             string objectKey = Guid.NewGuid().ToString() + ".dwg";
@@ -101,7 +96,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
             var bucketData = new BucketCreationData(
                 bucketKey, 
-                BucketPolicyEnum.kTemporary);
+                BucketPolicyEnum.kPersistent);
 
             var response = await viewDataClient.UploadAndRegisterAsync(
                 bucketData, fi);
@@ -126,14 +121,33 @@ namespace Autodesk.ADN.AcadGalleryUploader
                     return;
                 }
 
+                var modelName = info.Name.Substring(0, info.Name.Length - 4);
+
                 var fileId = viewDataClient.GetFileId(
                     bucketKey,
                     objectKey);
 
-                var modelName = info.Name.Substring(0, info.Name.Length - 4);
+                if (fUp.ShowProgress)
+                {
+                    var notifier = new TranslationNotifier(
+                        viewDataClient,
+                        fileId,
+                        2000);
+
+                    var fProgress = new ProgressForm(
+                        modelName, 
+                        notifier);
+
+                    Application.ShowModelessDialog(fProgress);
+
+                    notifier.OnTranslationCompleted += 
+                        OnTranslationCompleted;
+
+                    notifier.Activate();
+                }
 
                 var dbModel = new DBModel(
-                    new Author(userName, eMail),
+                    new Author(fUp.UserName, fUp.EMail),
                     modelName,
                     fileId,
                     fileId.ToBase64());
@@ -156,6 +170,12 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
                 System.IO.File.Delete(filename);
             }
+        }
+
+        static void OnTranslationCompleted(
+            ViewableResponse response)
+        {
+            // Translation complete ...
         }
     }
 

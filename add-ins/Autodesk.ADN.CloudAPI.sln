@@ -5,8 +5,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Autodesk.ADN.Toolkit", "Aut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Autodesk.ADN.AddIns", "Autodesk.ADN.AddIns", "{B615E4E4-0254-4ADA-9951-329914892285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.Toolkit.UI", "Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.UI\Autodesk.ADN.Toolkit.UI.csproj", "{DB529343-4636-459B-A3AF-4A36A7743660}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.Toolkit.ViewData", "Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\Autodesk.ADN.Toolkit.ViewData.csproj", "{ADBDD270-A9AD-4564-A999-61FAD27FB992}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.Toolkit.Gallery", "Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.Gallery\Autodesk.ADN.Toolkit.Gallery.csproj", "{345E5CD9-6027-41F2-92C7-786FE0DBBC2E}"
@@ -25,18 +23,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Release|Win32.ActiveCfg = Release|Any CPU
-		{DB529343-4636-459B-A3AF-4A36A7743660}.Release|x86.ActiveCfg = Release|Any CPU
 		{ADBDD270-A9AD-4564-A999-61FAD27FB992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADBDD270-A9AD-4564-A999-61FAD27FB992}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADBDD270-A9AD-4564-A999-61FAD27FB992}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -78,7 +64,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DB529343-4636-459B-A3AF-4A36A7743660} = {144E8E2A-A425-4751-8454-654892CD78CF}
 		{ADBDD270-A9AD-4564-A999-61FAD27FB992} = {144E8E2A-A425-4751-8454-654892CD78CF}
 		{345E5CD9-6027-41F2-92C7-786FE0DBBC2E} = {144E8E2A-A425-4751-8454-654892CD78CF}
 		{6542C42A-A7E9-457E-AD57-6EC18B352709} = {B615E4E4-0254-4ADA-9951-329914892285}

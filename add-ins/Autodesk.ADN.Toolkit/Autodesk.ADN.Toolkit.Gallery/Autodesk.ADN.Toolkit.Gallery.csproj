@@ -54,25 +54,22 @@
   <ItemGroup>
     <Compile Include="AdnGalleryClient.cs" />
     <Compile Include="data.cs" />
-    <Compile Include="Dialogs\FileUploadCtrl.xaml.cs">
-      <DependentUpon>FileUploadCtrl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\FileUploadForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\FileUploadForm.Designer.cs">
       <DependentUpon>FileUploadForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Dialogs\FileUploadCtrl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\add.png" />
@@ -92,6 +89,15 @@
     <EmbeddedResource Include="Dialogs\FileUploadForm.resx">
       <DependentUpon>FileUploadForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Autodesk.ADN.Toolkit.ViewData\Autodesk.ADN.Toolkit.ViewData.csproj">
+      <Project>{adbdd270-a9ad-4564-a999-61fad27fb992}</Project>
+      <Name>Autodesk.ADN.Toolkit.ViewData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

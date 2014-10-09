@@ -29,47 +29,90 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileUploadForm));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.fileUploadCtrl1 = new Autodesk.ADN.Toolkit.Gallery.Dialogs.FileUploadCtrl();
+            this.bOK = new System.Windows.Forms.Button();
+            this.bCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this._tbUsername = new System.Windows.Forms.TextBox();
+            this._tbEmail = new System.Windows.Forms.TextBox();
+            this.cbProgress = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // button1
+            // bOK
             // 
-            this.button1.Location = new System.Drawing.Point(213, 66);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.bOK.Location = new System.Drawing.Point(232, 72);
+            this.bOK.Name = "bOK";
+            this.bOK.Size = new System.Drawing.Size(70, 21);
+            this.bOK.TabIndex = 0;
+            this.bOK.Text = "OK";
+            this.bOK.UseVisualStyleBackColor = true;
+            this.bOK.Click += new System.EventHandler(this.bOK_Click);
             // 
-            // button2
+            // bCancel
             // 
-            this.button2.Location = new System.Drawing.Point(294, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(93, 22);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bCancel.Location = new System.Drawing.Point(308, 72);
+            this.bCancel.Name = "bCancel";
+            this.bCancel.Size = new System.Drawing.Size(70, 21);
+            this.bCancel.TabIndex = 1;
+            this.bCancel.Text = "Cancel";
+            this.bCancel.UseVisualStyleBackColor = true;
+            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
-            // elementHost1
+            // label1
             // 
-            this.elementHost1.Location = new System.Drawing.Point(2, 2);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(385, 58);
-            this.elementHost1.TabIndex = 2;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.fileUploadCtrl1;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Username:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Email:";
+            // 
+            // _tbUsername
+            // 
+            this._tbUsername.Location = new System.Drawing.Point(71, 6);
+            this._tbUsername.Name = "_tbUsername";
+            this._tbUsername.Size = new System.Drawing.Size(307, 20);
+            this._tbUsername.TabIndex = 4;
+            // 
+            // _tbEmail
+            // 
+            this._tbEmail.Location = new System.Drawing.Point(71, 33);
+            this._tbEmail.Name = "_tbEmail";
+            this._tbEmail.Size = new System.Drawing.Size(307, 20);
+            this._tbEmail.TabIndex = 5;
+            // 
+            // cbProgress
+            // 
+            this.cbProgress.AutoSize = true;
+            this.cbProgress.Location = new System.Drawing.Point(15, 72);
+            this.cbProgress.Name = "cbProgress";
+            this.cbProgress.Size = new System.Drawing.Size(147, 17);
+            this.cbProgress.TabIndex = 6;
+            this.cbProgress.Text = "Show translation progress";
+            this.cbProgress.UseVisualStyleBackColor = true;
+            this.cbProgress.CheckedChanged += new System.EventHandler(this.cbProgress_CheckedChanged);
             // 
             // FileUploadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 92);
-            this.Controls.Add(this.elementHost1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(389, 98);
+            this.Controls.Add(this.cbProgress);
+            this.Controls.Add(this._tbEmail);
+            this.Controls.Add(this._tbUsername);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.bCancel);
+            this.Controls.Add(this.bOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -77,14 +120,18 @@
             this.Name = "FileUploadForm";
             this.Text = "File upload details";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private FileUploadCtrl fileUploadCtrl1;
+        private System.Windows.Forms.Button bOK;
+        private System.Windows.Forms.Button bCancel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox _tbUsername;
+        private System.Windows.Forms.TextBox _tbEmail;
+        private System.Windows.Forms.CheckBox cbProgress;
     }
 }

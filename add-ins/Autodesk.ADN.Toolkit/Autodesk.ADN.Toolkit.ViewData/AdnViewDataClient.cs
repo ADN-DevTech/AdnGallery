@@ -489,16 +489,16 @@ namespace Autodesk.ADN.Toolkit.ViewData
             });
         }
 
-        public static async Task<T> ExecuteAsync<T>(
+        public static Task<T> ExecuteAsync<T>(
             this RestClient client,
             RestRequest request) where T : new()
         {
-            return await Task<T>.Factory.StartNew(() =>
+            var tcs = new TaskCompletionSource<T>();
+
+            client.ExecuteAsync<T>(request, (httpResponse) =>
             {
                 try
                 {
-                    IRestResponse httpResponse = client.Execute(request);
-
                     if (httpResponse.StatusCode != System.Net.HttpStatusCode.OK)
                     {
                         dynamic errorResponse = new T();
@@ -508,13 +508,14 @@ namespace Autodesk.ADN.Toolkit.ViewData
 
                         errorResponse.Error.StatusCode = httpResponse.StatusCode;
 
-                        return errorResponse;
+                        tcs.SetResult(errorResponse);
+                        return;
                     }
 
                     List<Newtonsoft.Json.Serialization.ErrorEventArgs> jsonErrors =
                         new List<Newtonsoft.Json.Serialization.ErrorEventArgs>();
 
-                    T response = JsonConvert.DeserializeObject<T>(
+                    T viewDataResponse = JsonConvert.DeserializeObject<T>(
                            httpResponse.Content,
                            new JsonSerializerSettings
                             {
@@ -530,15 +531,16 @@ namespace Autodesk.ADN.Toolkit.ViewData
                     if (jsonErrors.Count != 0)
                     {
                         dynamic responseWithErrors =
-                            (response != null ? response : new T());
+                            (viewDataResponse != null ? viewDataResponse : new T());
 
                         responseWithErrors.Error =
                             new ViewDataError(jsonErrors);
 
-                        return responseWithErrors;
+                        tcs.SetResult(responseWithErrors);
+                        return;
                     }
 
-                    return response;
+                    tcs.SetResult(viewDataResponse);
                 }
                 catch (Exception ex)
                 {
@@ -546,9 +548,11 @@ namespace Autodesk.ADN.Toolkit.ViewData
 
                     errorResponse.Error = new ViewDataError(ex);
 
-                    return errorResponse;
+                    tcs.SetResult(errorResponse);
                 }
             });
+
+            return tcs.Task;
         }
     }
 
