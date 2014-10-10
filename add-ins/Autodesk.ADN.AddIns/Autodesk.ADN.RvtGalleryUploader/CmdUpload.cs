@@ -47,7 +47,6 @@ namespace Autodesk.ADN.RvtGalleryUploader
       {
         Util.LogError( "Upload cancelled." );
 
-        System.IO.File.Delete( filename );
         return;
       }
 
@@ -192,25 +191,22 @@ namespace Autodesk.ADN.RvtGalleryUploader
       // Generate temporary filename for uploading
       // because otherwise Revit will not allow access 
 
-      string filename = Path.GetTempFileName() + ".rvt";
+      //string filename = Path.GetTempFileName() + ".rvt";
+      string filename = "C:/tmp/RvtGalleryUploader.tmp.rvt";
 
       filename = filename.Replace( '\\', '/' ); // easier to read in debugger
 
       Debug.Print( filename );
 
-      try
-      {
-        File.Copy( doc.PathName, filename );
+      File.Copy( doc.PathName, filename );
 
-        Debug.Assert( File.Exists( filename ),
-          "expected RVT file copy" );
+      Debug.Assert( File.Exists( filename ),
+        "expected RVT file copy" );
 
-        UploadToGallery( filename, doc.Title );
-      }
-      finally
-      {
-        System.IO.File.Delete( filename );
-      }
+      UploadToGallery( filename, doc.Title );
+
+      //System.IO.File.Delete( filename );
+
       return Result.Succeeded;
     }
   }
