@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Gallery Uploader</Text>
+    <Description>Upload RVT model to Autodesk View and Data API</Description>
+    <Assembly>Autodesk.ADN.RvtGalleryUploader.dll</Assembly>
+    <FullClassName>Autodesk.ADN.RvtGalleryUploader.CmdUpload</FullClassName>
+    <ClientId>de8d491c-26a4-457e-afa5-747108aaed96</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application Autodesk.ADN.RvtGalleryUploader</Name>
+    <Assembly>Autodesk.ADN.RvtGalleryUploader.dll</Assembly>
+    <FullClassName>Autodesk.ADN.RvtGalleryUploader.App</FullClassName>
+    <ClientId>7b06e99c-9959-4548-a113-bc913eca1178</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>

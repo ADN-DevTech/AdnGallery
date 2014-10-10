@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.Toolkit.Galler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.AcadGalleryUploader", "Autodesk.ADN.AddIns\Autodesk.ADN.AcadGalleryUploader\Autodesk.ADN.AcadGalleryUploader.csproj", "{6542C42A-A7E9-457E-AD57-6EC18B352709}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.RvtGalleryUploader", "Autodesk.ADN.AddIns\Autodesk.ADN.RvtGalleryUploader\Autodesk.ADN.RvtGalleryUploader.csproj", "{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,18 @@ Global
 		{6542C42A-A7E9-457E-AD57-6EC18B352709}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6542C42A-A7E9-457E-AD57-6EC18B352709}.Release|Win32.ActiveCfg = Release|Any CPU
 		{6542C42A-A7E9-457E-AD57-6EC18B352709}.Release|x86.ActiveCfg = Release|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Win32.ActiveCfg = Release|Any CPU
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +81,6 @@ Global
 		{ADBDD270-A9AD-4564-A999-61FAD27FB992} = {144E8E2A-A425-4751-8454-654892CD78CF}
 		{345E5CD9-6027-41F2-92C7-786FE0DBBC2E} = {144E8E2A-A425-4751-8454-654892CD78CF}
 		{6542C42A-A7E9-457E-AD57-6EC18B352709} = {B615E4E4-0254-4ADA-9951-329914892285}
+		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F} = {B615E4E4-0254-4ADA-9951-329914892285}
 	EndGlobalSection
 EndGlobal

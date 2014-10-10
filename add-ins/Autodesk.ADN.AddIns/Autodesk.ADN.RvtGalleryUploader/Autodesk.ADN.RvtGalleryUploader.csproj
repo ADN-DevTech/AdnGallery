@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+      None
+    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Autodesk.ADN.RvtGalleryUploader</RootNamespace>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2015\Revit.exe</StartProgram>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2015\Revit.exe</StartProgram>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdWindows">
+      <HintPath>C:\Program Files\Autodesk\Revit 2015\AdWindows.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>$(ProgramW6432)\Autodesk\Revit 2015\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(ProgramW6432)\Autodesk\Revit 2015\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.cs" />
+    <Compile Include="CmdUpload.cs" />
+    <Compile Include="JtWindowHandle.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSettings.cs" />
+    <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Autodesk.ADN.RvtGalleryUploader.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.Gallery\Autodesk.ADN.Toolkit.Gallery.csproj">
+      <Project>{345e5cd9-6027-41f2-92c7-786fe0dbbc2e}</Project>
+      <Name>Autodesk.ADN.Toolkit.Gallery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.ViewData\Autodesk.ADN.Toolkit.ViewData.csproj">
+      <Project>{adbdd270-a9ad-4564-a999-61fad27fb992}</Project>
+      <Name>Autodesk.ADN.Toolkit.ViewData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterClean">
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2015\Autodesk.ADN.RvtGalleryUploader.addin" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2015\Autodesk.ADN.RvtGalleryUploader.dll" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)Autodesk.ADN.RvtGalleryUploader.addin" "$(AppData)\Autodesk\REVIT\Addins\2015"
+copy "$(ProjectDir)bin\debug\*" "$(AppData)\Autodesk\REVIT\Addins\2015"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
