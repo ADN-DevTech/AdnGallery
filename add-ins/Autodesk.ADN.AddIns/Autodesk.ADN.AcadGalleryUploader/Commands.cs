@@ -127,25 +127,6 @@ namespace Autodesk.ADN.AcadGalleryUploader
                     bucketKey,
                     objectKey);
 
-                if (fUp.ShowProgress)
-                {
-                    var notifier = new TranslationNotifier(
-                        viewDataClient,
-                        fileId,
-                        2000);
-
-                    var fProgress = new ProgressForm(
-                        modelName, 
-                        notifier);
-
-                    Application.ShowModelessDialog(fProgress);
-
-                    notifier.OnTranslationCompleted += 
-                        OnTranslationCompleted;
-
-                    notifier.Activate();
-                }
-
                 var dbModel = new DBModel(
                     new Author(fUp.UserName, fUp.EMail),
                     modelName,
@@ -162,11 +143,33 @@ namespace Autodesk.ADN.AcadGalleryUploader
                     return;
                 }
 
+                var url = Utils.GetGalleryUrl() + "/#/viewer?id=" +
+                    modelResponse.Model.Id;
+
+                if (fUp.ShowProgress)
+                {
+                    var notifier = new TranslationNotifier(
+                        viewDataClient,
+                        fileId,
+                        2000);
+
+                    var fProgress = new ProgressForm(
+                        modelName, 
+                        url,
+                        notifier);
+
+                    Application.ShowModelessDialog(fProgress);
+
+                    notifier.OnTranslationCompleted += 
+                        OnTranslationCompleted;
+
+                    notifier.Activate();
+                }              
+
                 ed.WriteMessage("\nYou successfully uploaded a new model to the gallery!");
                 ed.WriteMessage("\nYour model is viewable at the following url:");
 
-                ed.WriteMessage("\n" + Utils.GetGalleryUrl() + "/#/viewer?id=" + 
-                    modelResponse.Model.Id + "\n");
+                ed.WriteMessage("\n" + url + "\n");
 
                 System.IO.File.Delete(filename);
             }

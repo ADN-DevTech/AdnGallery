@@ -13,15 +13,20 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
 {
     public partial class ProgressForm : Form
     {
+        private string url;
+
         private bool bComplete = false;
 
-        private static bool bAutoClose = true;
+        private static bool bAutoClose = false;
 
         public ProgressForm(
             string modelName,
+            string linkUrl,
             TranslationNotifier notifier)
         {
             InitializeComponent();
+
+            url = linkUrl;
 
             cbClose.Checked = bAutoClose;
 
@@ -35,6 +40,8 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
 
             notifier.OnTranslationCompleted += 
                 OnTranslationCompleted;
+
+            linkModel.LinkClicked += LinkClicked;
         }
 
         void OnTranslationError(ViewDataError error)
@@ -72,6 +79,8 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
 
             if (bAutoClose)
                 Close();
+
+            linkModel.Enabled = true;
         }
 
         private void cbClose_CheckedChanged(object sender, EventArgs e)
@@ -80,6 +89,16 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
 
             if(bComplete)
                 Close();
+        }
+
+        private void LinkClicked(
+            object sender, 
+            LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.ProcessStartInfo sInfo =
+                new System.Diagnostics.ProcessStartInfo(url);
+
+            System.Diagnostics.Process.Start(sInfo);
         }
     }
 }

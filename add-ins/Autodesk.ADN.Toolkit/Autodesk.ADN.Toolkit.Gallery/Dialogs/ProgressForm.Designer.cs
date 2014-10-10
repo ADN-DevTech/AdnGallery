@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbProgress = new System.Windows.Forms.Label();
             this.cbClose = new System.Windows.Forms.CheckBox();
+            this.linkModel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -91,11 +92,23 @@
             this.cbClose.UseVisualStyleBackColor = true;
             this.cbClose.CheckedChanged += new System.EventHandler(this.cbClose_CheckedChanged);
             // 
+            // linkModel
+            // 
+            this.linkModel.AutoSize = true;
+            this.linkModel.Enabled = false;
+            this.linkModel.Location = new System.Drawing.Point(258, 97);
+            this.linkModel.Name = "linkModel";
+            this.linkModel.Size = new System.Drawing.Size(145, 13);
+            this.linkModel.TabIndex = 6;
+            this.linkModel.TabStop = true;
+            this.linkModel.Text = "View my model on the Gallery";
+            // 
             // ProgressForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(418, 121);
+            this.Controls.Add(this.linkModel);
             this.Controls.Add(this.cbClose);
             this.Controls.Add(this.lbProgress);
             this.Controls.Add(this.label2);
@@ -120,5 +133,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbProgress;
         private System.Windows.Forms.CheckBox cbClose;
+        private System.Windows.Forms.LinkLabel linkModel;
     }
 }

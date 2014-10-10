@@ -13,7 +13,7 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
 {
     public partial class FileUploadForm : Form
     {
-        private static bool bShowProgress = false;
+        private static bool bShowProgress = true;
 
         public FileUploadForm()
         {
