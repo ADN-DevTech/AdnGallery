@@ -51,7 +51,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
       }
 
       SynchronizationContext.SetSynchronizationContext(
-          syncContext );
+        syncContext );
 
       // The gallery bucket
 
@@ -154,6 +154,10 @@ namespace Autodesk.ADN.RvtGalleryUploader
           + " uploaded a new model to the gallery.\r\n"
           + "Your model is viewable at the following url:\r\n"
           + url;
+
+        Util.LogError( msg );
+
+        TaskDialog.Show( "Gallery Upload", msg );
       }
     }
 
@@ -170,6 +174,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
       {
         message = "Sorry, this model has been modified. "
          + "Please resave before uploading.";
+        Util.LogError( message );
         return Result.Failed;
       }
 
@@ -177,6 +182,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
       {
         message = "Sorry, this model is detached and "
           + "I cannot access the RVT file path.";
+        Util.LogError( message );
         return Result.Failed;
       }
 
@@ -185,6 +191,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
         message = "Please save the model to a file "
           + "before running this command, so I can "
           + "upload it.";
+        Util.LogError( message );
         return Result.Failed;
       }
 
@@ -198,7 +205,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
 
       Debug.Print( filename );
 
-      File.Copy( doc.PathName, filename );
+      File.Copy( doc.PathName, filename, true );
 
       Debug.Assert( File.Exists( filename ),
         "expected RVT file copy" );
