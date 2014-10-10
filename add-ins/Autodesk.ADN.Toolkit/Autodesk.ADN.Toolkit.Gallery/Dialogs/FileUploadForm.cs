@@ -30,6 +30,10 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
             {
                 return _tbUsername.Text;
             }
+            set
+            {
+                _tbUsername.Text = value;
+            }
         }
 
         public string EMail
@@ -37,6 +41,10 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
             get
             {
                 return _tbEmail.Text;
+            }
+            set
+            {
+                _tbEmail.Text = value;
             }
         }
 
