@@ -103,6 +103,7 @@ angular.module('AdnGallery.upload',[])
             item.file = file;
             item.innerHTML = file.name;
             item.className = 'list-group-item';
+            item.style.padding = " 10px";
 
             var parent = document.getElementById(
                 'uploadDlgBodyContent');
@@ -135,7 +136,7 @@ angular.module('AdnGallery.upload',[])
                 $scope.viewDataClient.uploadFileAsync(
                     file,
                     'adn-viewer-gallery',
-                        $scope.newGUID() + '.' + getFileExt(file),
+                    $scope.newGUID() + '.' + getFileExt(file),
 
                     function (response) {
 

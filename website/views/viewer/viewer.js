@@ -184,6 +184,9 @@ angular.module('AdnGallery.viewer',
                 });
 
             toolbar.addToSubToolbar("sub1", bEmbed);
+
+
+            subToolbar.setToolImage(bEmbed.id, 'public/images/embed.png');
         }
 
         ///////////////////////////////////////////////////////////////////////

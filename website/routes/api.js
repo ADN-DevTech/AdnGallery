@@ -223,12 +223,21 @@ router.post('/model', function (req, res) {
 function sendMail(email, modelInfo) {
 
     var transporter = nodemailer.createTransport("SMTP", {
+        host: '127.0.0.1',
+        port: 587,
+        auth: {
+            user: 'adngallery',
+            pass: '@utod3sker113'
+        }
+    });
+
+    /*var transporter = nodemailer.createTransport("SMTP", {
         service: 'gmail',
         auth: {
             user: 'adn.autodesk@gmail.com',
             pass: 'autodesk913'
         }
-    });
+    });*/
 
     var text = "You have successfully uploaded a new model:" +
         "\n\nAuthor:\n" + modelInfo.author.name +
@@ -237,10 +246,11 @@ function sendMail(email, modelInfo) {
         "\n\nModel urn:\n" + modelInfo.urn;
 
     transporter.sendMail({
-        from: "adn.autodesk@gmail.com",
+        from: 'no-reply@autodesk.com',
         to: email,
         subject: "Model upload notification",
         text: text
+        //html:
     });
 
     transporter.close();

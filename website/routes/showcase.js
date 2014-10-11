@@ -55,7 +55,8 @@ router.initializeSocket = function(serverApp) {
             controllingUser: null,
             urn: '',
             view: null,
-            isolateIds: null
+            isolateIds: null,
+            explodeScale: 0.0
         };
     }
 
@@ -224,6 +225,17 @@ router.initializeSocket = function(serverApp) {
         //
         //
         ///////////////////////////////////////////////////////////////////////
+        socket.on('explode', function (data) {
+
+            showcaseData.explodeScale = data.explodeScale;
+
+            emitExclude(socket.id, 'explode', data);
+        });
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
         socket.on('isolate', function (data) {
 
             showcaseData.isolateIds = data.isolateIds;
@@ -293,6 +305,7 @@ router.initializeSocket = function(serverApp) {
             showcaseData.urn = urn;
             showcaseData.view = null;
             showcaseData.isolateIds = null;
+            showcaseData.explodeScale = 0.0;
 
             emitExclude(socket.id, 'loadDocument', urn);
 
@@ -312,6 +325,7 @@ router.initializeSocket = function(serverApp) {
             showcaseData.urn = '';
             showcaseData.view = null;
             showcaseData.isolateIds = null;
+            showcaseData.explodeScale = 0.0;
 
             emitAll('closeDocument');
         });

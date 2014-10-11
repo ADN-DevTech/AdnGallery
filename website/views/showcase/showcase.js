@@ -362,11 +362,11 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             var viewer = $scope.adnViewerMng.getViewer();
 
-            var explode = viewer.getExplodeScale();
+            var data = {
+                explodeScale: viewer.getExplodeScale()
+            };
 
-            console.log('Explode: ' + explode);
-
-            //$scope.socket.emit('explode', data);
+            $scope.socket.emit('explode', data);
         }
 
         ///////////////////////////////////////////////////////////////////
@@ -412,8 +412,20 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
             var viewer = $scope.adnViewerMng.getViewer();
 
             if(viewer) {
-                console.log(data);
                 viewer.isolateById(data.isolateIds)
+            }
+        });
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        $scope.socket.on('explode', function (data) {
+
+            var viewer = $scope.adnViewerMng.getViewer();
+
+            if(viewer) {
+                viewer.explode(data.explodeScale)
             }
         });
 
