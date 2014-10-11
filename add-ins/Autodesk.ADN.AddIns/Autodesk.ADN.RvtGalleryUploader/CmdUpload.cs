@@ -23,7 +23,9 @@ namespace Autodesk.ADN.RvtGalleryUploader
     static void OnTranslationCompleted(
         ViewableResponse response )
     {
-      // Translation complete ...
+      System.Windows.Forms.MessageBox.Show( 
+        "Translation complete.", 
+        "RVT Gallery Uploader" );
     }
 
     async static public void UploadToGallery(
@@ -143,7 +145,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
             url,
             notifier );
 
-          fProgress.ShowDialog( revit_window );
+          fProgress.Show( revit_window );
 
           notifier.OnTranslationCompleted +=
             OnTranslationCompleted;
@@ -157,7 +159,12 @@ namespace Autodesk.ADN.RvtGalleryUploader
 
         Util.LogError( msg );
 
-        TaskDialog.Show( "Gallery Upload", msg );
+        TaskDialog dlg = new TaskDialog( 
+          "Gallery Upload" );
+
+        dlg.MainInstruction = "Upload succeeded";
+        dlg.MainContent = msg;
+        dlg.Show();
       }
     }
 
