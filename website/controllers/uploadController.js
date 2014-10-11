@@ -226,7 +226,8 @@ angular.module('AdnGallery.upload',[])
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST',
-                "http://" + window.location.host + '/api/model',
+                'http://' + window.location.host +
+                '/api/model?host=' + window.location.host,
                 true);
 
             xhr.setRequestHeader(

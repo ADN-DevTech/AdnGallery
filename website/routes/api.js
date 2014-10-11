@@ -185,7 +185,11 @@ router.get('/search/models', function (req, res) {
 ///////////////////////////////////////////////////////////////////////////////
 router.post('/model', function (req, res) {
 
+    var host = req.query.host;
+
     var item = req.body;
+
+    console.log('host: ' + host);
 
     console.log('Adding model: ' + JSON.stringify(item));
 
@@ -212,7 +216,7 @@ router.post('/model', function (req, res) {
 
                     var modelInfo = result[0];
 
-                    var url = 'http://' + req._remoteAddress +
+                    var url = 'http://' + host +
                         ':3000/#/viewer?id=' + modelInfo._id;
 
                     sendMail(url, email,modelInfo );
@@ -264,7 +268,7 @@ function sendMail(url, email, modelInfo) {
         "<br><br>" + '<a href=' + url + '>View on the Gallery</a>';
 
     transporter.sendMail({
-        from: 'viewer-gallery <no-reply@autodesk.com>',
+        from: 'View & Data API Gallery <no-reply@autodesk.com>',
         replyTo: 'no-reply@autodesk.com',
         to: email,
         subject: "Model upload notification",
