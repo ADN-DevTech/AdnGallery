@@ -25,6 +25,7 @@ var ADMIN_PASSWORD = 'kow@bung@'
 //var CONSUMER_SECRET = "****** place holder - replace with your creds ******";
 //var BASE_URL = "https://developer.api.autodesk.com";
 
+var transport = require('nodemailer-direct-transport');
 var nodemailer = require('nodemailer');
 var express = require('express');
 var request = require('request');
@@ -208,6 +209,7 @@ router.post('/model', function (req, res) {
                 } else {
 
                     console.log('Success: ' + JSON.stringify(result[0]));
+
                     sendMail(email, result[0]);
 
                     var response = {
@@ -222,14 +224,14 @@ router.post('/model', function (req, res) {
 
 function sendMail(email, modelInfo) {
 
-    var transporter = nodemailer.createTransport("SMTP", {
+    /*var transporter = nodemailer.createTransport("SMTP", {
         host: '127.0.0.1',
         port: 587,
         auth: {
             user: 'adngallery',
             pass: '@utod3sker113'
         }
-    });
+    });*/
 
     /*var transporter = nodemailer.createTransport("SMTP", {
         service: 'gmail',
@@ -239,18 +241,32 @@ function sendMail(email, modelInfo) {
         }
     });*/
 
+    var transporter = nodemailer.createTransport(transport({
+        name: 'smtp.orange.fr'
+    }));
+
     var text = "You have successfully uploaded a new model:" +
         "\n\nAuthor:\n" + modelInfo.author.name +
         "\n\nModel name:\n" + modelInfo.name +
         "\n\nFile Id:\n" + modelInfo.fileId +
         "\n\nModel urn:\n" + modelInfo.urn;
 
+    var url = 'http://localhost:3000/#/viewer?id=' + modelInfo._id;
+
+    var html = "You have successfully uploaded a new model:" +
+        "<br><br><b>Author:</b><br>" + modelInfo.author.name +
+        "<br><br><b>Model name:</b><br>" + modelInfo.name +
+        "<br><br><b>File Id:</b><br>" + modelInfo.fileId +
+        "<br><br><b>Model urn:</b><br>" + modelInfo.urn +
+        "<br><br>" + '<a href=' + url + '>View on the Gallery</a>';
+
     transporter.sendMail({
-        from: 'no-reply@autodesk.com',
+        from: 'viewer-gallery <no-reply@autodesk.com>',
+        replyTo: 'no-reply@autodesk.com',
         to: email,
         subject: "Model upload notification",
-        text: text
-        //html:
+        text: text,
+        html: html
     });
 
     transporter.close();

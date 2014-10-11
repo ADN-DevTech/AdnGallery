@@ -160,7 +160,7 @@ angular.module('AdnGallery.viewer',
 
             parent.appendChild(div);
 
-            div.style.top = "100%";
+            div.style.bottom = "0%";
             div.style.right = "20%";
             div.style.zIndex = "2";
             div.style.position = "absolute";
@@ -185,8 +185,9 @@ angular.module('AdnGallery.viewer',
 
             toolbar.addToSubToolbar("sub1", bEmbed);
 
-
-            subToolbar.setToolImage(bEmbed.id, 'public/images/embed.png');
+            subToolbar.setToolImage(
+                bEmbed.id,
+                'public/images/embed.png');
         }
 
         ///////////////////////////////////////////////////////////////////////

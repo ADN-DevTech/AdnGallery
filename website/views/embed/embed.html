@@ -18,17 +18,7 @@
     ////////////////////////////////////////////////////////////////////////-->
     <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
     <script  type="text/javascript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
-    <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.ViewData.js"></script>
     <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
-
-
-    <style>
-
-        #bGalleryButton {
-            background-image: url('public/images/adsk.24x24.png');
-        }
-
-    </style>
 
     <script>
 
@@ -47,7 +37,7 @@
 
             var subToolbar = toolbar.addSubToolbar('sub1', false);
 
-            var bEmbed = Autodesk.Viewing.UI.ToolBar.createMenuButton(
+            var button = Autodesk.Viewing.UI.ToolBar.createMenuButton(
                     "bGallery",
                     "View in Gallery",
                     function (e) {
@@ -57,7 +47,9 @@
                             '_blank');
                     });
 
-            toolbar.addToSubToolbar("sub1", bEmbed);
+            toolbar.addToSubToolbar("sub1", button);
+
+            subToolbar.setToolImage(button.id, 'public/images/adsk.24x24.png');
         }
 
         function loadFromId(id) {
