@@ -210,7 +210,12 @@ router.post('/model', function (req, res) {
 
                     console.log('Success: ' + JSON.stringify(result[0]));
 
-                    sendMail(email, result[0]);
+                    var modelInfo = result[0];
+
+                    var url = 'http://' + req._remoteAddress +
+                        ':3000/#/viewer?id=' + modelInfo._id;
+
+                    sendMail(url, email,modelInfo );
 
                     var response = {
                         model: result[0]
@@ -222,7 +227,7 @@ router.post('/model', function (req, res) {
     });
 });
 
-function sendMail(email, modelInfo) {
+function sendMail(url, email, modelInfo) {
 
     /*var transporter = nodemailer.createTransport("SMTP", {
         host: '127.0.0.1',
@@ -250,8 +255,6 @@ function sendMail(email, modelInfo) {
         "\n\nModel name:\n" + modelInfo.name +
         "\n\nFile Id:\n" + modelInfo.fileId +
         "\n\nModel urn:\n" + modelInfo.urn;
-
-    var url = 'http://localhost:3000/#/viewer?id=' + modelInfo._id;
 
     var html = "You have successfully uploaded a new model:" +
         "<br><br><b>Author:</b><br>" + modelInfo.author.name +
