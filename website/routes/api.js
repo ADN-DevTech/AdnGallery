@@ -216,8 +216,7 @@ router.post('/model', function (req, res) {
 
                     var modelInfo = result[0];
 
-                    var url = 'http://' + host +
-                        ':3000/#/viewer?id=' + modelInfo._id;
+                    var url = 'http://' + host + '/#/viewer?id=' + modelInfo._id;
 
                     sendMail(url, email,modelInfo );
 
