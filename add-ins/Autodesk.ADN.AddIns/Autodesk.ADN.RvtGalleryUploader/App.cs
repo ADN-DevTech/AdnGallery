@@ -37,7 +37,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
     {
       PopulatePanel(
         a.CreateRibbonPanel(
-          "RVT Gallery Uploader" ) );
+          "Gallery Uploader" ) );
 
       return Result.Succeeded;
     }
