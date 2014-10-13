@@ -95,6 +95,7 @@ angular.module('AdnGallery.blog', ['ngRoute'])
 
             $('#navBarId').addClass("navbar-fixed-top");
 
+            $('#menuExtensionsId').css({"visibility": "collapse"});
             $('#menuSearchId').css({"visibility": "collapse"});
             $('#menuViewId').css({"visibility": "collapse"});
             $('#menuDocId').css({"visibility": "visible"});

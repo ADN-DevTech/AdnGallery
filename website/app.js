@@ -31,7 +31,8 @@ angular.module('AdnGallery',
       'AdnGallery.version',
       'AdnGallery.upload',
       'AdnGallery.showcase',
-      'AdnGallery.quickLoad'
+      'AdnGallery.quickLoad',
+      'AdnGallery.extensions'
     ]).
 
     ///////////////////////////////////////////////////////////////////////////
@@ -109,6 +110,14 @@ angular.module('AdnGallery',
                 dlgClrHover);
 
             $scope.setHoverStyle('embedDlgFrame',
+                dlgClr,
+                dlgClrHover);
+
+            $scope.setHoverStyle('loadExtDlgFrame',
+                dlgClr,
+                dlgClrHover);
+
+            $scope.setHoverStyle('manageExtDlgFrame',
                 dlgClr,
                 dlgClrHover);
         }
@@ -207,15 +216,16 @@ angular.module('AdnGallery',
         ///////////////////////////////////////////////////////////////////////
         $scope.clearContent = function(containerId) {
 
-            var content = document.getElementById(
-                    containerId + 'Content');
+            var id = containerId + 'Content';
+
+            var content = document.getElementById(id);
 
             if (content) {
                 content.parentNode.removeChild(content);
             }
 
             content = document.createElement("div");
-            content.id = containerId + 'Content';
+            content.id = id;
 
             var parent = document.getElementById(containerId);
 

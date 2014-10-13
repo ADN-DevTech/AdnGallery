@@ -504,6 +504,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             $('#navBarId').removeClass("navbar-fixed-top");
 
+            $('#menuExtensionsId').css({"visibility": "collapse"});
             $('#menuSearchId').css({"visibility": "collapse"});
             $('#menuViewId').css({"visibility": "collapse"});
             $('#menuDocId').css({"visibility": "visible"});

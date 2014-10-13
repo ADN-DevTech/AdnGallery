@@ -50,6 +50,12 @@
     <script type="text/javascript" src="components/date/js/date.js"> </script>
 
     <!--///////////////////////////////////////////////////////////////////////
+    // async
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <script type="text/javascript" src="components/async/js/async.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
     // text angular editor
     //
     ////////////////////////////////////////////////////////////////////////-->
@@ -214,7 +220,7 @@
                 </li>
 
                 <li id="menuUiId" class="dropdown" style="visibility:collapse;">
-                    <a class="dropdown-toggle" id="A1" data-toggle="dropdown">UI <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown">UI <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             &nbsp; <input id="cbBrowser" type="checkbox"/> &nbsp; Browser
@@ -222,6 +228,25 @@
                         <li class="divider"></li>
                         <li>
                             &nbsp; <input id="cbProperties" type="checkbox"/> &nbsp; Properties
+                        </li>
+                    </ul>
+                </li>
+
+                <li id="menuExtensionsId" class="dropdown" style="visibility:collapse;">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Extensions <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a id="btnLoadExtId">
+                                <span class="glyphicon glyphicon-cloud-upload"></span>
+                                &nbsp; Load
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnManageExtId">
+                                <span class="glyphicon glyphicon-wrench"></span>
+                                &nbsp; Manage
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -320,10 +345,10 @@
                 <br/>
 
                 <div class="input-group">
-                    <span class="input-group-addon">Username:</span>
+                    <span class="input-group-addon">Author:</span>
                     <input id="user" type="text" class="form-control" style="width:140px"/>
 
-                    <span class="input-group-addon">email:</span>
+                    <span class="input-group-addon">Email:</span>
                     <input id="email" type="text" class="form-control" style="width:265px"/>
                 </div>
 
@@ -463,7 +488,6 @@
         </div>
     </div>
 </div>
-
 
 <!--///////////////////////////////////////////////////////////////////////
 //  Load View Dialog
@@ -732,6 +756,108 @@
     </div>
 </div>
 
+<!--///////////////////////////////////////////////////////////////////////
+// Load Extension Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div ng-controller="extensionController"
+     id="loadExtDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="loadExtDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Load Extensions</h4>
+            </div>
+
+            <iframe name="targetFrame" style="display:none"></iframe>
+
+            <form id="loadExtFormId"
+                  target="targetFrame"
+                  action="/api/extensions"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div id="loadExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+                    <input type="file" name="file" id="fileInputExtId" multiple/>
+
+                    <div id="dropZoneExtId" class="dropZone">
+                        Drop your files here or click to select from disk ...
+                    </div>
+
+                    <br/>
+
+                    <div ng-repeat="file in SelectedFiles">
+                        <a class="list-group-item" style="padding:10px; background-color:#88b4dd">
+                            {{file.name}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnLoadExtOkId">Ok</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--///////////////////////////////////////////////////////////////////////
+// Manage Extensions Dialog
+//
+////////////////////////////////////////////////////////////////////////-->
+<div ng-controller="extensionController"
+     id="manageExtDlg"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content"
+             id="manageExtDlgFrame">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">
+                        Close
+                    </span>
+                </button>
+                <h4 class="modal-title">Manage Extensions</h4>
+            </div>
+
+            <div id="manageExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="btnManageExtOkId" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
 
 <!--[if lt IE 7]>
@@ -752,6 +878,7 @@ to improve your experience.</p>
 <script src="components/version/version.js"></script>
 
 <script src="controllers/uploadController.js"></script>
+<script src="controllers/extensionController.js"></script>
 <script src="controllers/quickLoadController.js"></script>
 <script src="controllers/modelViewsController.js"></script>
 

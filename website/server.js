@@ -49,9 +49,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
 app.use(favicon(__dirname + '/public/images/adsk.64x64.png'));
+
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(__dirname));
 app.use(bodyParser.json());
+
+app.use(express.static(__dirname));
 app.use(cookieParser());
 app.use(logger('dev'));
 app.use(cors);

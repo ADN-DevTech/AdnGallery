@@ -49,7 +49,7 @@ angular.module('AdnGallery.viewer',
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function initializeViewer() {
+        function initializeViewer(extensions) {
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
@@ -72,6 +72,11 @@ angular.module('AdnGallery.viewer',
 
                     //$scope.adnViewerMng.startAnnotate();
                 });
+
+            extensions.forEach(function(extension) {
+
+                $scope.adnViewerMng.addExtension(extension);
+            });
 
             var id =
                 Autodesk.Viewing.Private.getParameterByName("id");
@@ -247,6 +252,7 @@ angular.module('AdnGallery.viewer',
 
             $('#navBarId').removeClass("navbar-fixed-top");
 
+            $('#menuExtensionsId').css({"visibility": "visible"});
             $('#menuSearchId').css({"visibility": "visible"});
             $('#menuViewId').css({"visibility": "visible"});
             $('#menuDocId').css({"visibility": "visible"});
@@ -545,12 +551,92 @@ angular.module('AdnGallery.viewer',
         //
         //
         ///////////////////////////////////////////////////////////////////////
+        function loadExtensions() {
+
+            var url =  "http://" +
+                window.location.host +
+                '/api/extensions';
+
+            $http.get(url).success(function(response){
+
+                var loadedExtensions = [];
+
+                updateStorage(response.extensions);
+
+                async.each(response.extensions,
+
+                    function (extension, callback) {
+
+                        if (isExtensionEnabled(extension)) {
+
+                            loadedExtensions.push(extension.name);
+
+                            jQuery.getScript('../uploads/extensions/' + extension.file)
+                                .done(function () {
+
+                                    callback();
+                                })
+                                .fail(function () {
+                                    console.log("Load failed: " + extension.file);
+                                });
+                        }
+                        else callback();
+                    },
+                    function (err) {
+
+                        onExtensionScriptsLoaded(loadedExtensions);
+                    });
+            });
+        }
+
+        function updateStorage(extensions) {
+
+            //window.localStorage.clear();
+
+            if(!localStorage['extensions']) {
+
+                localStorage['extensions'] = JSON.stringify({});
+            }
+
+            var storageObj = JSON.parse(localStorage['extensions']);
+
+            extensions.forEach(function(extension) {
+
+                if(!storageObj[extension._id]) {
+
+                    storageObj[extension._id] = false;
+                }
+            });
+
+            localStorage['extensions'] = JSON.stringify(storageObj);
+        }
+
+        function isExtensionEnabled(extension) {
+
+            var storageObj = JSON.parse(localStorage['extensions']);
+
+            return storageObj[extension._id];
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function onExtensionScriptsLoaded(extensions) {
+
+            initializeViewer(extensions);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
 
         initializeEvents();
 
         initializeLayout();
 
-        initializeViewer();
+        loadExtensions();
 
         initializeGrid();
 

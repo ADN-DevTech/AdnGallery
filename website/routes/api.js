@@ -30,6 +30,9 @@ var nodemailer = require('nodemailer');
 var express = require('express');
 var request = require('request');
 var mongo = require('mongodb');
+var formidable = require('formidable');
+var path = require('path');
+var fs = require('fs');
 
 var Server = mongo.Server,
     Db = mongo.Db,
@@ -73,7 +76,7 @@ db.open(function (err, db) {
 ///////////////////////////////////////////////////////////////////////////////
 router.get('/models', function (req, res) {
 
-    console.log('Retrieving all items');
+    console.log('Retrieving all models');
 
     db.collection('models', function (err, collection) {
         collection.find().toArray(
@@ -307,6 +310,158 @@ router.put('/model/:id', function (req, res) {
             });
     });
 });
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+router.get('/extensions', function (req, res) {
+
+    console.log('Retrieving all extensions');
+
+    db.collection('extensions', function (err, collection) {
+        collection.find().toArray(
+
+            function (err, items) {
+
+                var response = {
+                    extensions: items
+                };
+
+                res.send(response);
+            });
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+router.post('/extensions', function (req, res) {
+
+    function getFileExt(file) {
+
+        var res = file.name.split('.');
+
+        return res[res.length - 1];
+    }
+
+    var error = null;
+
+    var form = new formidable.IncomingForm();
+
+    form.on('field', function(field, value) {
+
+    })
+
+    form.on('file', function(field, file) {
+
+        var ext = getFileExt(file);
+
+        if(ext === 'js' || ext === 'css') {
+
+            var filePath = file.path;
+
+            var uploadPath = path.join(
+                __dirname,
+                '../uploads/extensions/', file.name);
+
+            fs.readFile(filePath, function (err, data) {
+
+                var extensions = findExtensions(data.toString('utf8'));
+
+                if(extensions.length > 0) {
+
+                    extensions.forEach(function(name) {
+
+                        var extension = {
+                            name: name,
+                            file: file.name
+                        };
+
+                        addExtension(extension);
+                    });
+
+                    fs.writeFile(uploadPath, data, function (err) {
+
+                        fs.unlink(filePath, function (err) {
+
+                            error = err;
+                        });
+                    });
+                }
+            });
+        }
+    });
+
+    form.on('end', function() {
+
+        if (error) {
+            res.status(500);
+            res.json({'success': false});
+
+        } else {
+            res.status(200);
+            res.json({'success': true});
+        }
+    });
+
+    form.parse(req);
+});
+
+function addExtension(extension) {
+
+    db.collection('extensions', function (err, collection) {
+
+        collection.insert(
+            extension,
+            { safe: true },
+
+            function (err, result) {
+
+
+            });
+    });
+}
+
+function findExtensions(str) {
+
+    String.prototype.replaceAll = function (find, replace) {
+        var str = this;
+        return str.replace(new RegExp(
+                find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'),
+            replace);
+    };
+
+    var extensions = [];
+
+    var start = 0;
+
+    while(true) {
+
+        start = str.indexOf('registerExtension', start);
+
+        if(start < 0) {
+
+            return extensions;
+        }
+
+        var end = str.indexOf(',', start);
+
+        var substr = str.substring(start, end);
+
+        var ext = substr.replaceAll('registerExtension', '').
+            replaceAll('\n', '').
+            replaceAll(' ', '').
+            replaceAll('(', '').
+            replaceAll('\'', '').
+            replaceAll('"', '');
+
+        extensions.push(ext);
+
+        start = end;
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
