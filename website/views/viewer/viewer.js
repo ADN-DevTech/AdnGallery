@@ -638,7 +638,7 @@ angular.module('AdnGallery.viewer',
 
         loadExtensions();
 
-        initializeGrid();
-
         initializeMenu();
+
+        initializeGrid();
     });

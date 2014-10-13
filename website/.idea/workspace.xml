@@ -81,18 +81,8 @@
       <file leaf-file-name="viewer.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/viewer/viewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7444634" vertical-offset="8023" max-vertical-offset="9495">
-              <caret line="580" column="35" selection-start-line="580" selection-start-column="35" selection-end-line="580" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdnSimpleExtension.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Documents/TEMP/extension/AdnSimpleExtension.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.8278689" vertical-offset="8885" max-vertical-offset="9495">
+              <caret line="642" column="25" selection-start-line="642" selection-start-column="25" selection-end-line="642" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -806,14 +796,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Documents/TEMP/extension/AdnSimpleExtension.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="636">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Documents/TEMP/extension/AdnExtension.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
@@ -886,8 +868,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/viewer/viewer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7444634" vertical-offset="8023" max-vertical-offset="9495">
-          <caret line="580" column="35" selection-start-line="580" selection-start-column="35" selection-end-line="580" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.8278689" vertical-offset="8885" max-vertical-offset="9495">
+          <caret line="642" column="25" selection-start-line="642" selection-start-column="25" selection-end-line="642" selection-end-column="25" />
           <folding />
         </state>
       </provider>
