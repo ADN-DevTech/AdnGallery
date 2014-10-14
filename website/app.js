@@ -258,13 +258,22 @@ angular.module('AdnGallery',
         function initializeEvents() {
 
             var onModelSelected = $scope.$on('emit-modelSelected',
-
                 function(event, data) {
-                    $scope.$broadcast('broadcast-modelSelected', data);
+                    $scope.$broadcast(
+                        'broadcast-modelSelected',
+                        data);
+                });
+
+            var onExtensionModified = $scope.$on('emit-extension-status-modified',
+                function(event, extension) {
+                    $scope.$broadcast(
+                        'broadcast-extension-status-modified',
+                        extension);
                 });
 
             $scope.$on('$destroy', function() {
                 onModelSelected();
+                onExtensionModified();
             });
         }
 

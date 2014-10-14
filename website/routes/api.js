@@ -566,6 +566,10 @@ function findExtensions(str) {
             replace);
     };
 
+    String.prototype.trim = function () {
+        return this.replace(/^\s+/, '').replace(/\s+$/, '');
+    };
+
     var extensions = [];
 
     var start = 0;
@@ -585,12 +589,11 @@ function findExtensions(str) {
 
         var ext = substr.replaceAll('registerExtension', '').
             replaceAll('\n', '').
-            replaceAll(' ', '').
             replaceAll('(', '').
             replaceAll('\'', '').
             replaceAll('"', '');
 
-        extensions.push(ext);
+        extensions.push(ext.trim());
 
         start = end;
     }

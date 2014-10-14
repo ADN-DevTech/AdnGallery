@@ -49,7 +49,7 @@ angular.module('AdnGallery.viewer',
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function initializeViewer(extensions) {
+        function initializeViewer() {
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
@@ -71,12 +71,9 @@ angular.module('AdnGallery.viewer',
                         onItemSelected);
 
                     //$scope.adnViewerMng.startAnnotate();
+
+                    loadExtensions();
                 });
-
-            extensions.forEach(function(extension) {
-
-                $scope.adnViewerMng.addExtension(extension);
-            });
 
             var id =
                 Autodesk.Viewing.Private.getParameterByName("id");
@@ -320,11 +317,13 @@ angular.module('AdnGallery.viewer',
                 west__size: 300,
 
                 center__onresize: function () {
-                    $scope.viewer.resize();
+                    if($scope.viewer)
+                        $scope.viewer.resize();
                 },
 
                 west__onresize: function () {
-                    $scope.viewer.resize();
+                    if($scope.viewer)
+                        $scope.viewer.resize();
                 }
             });
 
@@ -543,6 +542,38 @@ angular.module('AdnGallery.viewer',
 
                 $location.path('/viewer').search({id: data.id});
             });
+
+            $scope.$on('broadcast-extension-status-modified',
+                function(event, extension) {
+
+                    if(extension.enabled) {
+
+                        jQuery.getScript('../uploads/extensions/' + extension.file)
+                            .done(function () {
+
+                                if ($scope.viewer) {
+
+                                    console.log("Loading extension: " + extension.name);
+
+                                    $scope.viewer.loadExtension(
+                                        extension.name);
+                                }
+                            })
+                            .fail(function () {
+                                console.log("Load failed: " + extension.file);
+                            });
+                    }
+                    else {
+
+                        if ($scope.viewer) {
+
+                            console.log("Unloading extension: " + extension.name);
+
+                            $scope.viewer.unloadExtension(
+                                extension.name);
+                        }
+                    }
+            });
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -557,8 +588,6 @@ angular.module('AdnGallery.viewer',
 
             $http.get(url).success(function(response){
 
-                var loadedExtensions = [];
-
                 updateStorage(response.extensions);
 
                 async.each(response.extensions,
@@ -567,12 +596,11 @@ angular.module('AdnGallery.viewer',
 
                         if (isExtensionEnabled(extension)) {
 
-                            loadedExtensions.push(extension.name);
-
                             jQuery.getScript('../uploads/extensions/' + extension.file)
                                 .done(function () {
 
-                                    callback();
+                                    $scope.viewer.loadExtension(
+                                        extension.name);
                                 })
                                 .fail(function () {
                                     console.log("Load failed: " + extension.file);
@@ -582,7 +610,7 @@ angular.module('AdnGallery.viewer',
                     },
                     function (err) {
 
-                        onExtensionScriptsLoaded(loadedExtensions);
+                        //All extensions loaded ...
                     });
             });
         }
@@ -620,21 +648,12 @@ angular.module('AdnGallery.viewer',
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function onExtensionScriptsLoaded(extensions) {
-
-            initializeViewer(extensions);
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //
-        ///////////////////////////////////////////////////////////////////////
 
         initializeEvents();
 
         initializeLayout();
 
-        loadExtensions();
+        initializeViewer();
 
         initializeMenu();
 

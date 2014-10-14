@@ -14,15 +14,15 @@ Autodesk.ADN.AnnotationExtension = function (viewer, options) {
     // Private members
     //
     ///////////////////////////////////////////////////////////////////////////
-    _selectedFragment = null;
+    var _annotationDivId = 'adn-annotation-divId';
 
-    _annotationDivId = 'adn-annotation-divId';
+    var _selectedFragment = null;
 
-    _selectedId = null;
+    var _selectedId = null;
 
-    _viewer = null;
+    var _viewer = viewer;
 
-    _self = this;
+    var _self = this;
 
     ///////////////////////////////////////////////////////////////////////////
     // load callback
@@ -67,6 +67,16 @@ Autodesk.ADN.AnnotationExtension = function (viewer, options) {
 
         console.log("Autodesk.ADN.AnnotationExtension unloaded");
 
+        _viewer.removeEventListener(
+            Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+            _self.onItemSelected);
+
+        _viewer.removeEventListener(
+            Autodesk.Viewing.CAMERA_CHANGE_EVENT,
+            _self.onCameraChanged);
+
+        $('#' + _annotationDivId).remove();
+
         return true;
     };
 
@@ -88,7 +98,18 @@ Autodesk.ADN.AnnotationExtension = function (viewer, options) {
             if(Array.isArray(_selectedFragment))
                 _selectedFragment = _selectedFragment[0];
 
-            _self.trackFragment(_selectedId, _selectedFragment);
+            _self.getPropertyValue(_selectedId, 'label',
+
+                function(value){
+
+                    $('#' + _annotationDivId).text(value);
+
+                    $('#' + _annotationDivId).css(
+                        {'visibility':'visible'}
+                    );
+
+                    _self.onCameraChanged();
+                });
         }
         else {
             $('#adnAnnotationDivId').css({'visibility':'hidden'});
@@ -99,75 +120,47 @@ Autodesk.ADN.AnnotationExtension = function (viewer, options) {
     // world -> screen coords conversion
     //
     ///////////////////////////////////////////////////////////////////////////
-    //Code modified from http://zachberry.com/blog/tracking-3d-objects-in-2d-with-three-js/
     _self.worldToScreen = function(mesh, camera) {
 
-        var v, percX, percY, left, top;
-
-        // this will give us position relative to the world
         var pos = new THREE.Vector3();
 
         pos.setFromMatrixPosition(mesh.matrixWorld);
 
-        // projectVector will translate position to 2d
-        var projector = new THREE.Projector();
+         var p = new THREE.Vector4();
 
-        v = projector.projectVector(pos, camera);
+         p.x = pos.x;
+         p.y = pos.y;
+         p.z = pos.z;
+         p.w = 1;
 
-        // translate our vector so that percX=0 represents
-        // the left edge, percX=1 is the right edge,
-        // percY=0 is the top edge, and percY=1 is the bottom edge.
-        percX = (v.x + 1) / 2;
-        percY = (-v.y + 1) / 2;
+         p.applyMatrix4(camera.matrixWorldInverse);
+         p.applyMatrix4(camera.projectionMatrix);
 
-        // scale these values to our viewport size
-        left = percX * 1200;
+         // don't want to mirror values with negative z (behind camera)
+         // if camera is inside the bounding box, better to throw markers to the screen sides.
+         if (p.w > 0)
+         {
+             p.x /= p.w;
+             p.y /= p.w;
+             p.z /= p.w;
+         }
 
-        if (left > 1200) left = 1200;
-        top = percY * 400;
+         //This one is multiplying by width/2 and –height/2, and offsetting by canvas location
+         point = _viewer.impl.viewportToClient(p.x, p.y);
 
-        if (top > 400) top = 400;
-        return new THREE.Vector2(left, top);
-    };
+         // snap to the center of the pixel
+         point.x = Math.floor(point.x) + 0.5;
+         point.y = Math.floor(point.y) + 0.5;
 
-    //better way to do ...
-    /*function worldToClient(point, camera) {
+         //Canvas is the HTML Canvas of the viewer instance
+         //var clientRect = canvas.getBoundingClientRect();
 
-     var p = new THREE.Vector4();
+         //Not sure you need this – depends on what you need the pixel coordinates relative to
+         //point.x -= clientRect.left;
+         //point.y -= clientRect.top;
 
-     p.x = point.x;
-     p.y = point.y;
-     p.z = point.z;
-     p.w = 1;
-
-     p.applyMatrix4(camera.matrixWorldInverse);
-     p.applyMatrix4(camera.projectionMatrix);
-
-     // don't want to mirror values with negative z (behind camera)
-     // if camera is inside the bounding box, better to throw markers to the screen sides.
-     if (p.w > 0)
-     {
-     p.x /= p.w;
-     p.y /= p.w;
-     p.z /= p.w;
+         return point;
      }
-
-     //This one is multiplying by width/2 and –height/2, and offsetting by canvas location
-     point = this.viewer.impl.viewportToClient(p.x, p.y);
-
-     // snap to the center of the pixel
-     point.x = Math.floor(point.x) + 0.5;
-     point.y = Math.floor(point.y) + 0.5;
-
-     //Canvas is the HTML Canvas of the viewer instance
-     var clientRect = canvas.getBoundingClientRect();
-
-     //Not sure you need this – depends on what you need the pixel coordinates relative to
-     point.x -= clientRect.left;
-     point.y -= clientRect.top;
-
-     return point;
-     }*/
 
     ///////////////////////////////////////////////////////////////////////////
     // Get Property Value
@@ -195,26 +188,6 @@ Autodesk.ADN.AnnotationExtension = function (viewer, options) {
             }
 
             _viewer.getProperties(dbId, _cb);
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    // track fragment
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    _self.trackFragment = function(id, fragment) {
-
-        _self.getPropertyValue(id, 'label',
-
-            function(value){
-
-                $('#' + _annotationDivId).text(value);
-
-                $('#' + _annotationDivId).css(
-                    {'visibility':'visible'}
-                );
-
-                _self.onCameraChanged();
-            });
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -262,6 +235,6 @@ Autodesk.ADN.AnnotationExtension.prototype.constructor =
     Autodesk.ADN.AnnotationExtension;
 
 Autodesk.Viewing.theExtensionManager.registerExtension(
-    'AnnotationExtension',
+    '2D Annotation',
     Autodesk.ADN.AnnotationExtension);
 

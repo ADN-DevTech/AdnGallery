@@ -209,6 +209,11 @@ angular.module('AdnGallery.extensions',[])
 
             $scope.Extensions.forEach(function(extension){
 
+                if(storageObj[extension._id] !== extension.enabled) {
+
+                    $scope.$emit('emit-extension-status-modified', extension);
+                }
+
                 storageObj[extension._id] = extension.enabled;
             });
 
