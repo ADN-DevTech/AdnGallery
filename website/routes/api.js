@@ -35,6 +35,7 @@ var mongo = require('mongodb');
 var path = require('path');
 var fs = require('fs');
 
+var Sync = require('sync');
 
 var Server = mongo.Server,
     Db = mongo.Db,
@@ -257,8 +258,6 @@ router.post('/model', function (req, res) {
                         translateModel(modelInfo, emailInfo);
                     }
 
-                    //sendMail(url, email, modelInfo);
-
                     var response = {
                         model: result[0]
                     };
@@ -267,7 +266,6 @@ router.post('/model', function (req, res) {
                 }
             });
     });
-
 });
 
 function translateModel(modelInfo, emailInfo) {
@@ -278,12 +276,12 @@ function translateModel(modelInfo, emailInfo) {
             var viewDataClient =
                 new AdnViewDataClient(
                     'https://developer.api.autodesk.com',
-                     token);
+                    token);
 
             checkTranslationStatus(
                 viewDataClient,
                 modelInfo.fileId,
-                1000 * 60 * 60 * 24 * 2, //2 days timeout :),
+                    1000 * 60 * 60 * 24 * 2, //2 days timeout :),
                 function (viewable) {
 
                     sendMail(emailInfo.url, emailInfo.email, modelInfo);
@@ -330,9 +328,9 @@ function checkTranslationStatus(
                 function (response) {
 
                     console.log(
-                        'Progress ' +
-                        fileId + ': ' +
-                        response.progress);
+                            'Progress ' +
+                            fileId + ': ' +
+                            response.progress);
 
                     if (response.progress === 'complete') {
                         clearInterval(timer);
@@ -353,21 +351,21 @@ function checkTranslationStatus(
 function sendMail(url, email, modelInfo) {
 
     /*var transporter = nodemailer.createTransport("SMTP", {
-        host: '127.0.0.1',
-        port: 587,
-        auth: {
-            user: 'adngallery',
-            pass: '@utod3sker113'
-        }
-    });*/
+     host: '127.0.0.1',
+     port: 587,
+     auth: {
+     user: 'adngallery',
+     pass: '@utod3sker113'
+     }
+     });*/
 
     /*var transporter = nodemailer.createTransport("SMTP", {
-        service: 'gmail',
-        auth: {
-            user: 'adn.autodesk@gmail.com',
-            pass: 'autodesk913'
-        }
-    });*/
+     service: 'gmail',
+     auth: {
+     user: 'adn.autodesk@gmail.com',
+     pass: 'autodesk913'
+     }
+     });*/
 
     var transporter = nodemailer.createTransport(transport({
         name: 'smtp.orange.fr'
@@ -436,19 +434,37 @@ router.get('/extensions', function (req, res) {
 
     console.log('Retrieving all extensions');
 
+    getExtensionsAsync(function(arg, items) {
+
+        var response = {
+            extensions: items
+        };
+
+        res.send(response);
+    });
+});
+
+function getExtensionsAsync(callback) {
+
     db.collection('extensions', function (err, collection) {
+
         collection.find().toArray(
 
             function (err, items) {
 
-                var response = {
-                    extensions: items
-                };
-
-                res.send(response);
+                callback(null, items);
             });
     });
-});
+}
+
+
+// Start fiber
+/*Sync(function(){
+
+    var res = getExtensionsAsync.sync(null);
+
+    console.log(res);
+})*/
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -589,31 +605,31 @@ function findExtensions(str) {
 
 /*router.delete('/model/:id', function (req, res) {
 
-    var id = req.params.id;
+ var id = req.params.id;
 
-    //Check password
-    var pwd = req.query.pwd;
+ //Check password
+ var pwd = req.query.pwd;
 
-    if (pwd !== ADMIN_PASSWORD) {
-        var error = 'Invalid admin password, cannot delete model: ' + id;
-        console.log(error);
-        res.send({ 'error': error });
-        return;
-    }
+ if (pwd !== ADMIN_PASSWORD) {
+ var error = 'Invalid admin password, cannot delete model: ' + id;
+ console.log(error);
+ res.send({ 'error': error });
+ return;
+ }
 
-    console.log('Deleting model: ' + id);
+ console.log('Deleting model: ' + id);
 
-    db.collection('models', function (err, collection) {
-        collection.remove(
-            { '_id': new BSON.ObjectID(id) },
-            { safe: true },
-            function (err, result) {
-                if (err) {
-                    res.send({ 'error': 'An error has occurred - ' + err });
-                } else {
-                    console.log('' + result + ' document(s) deleted');
-                    res.send(req.body);
-                }
-            });
-    });
-});*/
+ db.collection('models', function (err, collection) {
+ collection.remove(
+ { '_id': new BSON.ObjectID(id) },
+ { safe: true },
+ function (err, result) {
+ if (err) {
+ res.send({ 'error': 'An error has occurred - ' + err });
+ } else {
+ console.log('' + result + ' document(s) deleted');
+ res.send(req.body);
+ }
+ });
+ });
+ });*/

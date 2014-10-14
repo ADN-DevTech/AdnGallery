@@ -20,6 +20,7 @@
     "mongodb": "1.x",
     "socket.io": "*",
     "formidable": "*",
-    "xmlhttprequest": "*"
+    "xmlhttprequest": "*",
+    "sync": "*"
   }
 }

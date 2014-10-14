@@ -70,7 +70,7 @@ angular.module('AdnGallery.viewer',
                         Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                         onItemSelected);
 
-                    $scope.adnViewerMng.startAnnotate();
+                    //$scope.adnViewerMng.startAnnotate();
                 });
 
             extensions.forEach(function(extension) {
@@ -206,8 +206,6 @@ angular.module('AdnGallery.viewer',
             for (var i = 0; i < dbIdArray.length; i++) {
 
                 var dbId = dbIdArray[i];
-
-                console.log("Selected Item Id: " + dbId);
 
                 $scope.viewer.getProperties(
                     dbId,
