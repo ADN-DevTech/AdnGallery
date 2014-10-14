@@ -15,11 +15,15 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
     {
         private static bool bShowProgress = true;
 
+        private static bool bStoreDetails = true;
+
         public FileUploadForm()
         {
             InitializeComponent();
 
             cbProgress.Checked = bShowProgress;
+
+            cbStoreDetails.Checked = bStoreDetails;
 
             DialogResult = DialogResult.Cancel;         
         }
@@ -56,6 +60,14 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
             }
         }
 
+        public bool StoreDetails
+        {
+            get
+            {
+                return cbStoreDetails.Checked;
+            }
+        }
+
         private void bOK_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
@@ -71,6 +83,11 @@ namespace Autodesk.ADN.Toolkit.Gallery.Dialogs
         private void cbProgress_CheckedChanged(object sender, EventArgs e)
         {
             bShowProgress = cbProgress.Checked;
+        }
+
+        private void cbStoreDetails_CheckedChanged(object sender, EventArgs e)
+        {
+            bStoreDetails = cbStoreDetails.Checked;
         }
     }
 }

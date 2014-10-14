@@ -34,10 +34,15 @@ namespace Autodesk.ADN.Toolkit.Gallery
                     request);
         }
 
-        async public Task<DBModelResponse> AddModelAsync(DBModel model)
+        async public Task<DBModelResponse> AddModelAsync(
+            DBModel model)
         {
+            var host = _restClient.BaseUrl.
+                Replace("http://", "").
+                Replace("https://", "");
+
             var request = new RestRequest(
-                "api/model", 
+                "api/model?=" + host, 
                 Method.POST);
 
             request.AddHeader("Content-Type", "application/json");

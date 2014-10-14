@@ -36,11 +36,12 @@
             this._tbUsername = new System.Windows.Forms.TextBox();
             this._tbEmail = new System.Windows.Forms.TextBox();
             this.cbProgress = new System.Windows.Forms.CheckBox();
+            this.cbStoreDetails = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // bOK
             // 
-            this.bOK.Location = new System.Drawing.Point(232, 72);
+            this.bOK.Location = new System.Drawing.Point(232, 91);
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(70, 21);
             this.bOK.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // bCancel
             // 
-            this.bCancel.Location = new System.Drawing.Point(308, 72);
+            this.bCancel.Location = new System.Drawing.Point(308, 91);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(70, 21);
             this.bCancel.TabIndex = 1;
@@ -101,11 +102,23 @@
             this.cbProgress.UseVisualStyleBackColor = true;
             this.cbProgress.CheckedChanged += new System.EventHandler(this.cbProgress_CheckedChanged);
             // 
+            // cbStoreDetails
+            // 
+            this.cbStoreDetails.AutoSize = true;
+            this.cbStoreDetails.Location = new System.Drawing.Point(15, 95);
+            this.cbStoreDetails.Name = "cbStoreDetails";
+            this.cbStoreDetails.Size = new System.Drawing.Size(145, 17);
+            this.cbStoreDetails.TabIndex = 7;
+            this.cbStoreDetails.Text = "Remember upload details";
+            this.cbStoreDetails.UseVisualStyleBackColor = true;
+            this.cbStoreDetails.CheckedChanged += new System.EventHandler(this.cbStoreDetails_CheckedChanged);
+            // 
             // FileUploadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 98);
+            this.ClientSize = new System.Drawing.Size(389, 118);
+            this.Controls.Add(this.cbStoreDetails);
             this.Controls.Add(this.cbProgress);
             this.Controls.Add(this._tbEmail);
             this.Controls.Add(this._tbUsername);
@@ -133,5 +146,6 @@
         private System.Windows.Forms.TextBox _tbUsername;
         private System.Windows.Forms.TextBox _tbEmail;
         private System.Windows.Forms.CheckBox cbProgress;
+        private System.Windows.Forms.CheckBox cbStoreDetails;
     }
 }

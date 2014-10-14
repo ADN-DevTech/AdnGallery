@@ -24,11 +24,14 @@ namespace Autodesk.ADN.AcadGalleryUploader
             Database db = doc.Database;
             Editor ed = doc.Editor;
 
-            var modelListResponse = await Utils.GetModelsAsync();
+            AdnGalleryClient galleryClient = new AdnGalleryClient(
+                Util.GetGalleryUrl());
+
+            var modelListResponse = await galleryClient.GetModelsAsync();
 
             if (!modelListResponse.IsOk())
             {
-                Utils.LogError("Error: " + modelListResponse.Error.ToString());
+                Util.LogError("Error: " + modelListResponse.Error.ToString());
                 return;
             }
 
@@ -50,7 +53,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
             if (info.Extension == ".dwt")
             {
-                Utils.LogError("Please save the drawing before uploading to the gallery, aborting...");
+                Util.LogError("Please save the drawing before uploading to the gallery, aborting...");
                 return;
             }
 
@@ -58,10 +61,18 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
             FileUploadForm fUp = new FileUploadForm();
 
+            fUp.UserName = Util.GetUser();
+            fUp.EMail = Util.GetEmail();
+
             var dialogResult = Application.ShowModalDialog(fUp);
 
             if (dialogResult != System.Windows.Forms.DialogResult.OK)
-                return;  
+                return;
+
+            if (fUp.StoreDetails)
+            {
+                Util.StoreUserInfo(fUp.UserName, fUp.EMail);
+            }
 
             SynchronizationContext.SetSynchronizationContext(
                 syncContext);
@@ -86,7 +97,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
             if (!tokenResult.IsOk())
             {
-                Utils.LogError("Authentication failed: " + tokenResult.Error.Reason);
+                Util.LogError("Authentication failed: " + tokenResult.Error.Reason);
 
                 System.IO.File.Delete(filename);
                 return;
@@ -103,7 +114,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
             if (!response.IsOk())
             {
-                Utils.LogError("Error: " + response.Error.Reason);
+                Util.LogError("Error: " + response.Error.Reason);
 
                 System.IO.File.Delete(filename);
                 return;
@@ -115,7 +126,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
                 if (registerResponse.Result.ToLower() != "success")
                 {
-                    Utils.LogError("Registration failed: " + registerResponse.Result);
+                    Util.LogError("Registration failed: " + registerResponse.Result);
 
                     System.IO.File.Delete(filename);
                     return;
@@ -133,17 +144,21 @@ namespace Autodesk.ADN.AcadGalleryUploader
                     fileId,
                     fileId.ToBase64());
 
-                var modelResponse = await Utils.AddModelToGalleryAsync(dbModel);
+                AdnGalleryClient galleryClient = new AdnGalleryClient(
+                    Util.GetGalleryUrl());
+
+                var modelResponse = await galleryClient.AddModelAsync(
+                    dbModel);
 
                 if (!modelResponse.IsOk())
                 {
-                    Utils.LogError("Error: " + modelResponse.Error.ToString());
+                    Util.LogError("Error: " + modelResponse.Error.ToString());
 
                     System.IO.File.Delete(filename);
                     return;
                 }
 
-                var url = Utils.GetGalleryUrl() + "/#/viewer?id=" +
+                var url = Util.GetGalleryUrl() + "/#/viewer?id=" +
                     modelResponse.Model.Id;
 
                 if (fUp.ShowProgress)
@@ -182,7 +197,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
         }
     }
 
-    class Utils
+    class Util
     {
         public static void LogError(string msg)
         {
@@ -192,38 +207,53 @@ namespace Autodesk.ADN.AcadGalleryUploader
             ed.WriteMessage("\n" + msg + "\n");
         }
 
-        async public static Task <DBModelResponse> AddModelToGalleryAsync(
-            DBModel model)
+        private static Configuration GetConfig()
         {
-            AdnGalleryClient galleryClient = new AdnGalleryClient(
-                GetGalleryUrl());
-
-            return await galleryClient.AddModelAsync(model);
-        }
-
-        async public static Task <DBModelListResponse> GetModelsAsync()
-        {
-            AdnGalleryClient galleryClient = new AdnGalleryClient(
-                GetGalleryUrl());
-
-            return await galleryClient.GetModelsAsync();
-        }
-
-        public static string GetGalleryUrl()
-        {     
             FileInfo fi = new FileInfo(
                 System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             string configPath = fi.DirectoryName + "\\" + "addin.config";
 
-            Configuration config =
+            Configuration config = 
                 ConfigurationManager.OpenMappedExeConfiguration(
                     new ExeConfigurationFileMap { ExeConfigFilename = configPath },
                     ConfigurationUserLevel.None);
 
+            return config;
+        }
+
+        public static string GetGalleryUrl()
+        {     
+            Configuration config = GetConfig();
+
             var url = config.AppSettings.Settings["GalleryUrl"].Value;
 
             return url;
+        }
+
+        public static void StoreUserInfo(string user, string email)
+        {
+            Configuration config = GetConfig();
+
+            config.AppSettings.Settings["Username"].Value = user;
+
+            config.AppSettings.Settings["Email"].Value = email;
+
+            config.Save(ConfigurationSaveMode.Modified);
+        }
+
+        public static string GetUser()
+        {
+            Configuration config = GetConfig();
+
+            return config.AppSettings.Settings["Username"].Value;
+        }
+
+        public static string GetEmail()
+        {
+            Configuration config = GetConfig();
+
+            return config.AppSettings.Settings["Email"].Value;
         }
     }
 }
