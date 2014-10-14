@@ -55,7 +55,7 @@ angular.module('AdnGallery.views',[])
 
                 var dbModel = $scope.getCurrentDbModel();
 
-                var view = $scope.getViewerManager().getCurrentView(name);
+                var view = $scope.getViewerManager().getViewer().getCurrentView(name);
 
                 getModelById(dbModel._id,
 
@@ -93,7 +93,7 @@ angular.module('AdnGallery.views',[])
 
                                 $('#loadViewDlg').modal('hide');
 
-                                $scope.getViewerManager().setView(this.view);
+                                $scope.getViewerManager().getViewer().setView(this.view);
                             });
                     });
                 });

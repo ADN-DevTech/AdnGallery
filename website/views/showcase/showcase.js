@@ -201,7 +201,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                     onExplode);
 
                 // enable mouse on viewer div
-                $('#' + $scope.adnViewerMng.getViewerDivId()).css(
+                $('#' + viewer.clientContainer.id).css(
                     'pointer-events', 'auto');
             }
             else {
@@ -219,7 +219,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                     onIsolate);
 
                 // disable mouse on viewer div
-                $('#' + $scope.adnViewerMng.getViewerDivId()).css(
+                $('#' + viewer.clientContainer.id).css(
                     'pointer-events', 'none');
             }
         }
@@ -245,19 +245,6 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                     document.getElementById('ViewerDiv'));
 
             $scope.setViewerManager($scope.adnViewerMng);
-
-            $scope.adnViewerMng.registerForGeometryLoaded(
-
-                function (viewer) {
-
-                    var data = $scope.showcaseData;
-
-                    if(data) {
-
-                        if(data.isolateIds)
-                            viewer.isolateById(data.isolateIds);
-                    }
-                });
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -291,6 +278,17 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                             if(data.view)
                                 $scope.adnViewerMng.setView(data.view);
                         }
+
+                        viewer.addEventListener(
+                            Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+                            function (event) {
+
+                                if(data) {
+
+                                    if(data.isolateIds)
+                                        viewer.isolateById(data.isolateIds);
+                                }
+                            });
                     },
                     function(error) {
                         console.log("Error loading document: " + error);
@@ -328,7 +326,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
         function onCameraChanged(event) {
 
             var data = {
-                view: $scope.adnViewerMng.getCurrentView('current')
+                view: $scope.viewer.getCurrentView('current')
             };
 
             $scope.socket.emit('cameraChanged', data);
@@ -399,7 +397,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             if(viewer) {
 
-                $scope.adnViewerMng.setView(data.view);
+                viewer.setView(data.view);
             }
         });
 

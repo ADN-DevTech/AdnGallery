@@ -58,23 +58,6 @@ angular.module('AdnGallery.viewer',
 
             $scope.setViewerManager($scope.adnViewerMng);
 
-            $scope.adnViewerMng.registerForGeometryLoaded(
-
-                function (viewer) {
-
-                    $scope.viewer = viewer;
-
-                    initializeTree(viewer);
-
-                    viewer.addEventListener(
-                        Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-                        onItemSelected);
-
-                    //$scope.adnViewerMng.startAnnotate();
-
-                    loadExtensions();
-                });
-
             var id =
                 Autodesk.Viewing.Private.getParameterByName("id");
 
@@ -100,12 +83,29 @@ angular.module('AdnGallery.viewer',
                 urn,
                 function (viewer) {
 
+                    $scope.viewer = viewer;
+
+                    getModelByUrn(urn);
+
+                    viewer.addEventListener(
+
+                        Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+
+                        function (event) {
+
+                            initializeTree(viewer);
+
+                            viewer.addEventListener(
+                                Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                                onItemSelected);
+
+                            loadExtensions();
+                        });
                 },
                 function(error) {
+
                     console.log("Error loading document: " + error);
                 });
-
-            getModelByUrn(urn);
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -158,7 +158,7 @@ angular.module('AdnGallery.viewer',
             var div = document.createElement("div");
 
             var parent = document.getElementById(
-                $scope.adnViewerMng.getViewerDivId());
+                $scope.viewer.clientContainer.id);
 
             parent.appendChild(div);
 
@@ -219,24 +219,6 @@ angular.module('AdnGallery.viewer',
                         }
                     });
             }
-
-            // Properties table hook
-
-            $scope.adnViewerMng.onDisplayPropertiesTable(
-
-                function(table) {
-
-                    var properties = [{
-                        index: 0,   //optional index position in the table
-                        displayName: 'Developer',
-                        displayValue: 'Philippe Leefsma'
-                    }, {
-                        displayName: 'Company',
-                        displayValue: 'ADN'
-                    }];
-
-                    //$scope.adnViewerMng.insertProperties(properties, table);
-                });
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -255,22 +237,26 @@ angular.module('AdnGallery.viewer',
 
             $('#btnExplodeMotionId').unbind().click(
                 function() {
-                    $scope.adnViewerMng.startExplodeMotion(
-                        0.2, 0.1, 1.5);
+                    if($scope.viewer)
+                        $scope.viewer.startExplodeMotion(
+                            0.2, 0.1, 1.5);
                 }
             );
 
             $('#btnRotateMotionId').unbind().click(
                 function() {
-                    $scope.adnViewerMng.startRotateMotion(
-                        0.3, {x:0, y:1, z:0});
+                    if($scope.viewer)
+                        $scope.viewer.startRotateMotion(
+                            0.3, {x:0, y:1, z:0});
                 }
             );
 
             $('#btnStopMotionId').unbind().click(
                 function() {
-                    $scope.adnViewerMng.stopExplodeMotion();
-                    $scope.adnViewerMng.stopRotateMotion();
+                    if($scope.viewer) {
+                        $scope.viewer.stopExplodeMotion();
+                        $scope.viewer.stopRotateMotion();
+                    }
                 }
             );
 
