@@ -19,6 +19,7 @@
     "bson":"*",
     "mongodb": "1.x",
     "socket.io": "*",
-    "formidable": "*"
+    "formidable": "*",
+    "xmlhttprequest": "*"
   }
 }

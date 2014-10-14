@@ -93,9 +93,6 @@ app.use(function(err, req, res, next) {
     });
 });*/
 
-module.exports = app;
-
-//run with: leefsmp$ node server.js
 
 app.set('port', process.env.PORT || 3000);
 
@@ -110,3 +107,4 @@ var serverApp = app.listen(
 
 showcase.initializeSocket(serverApp);
 
+module.exports = app;

@@ -160,7 +160,7 @@ angular.module('AdnGallery.upload',[])
                                 views: []
                             };
 
-                            postModel(modelInfo);
+                            postModel(modelInfo, true);
 
                             checkTranslationStatus(
                                 fileId,
@@ -221,13 +221,14 @@ angular.module('AdnGallery.upload',[])
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function postModel(modelInfo) {
+        function postModel(modelInfo, translate) {
 
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST',
                 'http://' + window.location.host +
-                '/api/model?host=' + window.location.host,
+                '/api/model?host=' + window.location.host +
+                '&translate=' + translate,
                 true);
 
             xhr.setRequestHeader(

@@ -25,14 +25,16 @@ var ADMIN_PASSWORD = 'kow@bung@'
 //var CONSUMER_SECRET = "****** place holder - replace with your creds ******";
 //var BASE_URL = "https://developer.api.autodesk.com";
 
+var AdnViewDataClient = require('./Autodesk.ADN.Toolkit.ViewDataServer.js');
 var transport = require('nodemailer-direct-transport');
+var formidable = require('formidable');
 var nodemailer = require('nodemailer');
 var express = require('express');
 var request = require('request');
 var mongo = require('mongodb');
-var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
+
 
 var Server = mongo.Server,
     Db = mongo.Db,
@@ -116,6 +118,30 @@ router.get('/token', function (req, res) {
         });
 });
 
+// get token server side
+function getToken(onSuccess, onError) {
+
+    var params = {
+        client_id: CONSUMER_KEY,
+        client_secret: CONSUMER_SECRET,
+        grant_type: 'client_credentials'
+    }
+
+    request.post(BASE_URL + '/authentication/v1/authenticate',
+        { form: params },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+
+                var authResponse = JSON.parse(body);
+
+                onSuccess(authResponse.access_token);
+            }
+            else {
+                onError(error)
+            }
+        });
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //
@@ -188,6 +214,8 @@ router.get('/search/models', function (req, res) {
 ///////////////////////////////////////////////////////////////////////////////
 router.post('/model', function (req, res) {
 
+    var translate = req.query.translate;
+
     var host = req.query.host;
 
     var item = req.body;
@@ -203,7 +231,6 @@ router.post('/model', function (req, res) {
     }
 
     db.collection('models', function (err, collection) {
-
         collection.insert(
             item,
             { safe: true },
@@ -221,7 +248,16 @@ router.post('/model', function (req, res) {
 
                     var url = 'http://' + host + '/#/viewer?id=' + modelInfo._id;
 
-                    sendMail(url, email,modelInfo );
+                    var emailInfo = {
+                        url: url,
+                        email: email
+                    }
+
+                    if(translate) {
+                        translateModel(modelInfo, emailInfo);
+                    }
+
+                    //sendMail(url, email, modelInfo);
 
                     var response = {
                         model: result[0]
@@ -231,8 +267,89 @@ router.post('/model', function (req, res) {
                 }
             });
     });
+
 });
 
+function translateModel(modelInfo, emailInfo) {
+
+    getToken(
+        function(token) {
+
+            var viewDataClient =
+                new AdnViewDataClient(
+                    'https://developer.api.autodesk.com',
+                     token);
+
+            checkTranslationStatus(
+                viewDataClient,
+                modelInfo.fileId,
+                1000 * 60 * 60 * 24 * 2, //2 days timeout :),
+                function (viewable) {
+
+                    sendMail(emailInfo.url, emailInfo.email, modelInfo);
+
+                    console.log("Translation successful: " +
+                        modelInfo.name + " - FileId: " +
+                        modelInfo.fileId);
+                },
+                function(error) {
+
+                });
+        },
+        function(error) {
+
+        }
+    );
+}
+
+///////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////
+function checkTranslationStatus(
+    viewDataClient,
+    fileId,
+    timeout,
+    onSuccess,
+    onError) {
+
+    var startTime = new Date().getTime();
+
+    var timer = setInterval(function () {
+
+        var dt = (new Date().getTime() - startTime) / timeout;
+
+        if (dt >= 1.0) {
+
+            clearInterval(timer);
+        }
+        else {
+
+            viewDataClient.getViewableAsync(
+                fileId,
+                function (response) {
+
+                    console.log(
+                        'Progress ' +
+                        fileId + ': ' +
+                        response.progress);
+
+                    if (response.progress === 'complete') {
+                        clearInterval(timer);
+                        onSuccess(response);
+                    }
+                },
+                function (error) {
+                    onError(error);
+                });
+        }
+    }, 10000);
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 function sendMail(url, email, modelInfo) {
 
     /*var transporter = nodemailer.createTransport("SMTP", {
