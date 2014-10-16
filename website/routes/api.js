@@ -25,7 +25,7 @@ var ADMIN_PASSWORD = 'kow@bung@'
 //var CONSUMER_SECRET = "****** place holder - replace with your creds ******";
 //var BASE_URL = "https://developer.api.autodesk.com";
 
-var AdnViewDataClient = require('./Autodesk.ADN.Toolkit.ViewDataServer.js');
+var AdnViewDataClient = require('./Autodesk.ADN.Toolkit.ViewDataClient.js');
 var transport = require('nodemailer-direct-transport');
 var formidable = require('formidable');
 var nodemailer = require('nodemailer');
@@ -457,7 +457,6 @@ function getExtensionsAsync(callback) {
     });
 }
 
-
 // Start fiber
 /*Sync(function(){
 
@@ -512,7 +511,16 @@ router.post('/extensions', function (req, res) {
                             file: file.name
                         };
 
-                        addExtension(extension);
+                        // Start fiber
+                        Sync(function(){
+
+                            var res = getExtensionsByNameAsync.sync(null, name);
+
+                            if(res.length === 0) {
+
+                                addExtension(extension);
+                            }
+                         })
                     });
 
                     fs.writeFile(uploadPath, data, function (err) {
@@ -555,6 +563,21 @@ function addExtension(extension) {
 
             });
     });
+}
+
+function getExtensionsByNameAsync(name, callback) {
+
+    var query = new Object();
+
+    query['name'] = name;
+
+    db.collection('extensions',
+        function (err, collection) {
+            collection.find(query).toArray(
+                function (err, items) {
+                    callback(null, items);
+                });
+        });
 }
 
 function findExtensions(str) {
