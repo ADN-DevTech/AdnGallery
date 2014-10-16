@@ -1,6 +1,7 @@
 **/node_modules
 npm-debug.log
 **/components/viewer
+**/uploads/extensions
 
 # Compiled source #
 ###################
