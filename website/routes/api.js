@@ -504,9 +504,22 @@ router.post('/extensions', function (req, res) {
 
                 if(extensions.length > 0) {
 
-                    extensions.forEach(function(name) {
+                    extensions.forEach(function(id) {
+
+                        var idComponents = id.split('.');
+
+                        var nameComponents =
+                            idComponents[idComponents.length - 1].
+                                match(/[A-Z][a-z]+/g);
+
+                        var name = '';
+
+                        nameComponents.forEach(function(nameComp){
+                            name += nameComp + ' ';
+                        });
 
                         var extension = {
+                            id: id,
                             name: name,
                             file: file.name
                         };
@@ -514,7 +527,7 @@ router.post('/extensions', function (req, res) {
                         // Start fiber
                         Sync(function(){
 
-                            var res = getExtensionsByNameAsync.sync(null, name);
+                            var res = getExtensionsByIdAsync.sync(null, name);
 
                             if(res.length === 0) {
 
@@ -565,11 +578,11 @@ function addExtension(extension) {
     });
 }
 
-function getExtensionsByNameAsync(name, callback) {
+function getExtensionsByIdAsync(id, callback) {
 
     var query = new Object();
 
-    query['name'] = name;
+    query['id'] = id;
 
     db.collection('extensions',
         function (err, collection) {

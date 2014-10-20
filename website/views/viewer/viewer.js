@@ -93,6 +93,8 @@ angular.module('AdnGallery.viewer',
 
                         function (event) {
 
+                            viewer.impl.setLightPreset(8);
+
                             initializeTree(viewer);
 
                             viewer.addEventListener(
@@ -539,10 +541,8 @@ angular.module('AdnGallery.viewer',
 
                                 if ($scope.viewer) {
 
-                                    console.log("Loading extension: " + extension.name);
-
                                     $scope.viewer.loadExtension(
-                                        extension.name);
+                                        extension.id);
                                 }
                             })
                             .fail(function () {
@@ -553,10 +553,8 @@ angular.module('AdnGallery.viewer',
 
                         if ($scope.viewer) {
 
-                            console.log("Unloading extension: " + extension.name);
-
                             $scope.viewer.unloadExtension(
-                                extension.name);
+                                extension.id);
                         }
                     }
             });
@@ -586,7 +584,7 @@ angular.module('AdnGallery.viewer',
                                 .done(function () {
 
                                     $scope.viewer.loadExtension(
-                                        extension.name);
+                                        extension.id);
                                 })
                                 .fail(function () {
                                     console.log("Load failed: " + extension.file);

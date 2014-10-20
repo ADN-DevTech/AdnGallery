@@ -31,8 +31,6 @@ angular.module('AdnGallery.extensions',[])
 
         $scope.SelectedFiles = [];
 
-        $scope.Extensions = [];
-
         ///////////////////////////////////////////////////////////////////////
         //
         //
@@ -249,6 +247,7 @@ angular.module('AdnGallery.extensions',[])
 
         $('#btnLoadExtId').unbind().click(
             function() {
+                $scope.SelectedFiles = [];
                 $('#loadExtDlg').modal('show');
             }
         );
