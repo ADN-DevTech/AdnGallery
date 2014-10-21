@@ -163,6 +163,7 @@ angular.module('AdnGallery.upload',[])
                             postModel(modelInfo, true);
 
                             checkTranslationStatus(
+                                modelInfo.name,
                                 fileId,
                                 1000 * 60 * 60, //60 mins timeout
                                 function (viewable) {
@@ -182,11 +183,11 @@ angular.module('AdnGallery.upload',[])
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function checkTranslationStatus(fileId, timeout, onSuccess) {
+        function checkTranslationStatus(name, fileId, timeout, onSuccess) {
 
             var dialogId = fileId.split('/')[1].split('.')[0];
 
-            showProgressDialog(dialogId);
+            showProgressDialog(name, dialogId);
 
             var startTime = new Date().getTime();
 
@@ -204,7 +205,10 @@ angular.module('AdnGallery.upload',[])
                         fileId,
                         function (response) {
 
-                            $('#' + dialogId).text(response.progress);
+                            $('#' + dialogId).html(
+                                '<b>Model: </b>' + name +
+                                '<br>' +
+                                '<b>Status: </b>' + response.progress);
 
                             console.log(
                                 'Progress ' +
@@ -220,7 +224,7 @@ angular.module('AdnGallery.upload',[])
 
                         });
                 }
-            }, 10000);
+            }, 5000);
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -277,17 +281,21 @@ angular.module('AdnGallery.upload',[])
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function showProgressDialog(dialogId) {
+        function showProgressDialog(name, dialogId) {
 
             $('<div/>').
                 attr('id', dialogId).
                 appendTo('#AppContainerId');
 
-            $('#' + dialogId).text('yo mamma');
+            $('#' + dialogId).html(
+                '<b>Model: </b>' + name +
+                '<br>'+
+                '<b>Status:</b> Registration successful');
 
             var dlg = $('#' + dialogId).dialog({
 
-                width: 'auto',
+                title: 'Translation Progress',
+                //width: 'auto',
                 //autoResize: true,
                 modal: false,
                 autoOpen: false,
@@ -302,7 +310,7 @@ angular.module('AdnGallery.upload',[])
                 },
                 close: function() {
 
-                    $('#' + id).remove();
+                    $('#' + dialogId).remove();
                 },
                 buttons: {
                     Ok: function() {
