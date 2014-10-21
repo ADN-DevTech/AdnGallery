@@ -78,7 +78,6 @@
     <script  type="text/javascript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
     <script type="text/javascript" src="components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
 
-
     <style type="text/css">
         .dropZone {
             background-color: rgba(117, 206, 246, 0.5);
@@ -90,6 +89,9 @@
             color: white;
         }
     </style>
+
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
 </head>
 <body ng-controller="appController">
@@ -756,109 +758,110 @@
     </div>
 </div>
 
-<!--///////////////////////////////////////////////////////////////////////
-// Load Extension Dialog
-//
-////////////////////////////////////////////////////////////////////////-->
-<div ng-controller="extensionController"
-     id="loadExtDlg"
-     class="modal fade"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="myModalLabel"
-     aria-hidden="true">
 
-    <div class="modal-dialog">
+<div ng-controller="extensionController">
+    <!--///////////////////////////////////////////////////////////////////////
+    // Load Extension Dialog
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <div id="loadExtDlg"
+         class="modal fade"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
 
-        <div class="modal-content"
-             id="loadExtDlgFrame">
+        <div class="modal-dialog">
 
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
+            <div class="modal-content"
+                 id="loadExtDlgFrame">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
                     <span class="sr-only">
                         Close
                     </span>
-                </button>
-                <h4 class="modal-title">Load Extensions</h4>
+                    </button>
+                    <h4 class="modal-title">Load Extensions</h4>
+                </div>
+
+                <iframe name="targetFrame" style="display:none"></iframe>
+
+                <form id="loadExtFormId"
+                      target="targetFrame"
+                      action="/api/extensions"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <div id="loadExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+                        <input type="file" name="file" id="fileInputExtId" multiple/>
+
+                        <div id="dropZoneExtId" class="dropZone">
+                            Drop your files here or click to select from disk ...
+                        </div>
+
+                        <br/>
+
+                        <div ng-repeat="file in SelectedFiles">
+                            <a class="list-group-item" style="padding:10px; background-color:#88b4dd">
+                                {{file.name}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnLoadExtOkId">Ok</button>
+                    </div>
+
+                </form>
             </div>
+        </div>
+    </div>
 
-            <iframe name="targetFrame" style="display:none"></iframe>
+    <!--///////////////////////////////////////////////////////////////////////
+    // Manage Extensions Dialog
+    //
+    ////////////////////////////////////////////////////////////////////////-->
+    <div id="manageExtDlg"
+         class="modal fade"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
 
-            <form id="loadExtFormId"
-                  target="targetFrame"
-                  action="/api/extensions"
-                  method="post"
-                  enctype="multipart/form-data">
+        <div class="modal-dialog">
 
-                <div id="loadExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+            <div class="modal-content"
+                 id="manageExtDlgFrame">
 
-                    <input type="file" name="file" id="fileInputExtId" multiple/>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">
+                            Close
+                        </span>
+                    </button>
+                    <h4 class="modal-title">Manage Extensions</h4>
+                </div>
 
-                    <div id="dropZoneExtId" class="dropZone">
-                        Drop your files here or click to select from disk ...
-                    </div>
+                <div id="manageExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
 
-                    <br/>
-
-                    <div ng-repeat="file in SelectedFiles">
-                        <a class="list-group-item" style="padding:10px; background-color:#88b4dd">
-                            {{file.name}}
-                        </a>
-                    </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnLoadExtOkId">Ok</button>
+                    <button id="btnManageExtOkId" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
                 </div>
-
-            </form>
-        </div>
-    </div>
-</div>
-
-<!--///////////////////////////////////////////////////////////////////////
-// Manage Extensions Dialog
-//
-////////////////////////////////////////////////////////////////////////-->
-<div ng-controller="extensionController"
-     id="manageExtDlg"
-     class="modal fade"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="myModalLabel"
-     aria-hidden="true">
-
-    <div class="modal-dialog">
-
-        <div class="modal-content"
-             id="manageExtDlgFrame">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">
-                        Close
-                    </span>
-                </button>
-                <h4 class="modal-title">Manage Extensions</h4>
-            </div>
-
-            <div id="manageExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button id="btnManageExtOkId" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
 </div>
 
-
 </div>
+
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser.
@@ -866,7 +869,10 @@ Please <a href="http://browsehappy.com/">upgrade your browser</a>
 to improve your experience.</p>
 <![endif]-->
 
-<div ng-view> </div>
+<div id="AppContainerId">
+    <div ng-view>
+    </div>
+</div>
 
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="app.js"></script>

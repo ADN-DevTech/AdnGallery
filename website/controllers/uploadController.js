@@ -184,6 +184,10 @@ angular.module('AdnGallery.upload',[])
         ///////////////////////////////////////////////////////////////////////
         function checkTranslationStatus(fileId, timeout, onSuccess) {
 
+            var dialogId = fileId.split('/')[1].split('.')[0];
+
+            showProgressDialog(dialogId);
+
             var startTime = new Date().getTime();
 
             var timer = setInterval(function () {
@@ -199,6 +203,8 @@ angular.module('AdnGallery.upload',[])
                     $scope.viewDataClient.getViewableAsync(
                         fileId,
                         function (response) {
+
+                            $('#' + dialogId).text(response.progress);
 
                             console.log(
                                 'Progress ' +
@@ -265,6 +271,51 @@ angular.module('AdnGallery.upload',[])
                     file.name.length - ext.length - 1);
 
             return name;
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function showProgressDialog(dialogId) {
+
+            $('<div/>').
+                attr('id', dialogId).
+                appendTo('#AppContainerId');
+
+            $('#' + dialogId).text('yo mamma');
+
+            var dlg = $('#' + dialogId).dialog({
+
+                width: 'auto',
+                //autoResize: true,
+                modal: false,
+                autoOpen: false,
+                closeOnEscape: true,
+                resizable: false,
+
+                open: function() {
+
+                },
+                focus: function() {
+
+                },
+                close: function() {
+
+                    $('#' + id).remove();
+                },
+                buttons: {
+                    Ok: function() {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+
+            dlg.parent().draggable({
+                containment: '#AppContainerId'
+            });
+
+            $('#' + dialogId).dialog('open');
         }
 
         ///////////////////////////////////////////////////////////////////////

@@ -85,6 +85,8 @@ angular.module('AdnGallery.viewer',
 
                     $scope.viewer = viewer;
 
+                    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
+
                     getModelByUrn(urn);
 
                     viewer.addEventListener(
@@ -101,7 +103,7 @@ angular.module('AdnGallery.viewer',
                                 Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                                 onItemSelected);
 
-                            loadExtensions();
+                            loadUserExtensions();
                         });
                 },
                 function(error) {
@@ -564,7 +566,7 @@ angular.module('AdnGallery.viewer',
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function loadExtensions() {
+        function loadUserExtensions() {
 
             var url =  "http://" +
                 window.location.host +

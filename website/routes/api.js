@@ -527,7 +527,7 @@ router.post('/extensions', function (req, res) {
                         // Start fiber
                         Sync(function(){
 
-                            var res = getExtensionsByIdAsync.sync(null, name);
+                            var res = getExtensionsByIdAsync.sync(null, id);
 
                             if(res.length === 0) {
 
