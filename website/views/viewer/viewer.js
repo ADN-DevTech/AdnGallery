@@ -538,7 +538,7 @@ angular.module('AdnGallery.viewer',
 
                     if(extension.enabled) {
 
-                        jQuery.getScript('../uploads/extensions/' + extension.file)
+                        jQuery.getScript('/node/gallery/uploads/extensions/' + extension.file)
                             .done(function () {
 
                                 if ($scope.viewer) {
