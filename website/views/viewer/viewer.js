@@ -582,13 +582,13 @@ angular.module('AdnGallery.viewer',
 
                         if (isExtensionEnabled(extension)) {
 
-                            jQuery.getScript('../uploads/extensions/' + extension.file)
+                            jQuery.getScript('/node/gallery/uploads/extensions/' + extension.file)
                                 .done(function () {
 
                                     $scope.viewer.loadExtension(
                                         extension.id);
                                 })
-                                .fail(function () {
+                                .fail(function(jqxhr, settings, exception) {
                                     console.log("Load failed: " + extension.file);
                                 });
                         }
