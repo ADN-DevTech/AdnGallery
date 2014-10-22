@@ -265,6 +265,8 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
                         viewer.impl.setLightPreset(8);
 
+                        viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
+
                         if($scope.currentUser.hasControl) {
                             $scope.socket.emit('loadDocument', urn);
                         }
@@ -276,7 +278,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                         if(data) {
 
                             if(data.view)
-                                $scope.adnViewerMng.setView(data.view);
+                                viewer.setView(data.view);
                         }
 
                         viewer.addEventListener(
