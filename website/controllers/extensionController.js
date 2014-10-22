@@ -171,7 +171,9 @@ angular.module('AdnGallery.extensions',[])
 
             $scope.Extensions = [];
 
-            var url =  "http://" + window.location.host + '/api/extensions';
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/api/extensions';
 
             $http.get(url).success(function(response){
 

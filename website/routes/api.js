@@ -19,7 +19,7 @@
 var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
 var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
 var BASE_URL = 'https://developer.api.autodesk.com';
-var ADMIN_PASSWORD = 'kow@bung@'
+var ADMIN_PASSWORD = 'kow@bung@';
 
 //var CONSUMER_KEY = "****** place holder - replace with your creds ******";
 //var CONSUMER_SECRET = "****** place holder - replace with your creds ******";

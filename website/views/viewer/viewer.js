@@ -53,7 +53,7 @@ angular.module('AdnGallery.viewer',
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    'http://' + window.location.host + '/api/token',
+                    'http://' + window.location.host + '/node/gallery/api/token',
                     document.getElementById('ViewerDiv'));
 
             $scope.setViewerManager($scope.adnViewerMng);
@@ -120,7 +120,7 @@ angular.module('AdnGallery.viewer',
 
             var url =  "http://" +
                 window.location.host +
-                '/api/model/' + id;
+                '/node/gallery/api/model/' + id;
 
             $http.get(url).success(function(model){
 
@@ -136,7 +136,7 @@ angular.module('AdnGallery.viewer',
 
             var url =  "http://" +
                 window.location.host +
-                '/api/search/models?field=urn&value=' + urn;
+                '/node/gallery/api/search/models?field=urn&value=' + urn;
 
             $scope.setCurrentDbModel(null);
 
@@ -183,7 +183,7 @@ angular.module('AdnGallery.viewer',
                     $('#embedCode').text("<iframe \n" +
                         "width='800' height='480' frameborder='0' \n" +
                         "allowFullScreen webkitallowfullscreen mozallowfullscreen \n" +
-                        "src='http://" + window.location.host + "/embed/" + model._id + "'> \n" +
+                        "src='http://" + window.location.host + "/node/gallery/embed/" + model._id + "'> \n" +
                         "</iframe>");
 
                     $('#embedDlg').modal('show');
@@ -570,7 +570,7 @@ angular.module('AdnGallery.viewer',
 
             var url =  "http://" +
                 window.location.host +
-                '/api/extensions';
+                '/node/gallery/api/extensions';
 
             $http.get(url).success(function(response){
 

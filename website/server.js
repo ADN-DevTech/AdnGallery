@@ -23,7 +23,6 @@ var logger = require('morgan');
 var path = require('path');
 
 var showcase = require('./routes/showcase');
-var routes = require('./routes/index');
 var embed = require('./routes/embed');
 var api = require('./routes/api');
 
@@ -53,15 +52,20 @@ app.use(favicon(__dirname + '/public/images/adsk.64x64.png'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(__dirname));
+app.use('/node/gallery', express.static(__dirname));
 app.use(cookieParser());
 app.use(logger('dev'));
 app.use(cors);
 
-app.use('/', routes);
-app.use('/api', api);
-app.use('/embed', embed);
-app.use('/showcase', showcase);
+app.use('/node/gallery/api', api);
+app.use('/node/gallery/embed', embed);
+app.use('/node/gallery/showcase', showcase);
+
+app.get('/node/gallery', function (req, res) {
+
+    var file = path.join(__dirname, 'index.html')
+    res.sendFile(file);
+});
 
 /*
 // catch 404 and forward to error handler

@@ -237,7 +237,7 @@ angular.module('AdnGallery.upload',[])
 
             xhr.open('POST',
                 'http://' + window.location.host +
-                '/api/model?host=' + window.location.host +
+                '/node/gallery/api/model?host=' + window.location.host + '/node/gallery' +
                 '&translate=' + translate,
                 true);
 

@@ -48,7 +48,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
         $scope.users = {};
 
-        $scope.socket = io.connect(location.hostname);
+        $scope.socket = io.connect(location.hostname + ':3001');
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -241,7 +241,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    'http://' + window.location.host + '/api/token',
+                    'http://' + window.location.host + '/node/gallery/api/token',
                     document.getElementById('ViewerDiv'));
 
             $scope.setViewerManager($scope.adnViewerMng);
@@ -306,7 +306,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             var url =  "http://" +
                 window.location.host +
-                '/api/search/models?field=urn&value=' + urn;
+                '/node/gallery/api/search/models?field=urn&value=' + urn;
 
             $scope.setCurrentDbModel(null);
 

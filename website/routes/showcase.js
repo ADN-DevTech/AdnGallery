@@ -15,7 +15,7 @@
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 ///////////////////////////////////////////////////////////////////////////////
-var socketio = require('socket.io');
+var socketio = require('socket.io').listen(3001);
 var express = require('express');
 var request = require('request');
 var path = require('path');

@@ -132,7 +132,7 @@ angular.module('AdnGallery.views',[])
 
             xhr.open('GET',
                 "http://" + window.location.host +
-                '/api/model/' + id,
+                '/node/gallery/api/model/' + id,
                 true);
 
             xhr.setRequestHeader(
@@ -158,7 +158,7 @@ angular.module('AdnGallery.views',[])
 
             xhr.open('PUT',
                 "http://" + window.location.host +
-                '/api/model/' + model._id,
+                '/node/gallery/api/model/' + model._id,
                 true);
 
             xhr.setRequestHeader(

@@ -43,7 +43,7 @@
                     function (e) {
                         window.open('http://' +
                             window.location.host +
-                            '#/viewer?id=' + id,
+                            '/node/gallery/#/viewer?id=' + id,
                             '_blank');
                     });
 
@@ -54,12 +54,12 @@
 
         function loadFromId(id) {
 
-            var url =  'http://' + window.location.host + '/api/model/' + id;
+            var url =  'http://' + window.location.host + '/node/gallery/api/model/' + id;
 
             $.getJSON(url, function(model){
 
                 var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    'http://' + window.location.host + '/api/token',
+                    'http://' + window.location.host + '/node/gallery/api/token',
                     document.getElementById('ViewerDiv'));
 
                 adnViewerMng.loadDocument(

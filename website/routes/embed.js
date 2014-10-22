@@ -42,7 +42,7 @@ router.get('/:id', function(req, res) {
 
     var id = req.params.id;
 
-    res.redirect('/embed?id=' + id);
+    res.redirect('/node/gallery/embed?id=' + id);
 });
 
 module.exports = router;

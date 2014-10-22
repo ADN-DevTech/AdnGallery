@@ -297,7 +297,7 @@ angular.module('AdnGallery',
         $rootScope.viewDataClient =
             new Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient(
                 'https://developer.api.autodesk.com',
-                'http://' + window.location.host + '/api/token');
+                'http://' + window.location.host + '/node/gallery/api/token');
 
         $rootScope.viewDataClient.getToken();
 

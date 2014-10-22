@@ -52,7 +52,9 @@ angular.module('AdnGallery.quickLoad',[]).
         ///////////////////////////////////////////////////////////////////////
         function loadModels() {
 
-            var url =  "http://" + window.location.host + '/api/models';
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/api/models';
 
             $http.get(url).success(function(response){
 
