@@ -48,7 +48,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
         $scope.users = {};
 
-        $scope.socket = io.connect(location.hostname + ':3001');
+        $scope.socket = io.connect(location.hostname + ':5000');
 
         ///////////////////////////////////////////////////////////////////////
         //

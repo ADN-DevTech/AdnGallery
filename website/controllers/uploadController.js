@@ -133,10 +133,14 @@ angular.module('AdnGallery.upload',[])
 
                 var file = content.children[i].file;
 
+                var id = $scope.newGUID();
+
+                showProgressDialog(getFileName(file), id);
+
                 $scope.viewDataClient.uploadFileAsync(
                     file,
                     'adn-viewer-gallery',
-                    $scope.newGUID() + '.' + getFileExt(file),
+                     id + '.' + getFileExt(file),
 
                     function (response) {
 
@@ -150,11 +154,20 @@ angular.module('AdnGallery.upload',[])
                         console.log("Registration result: " +
                             registerResponse.Result);
 
+                        var modelName = getFileName(response.file);
+
+                        var dialogId = fileId.split('/')[1].split('.')[0];
+
+                        $('#' + dialogId).html(
+                            '<b>Model: </b>' + modelName +
+                            '<br>' +
+                            '<b>Status: </b>' + 'Registration = ' + registerResponse.Result);
+
                         if (registerResponse.Result === "Success") {
 
                             var modelInfo = {
                                 author: author,
-                                name: getFileName(response.file),
+                                name: modelName,
                                 fileId: fileId,
                                 urn: $scope.viewDataClient.toBase64(fileId),
                                 views: []
@@ -185,10 +198,6 @@ angular.module('AdnGallery.upload',[])
         ///////////////////////////////////////////////////////////////////////
         function checkTranslationStatus(name, fileId, timeout, onSuccess) {
 
-            var dialogId = fileId.split('/')[1].split('.')[0];
-
-            showProgressDialog(name, dialogId);
-
             var startTime = new Date().getTime();
 
             var timer = setInterval(function () {
@@ -204,6 +213,8 @@ angular.module('AdnGallery.upload',[])
                     $scope.viewDataClient.getViewableAsync(
                         fileId,
                         function (response) {
+
+                            var dialogId = fileId.split('/')[1].split('.')[0];
 
                             $('#' + dialogId).html(
                                 '<b>Model: </b>' + name +
@@ -290,7 +301,7 @@ angular.module('AdnGallery.upload',[])
             $('#' + dialogId).html(
                 '<b>Model: </b>' + name +
                 '<br>'+
-                '<b>Status:</b> Registration successful');
+                '<b>Status:</b> Uploading file ...');
 
             var dlg = $('#' + dialogId).dialog({
 
