@@ -365,7 +365,7 @@ angular.module('AdnGallery',
 
                 var foundAny = false;
 
-                var getAllMethods = Object.getOwnPropertyNames(SmartPhone).filter(
+                var getAllMethods = Object.getOwnPropertyNames(mobile).filter(
                     function(property) {
                         return typeof mobile[property] == 'function';
                 });

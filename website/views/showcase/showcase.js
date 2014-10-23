@@ -296,7 +296,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
                                 // fusion files need setting preset again
                                 viewer.impl.setLightPreset(lightPreset);
-                                
+
                                 if(data) {
 
                                     if(data.isolateIds)
