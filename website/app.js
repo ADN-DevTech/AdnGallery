@@ -335,7 +335,7 @@ angular.module('AdnGallery',
 
         //@author SM@K<smali.kazmi@hotmail.com>
         //@description website: smak.pk
-        $rootScope.mobile = {
+        var mobile = {
 
             getUserAgent: function() {
                 return navigator.userAgent;
@@ -386,6 +386,8 @@ angular.module('AdnGallery',
                 return foundAny;
             }
         };
+
+        $rootScope.mobile = mobile;
     }).
 
     ///////////////////////////////////////////////////////////////////////////
