@@ -36,21 +36,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewer.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="viewer.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/viewer/viewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31085044" vertical-offset="838" max-vertical-offset="9630">
-              <caret line="86" column="20" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
+            <state vertical-scroll-proportion="-9.038462" vertical-offset="740" max-vertical-offset="9705">
+              <caret line="81" column="38" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="showcase.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4759" max-vertical-offset="5910">
+              <caret line="366" column="0" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="showcase.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/showcase/showcase.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6345" max-vertical-offset="10365">
-              <caret line="50" column="61" selection-start-line="50" selection-start-column="61" selection-end-line="50" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.7505774" vertical-offset="3905" max-vertical-offset="10545">
+              <caret line="298" column="32" selection-start-line="298" selection-start-column="32" selection-end-line="298" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -121,18 +131,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Autodesk.ADN.Viewing.Extension.API.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/components/viewer/js/Autodesk.ADN.Viewing.Extension.API.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="4635">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -175,7 +173,6 @@
         <option value="$PROJECT_DIR$/routes/api.js" />
         <option value="$PROJECT_DIR$/app.css" />
         <option value="$PROJECT_DIR$/components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/views/gallery/gallery.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/views/showcase/showcase.html" />
@@ -188,12 +185,13 @@
         <option value="$PROJECT_DIR$/views/viewer/viewer.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/routes/showcase.js" />
-        <option value="$PROJECT_DIR$/views/showcase/showcase.js" />
         <option value="$PROJECT_DIR$/components/viewer/js/Autodesk.ADN.Viewing.Extension.API.js" />
         <option value="$PROJECT_DIR$/../../extensions/Extension Demo.html" />
         <option value="$PROJECT_DIR$/../../extensions/js/Autodesk.ADN.Viewing.Extension.MeshImporter.js" />
         <option value="$PROJECT_DIR$/../../extensions/js/Autodesk.ADN.Viewing.Extension.Move.js" />
+        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/views/viewer/viewer.js" />
+        <option value="$PROJECT_DIR$/views/showcase/showcase.js" />
       </list>
     </option>
   </component>
@@ -454,7 +452,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22378516" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908162" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3478261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3478261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -729,14 +727,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.5" vertical-offset="4128" max-vertical-offset="5100">
-          <caret line="299" column="66" selection-start-line="299" selection-start-column="66" selection-end-line="299" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/modelViewsController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2034" max-vertical-offset="4725">
@@ -888,18 +878,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/showcase/showcase.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6345" max-vertical-offset="10365">
-          <caret line="50" column="61" selection-start-line="50" selection-start-column="61" selection-end-line="50" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4759" max-vertical-offset="5910">
+          <caret line="366" column="0" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/viewer/viewer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31085044" vertical-offset="838" max-vertical-offset="9630">
-          <caret line="86" column="20" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
+        <state vertical-scroll-proportion="-9.038462" vertical-offset="740" max-vertical-offset="9705">
+          <caret line="81" column="38" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/showcase/showcase.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7505774" vertical-offset="3905" max-vertical-offset="10545">
+          <caret line="298" column="32" selection-start-line="298" selection-start-column="32" selection-end-line="298" selection-end-column="32" />
           <folding />
         </state>
       </provider>

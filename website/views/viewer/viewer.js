@@ -84,16 +84,20 @@ angular.module('AdnGallery.viewer',
                 function (viewer) {
 
                     getModelByUrn(urn);
-                    
+
                     $scope.viewer = viewer;
 
                     viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
 
+                    var lightPreset = 8;
 
+                    if($scope.mobile.isAny()) {
 
-                    viewer.setLightPreset(0);
-                    viewer.setQualityLevel(false, false);
+                        lightPreset = 0;
+                        viewer.setQualityLevel(false, false);
+                    }
 
+                    viewer.impl.setLightPreset(lightPreset);
 
                     viewer.addEventListener(
 
@@ -101,7 +105,8 @@ angular.module('AdnGallery.viewer',
 
                         function (event) {
 
-                            //viewer.impl.setLightPreset(8);
+                            // fusion files need setting preset again
+                            viewer.impl.setLightPreset(lightPreset);
 
                             initializeTree(viewer);
 

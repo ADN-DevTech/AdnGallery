@@ -263,11 +263,20 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
                         $scope.viewer = viewer;
 
-                        viewer.impl.setLightPreset(8);
+                        var lightPreset = 8;
+
+                        if($scope.mobile.isAny()) {
+
+                            lightPreset = 0;
+                            viewer.setQualityLevel(false, false);
+                        }
+
+                        viewer.impl.setLightPreset(lightPreset);
 
                         viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
 
                         if($scope.currentUser.hasControl) {
+
                             $scope.socket.emit('loadDocument', urn);
                         }
 
@@ -285,6 +294,9 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
                             Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
                             function (event) {
 
+                                // fusion files need setting preset again
+                                viewer.impl.setLightPreset(lightPreset);
+                                
                                 if(data) {
 
                                     if(data.isolateIds)
