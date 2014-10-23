@@ -83,11 +83,17 @@ angular.module('AdnGallery.viewer',
                 urn,
                 function (viewer) {
 
+                    getModelByUrn(urn);
+                    
                     $scope.viewer = viewer;
 
                     viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
 
-                    getModelByUrn(urn);
+
+
+                    viewer.setLightPreset(0);
+                    viewer.setQualityLevel(false, false);
+
 
                     viewer.addEventListener(
 
@@ -95,7 +101,7 @@ angular.module('AdnGallery.viewer',
 
                         function (event) {
 
-                            viewer.impl.setLightPreset(8);
+                            //viewer.impl.setLightPreset(8);
 
                             initializeTree(viewer);
 
