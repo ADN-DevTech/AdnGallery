@@ -142,11 +142,11 @@ angular.module('AdnGallery.upload',[])
                     'adn-viewer-gallery',
                      id + '.' + getFileExt(file),
 
-                    function (response) {
+                    function (uploadResponse) {
 
-                        var fileId = response.objects[0].id;
+                        var fileId = uploadResponse.objects[0].id;
 
-                        console.log("Upload successful: " + response.file.name);
+                        console.log("Upload successful: " + uploadResponse.file.name);
 
                         var registerResponse =
                             $scope.viewDataClient.register(fileId);
@@ -154,14 +154,15 @@ angular.module('AdnGallery.upload',[])
                         console.log("Registration result: " +
                             registerResponse.Result);
 
-                        var modelName = getFileName(response.file);
+                        var modelName = getFileName(uploadResponse.file);
 
                         var dialogId = fileId.split('/')[1].split('.')[0];
 
                         $('#' + dialogId).html(
                             '<b>Model: </b>' + modelName +
                             '<br>' +
-                            '<b>Status: </b>' + 'Registration = ' + registerResponse.Result);
+                            '<b>Status: </b>' + 'Registration = ' +
+                                registerResponse.Result);
 
                         if (registerResponse.Result === "Success") {
 
@@ -173,17 +174,35 @@ angular.module('AdnGallery.upload',[])
                                 views: []
                             };
 
-                            postModel(modelInfo, true);
+                            postModel(modelInfo, true, function(modelResponse) {
 
-                            checkTranslationStatus(
-                                modelInfo.name,
-                                fileId,
-                                1000 * 60 * 60, //60 mins timeout
-                                function (viewable) {
+                                console.log("New model added to DB: " +
+                                    JSON.stringify(modelResponse.model));
 
-                                    console.log("Translation successful: " +
-                                        response.file.name);
-                                });
+                                var url = 'http://' + window.location.host +
+                                    '/node/gallery/#/viewer?id=' + modelResponse.model._id;
+
+                                checkTranslationStatus(
+                                    modelInfo.name,
+                                    fileId,
+                                    1000 * 60 * 60, //60 mins timeout
+                                    function (viewable) {
+
+                                        console.log("Translation successful: " +
+                                            uploadResponse.file.name);
+
+                                        $('#' + dialogId).html(
+                                            '<b>Model: </b>' + modelName +
+                                            '<br>' +
+                                            '<b>Status: </b>' + 'Registration = ' +
+                                                registerResponse.Result +
+                                            '<br>' +
+                                            '<b>Link: </b>' +
+                                                '<a target="_blank" href=' + url + '>' + modelName + '</a>');
+                                    });
+                            });
+
+
                         }
                     },
                     function(error){
@@ -242,7 +261,7 @@ angular.module('AdnGallery.upload',[])
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function postModel(modelInfo, translate) {
+        function postModel(modelInfo, translate, onSuccess) {
 
             var xhr = new XMLHttpRequest();
 
@@ -258,8 +277,8 @@ angular.module('AdnGallery.upload',[])
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log("Posting new model to DB: " +
-                        xhr.responseText);
+
+                    onSuccess(JSON.parse(xhr.responseText));
                 }
             }
 
@@ -306,7 +325,7 @@ angular.module('AdnGallery.upload',[])
             var dlg = $('#' + dialogId).dialog({
 
                 title: 'Translation Progress',
-                //width: 'auto',
+                height: 'auto',
                 //autoResize: true,
                 modal: false,
                 autoOpen: false,
@@ -344,14 +363,36 @@ angular.module('AdnGallery.upload',[])
         initializeDropzone();
 
         $('#btnUploadDocId').unbind().click(
+
             function() {
+
                 $scope.clearContent('uploadDlgBody');
+
+                if(!localStorage['uploadInfo']) {
+
+                    localStorage['uploadInfo'] = JSON.stringify({
+                        user: '',
+                        email:''
+                    });
+                }
+
+                var storageObj = JSON.parse(localStorage['uploadInfo']);
+
+                $('#user').val(storageObj.user);
+                $('#email').val(storageObj.email);
+
                 $('#uploadDlg').modal('show');
             }
         );
 
         $('#btnUploadOkId').unbind().click(
             function() {
+
+                localStorage['uploadInfo'] = JSON.stringify({
+                    user: $('#user').val(),
+                    email:$('#email').val()
+                });
+
                 doUpload();
             }
         );

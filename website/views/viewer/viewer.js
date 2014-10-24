@@ -317,12 +317,20 @@ angular.module('AdnGallery.viewer',
 
                 west__size: 300,
 
+                east__initHidden:
+                    true,
+
                 center__onresize: function () {
                     if($scope.viewer)
                         $scope.viewer.resize();
                 },
 
                 west__onresize: function () {
+                    if($scope.viewer)
+                        $scope.viewer.resize();
+                },
+
+                east__onresize: function () {
                     if($scope.viewer)
                         $scope.viewer.resize();
                 }
