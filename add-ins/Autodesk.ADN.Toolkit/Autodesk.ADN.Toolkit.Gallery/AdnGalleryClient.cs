@@ -42,7 +42,7 @@ namespace Autodesk.ADN.Toolkit.Gallery
                 Replace("https://", "");
 
             var request = new RestRequest(
-                "api/model?=" + host, 
+                "api/model?host=" + host + "&translate=false", 
                 Method.POST);
 
             request.AddHeader("Content-Type", "application/json");

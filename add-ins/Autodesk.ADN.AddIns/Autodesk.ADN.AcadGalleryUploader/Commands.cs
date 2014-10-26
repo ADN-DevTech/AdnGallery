@@ -37,7 +37,7 @@ namespace Autodesk.ADN.AcadGalleryUploader
 
             foreach(var model in modelListResponse.Models)
             {
-                ed.WriteMessage("\n - " + model.Name + " { urn: " + model.Urn + " }");
+                ed.WriteMessage("\n - " + model.Name + " {urn: " + model.Urn + "}\n");
             }
         }
 

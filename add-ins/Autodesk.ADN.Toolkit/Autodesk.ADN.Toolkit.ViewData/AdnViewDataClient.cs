@@ -30,6 +30,9 @@ using RestSharp.Contrib;
 
 namespace Autodesk.ADN.Toolkit.ViewData
 {
+    public delegate void OnTokenRefreshedHandler(
+        TokenResponse tokenResponse);
+
     /////////////////////////////////////////////////////////////////////////////////////
     // ADN View & Data Client
     //
@@ -41,6 +44,13 @@ namespace Autodesk.ADN.Toolkit.ViewData
         private string _clientKey;
 
         private string _secretKey;
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // Token refreshed event handler
+        //
+        /////////////////////////////////////////////////////////////////////////////////
+        public event OnTokenRefreshedHandler
+           OnTokenRefreshed = null;
 
         /////////////////////////////////////////////////////////////////////////////////
         // Constructor
@@ -125,6 +135,9 @@ namespace Autodesk.ADN.Toolkit.ViewData
                 if (AutoRefresh)
                 {
                     AuthenticateAsync().Wait();
+
+                    if (OnTokenRefreshed != null)
+                        OnTokenRefreshed(TokenResponse);
                 }
                 
             }).Start();

@@ -97,7 +97,7 @@ namespace Autodesk.ADN.Toolkit.ViewData.DataContracts
 
             return result;
         }
-    }
+        }
 
     /////////////////////////////////////////////////////////////////////////////////
     // Bucket Details Response 
