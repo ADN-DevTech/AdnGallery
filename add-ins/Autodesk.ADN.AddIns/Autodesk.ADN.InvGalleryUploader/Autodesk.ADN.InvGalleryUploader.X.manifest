@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <assemblyIdentity name="Autodesk.ADN.InvGalleryUploader" version="1.0.0.0"></assemblyIdentity>
+
+  <clrClass clsid="{eb15a998-0623-40c6-a06f-ea61f84cda3a}" 
+		progid="Autodesk.StandardAddInServer" 
+		threadingModel="Both" 
+		name="Autodesk.ADN.InvGalleryUploader.StandardAddInServer" 
+		runtimeVersion=""></clrClass>
+
+  <file name="Autodesk.ADN.InvGalleryUploader.dll" hashalg="SHA1"></file>
+
+</assembly>

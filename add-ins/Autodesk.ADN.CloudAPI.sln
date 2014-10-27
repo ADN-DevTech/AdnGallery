@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.AcadGalleryUpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.RvtGalleryUploader", "Autodesk.ADN.AddIns\Autodesk.ADN.RvtGalleryUploader\Autodesk.ADN.RvtGalleryUploader.csproj", "{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autodesk.ADN.InvGalleryUploader", "Autodesk.ADN.AddIns\Autodesk.ADN.InvGalleryUploader\Autodesk.ADN.InvGalleryUploader.csproj", "{3DC284CE-6572-439D-ADA3-E703FF8498B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,18 @@ Global
 		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|Win32.ActiveCfg = Release|Any CPU
 		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F}.Release|x86.ActiveCfg = Release|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,5 +96,6 @@ Global
 		{345E5CD9-6027-41F2-92C7-786FE0DBBC2E} = {144E8E2A-A425-4751-8454-654892CD78CF}
 		{6542C42A-A7E9-457E-AD57-6EC18B352709} = {B615E4E4-0254-4ADA-9951-329914892285}
 		{508002D3-BC63-4AFD-BAB6-77114E5B3D2F} = {B615E4E4-0254-4ADA-9951-329914892285}
+		{3DC284CE-6572-439D-ADA3-E703FF8498B6} = {B615E4E4-0254-4ADA-9951-329914892285}
 	EndGlobalSection
 EndGlobal

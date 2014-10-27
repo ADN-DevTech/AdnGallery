@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Ribbon>
+  <RibbonTab ribbons="Part" internalName="id_TabTools" displayName="Tools" targetTabBefore="id_TabInspect" targetTabAfter="id_TabManage">
+    <RibbonPanel internalName="GalleryUploader.Panel" displayName="Gallery" targetPanelBefore="id_PanelP_ShowPanels" targetPanelAfter="ADN.CGDemo.PanelPart">
+      <Button internalName="Autodesk.ADN.InvGalleryUploader.GalleryUploaderCmd" useLargeIcon="True" isInSlideout="False" isPersistent="true" />
+    </RibbonPanel>
+  </RibbonTab>
+  <RibbonTab ribbons="Assembly" internalName="id_TabTools" displayName="Tools" targetTabBefore="id_TabInspect" targetTabAfter="id_TabManage">
+    <RibbonPanel internalName="GalleryUploader.Panel" displayName="Gallery" targetPanelBefore="id_PanelP_ShowPanels" targetPanelAfter="ADN.CGDemo.PanelAsm">
+      <Button internalName="Autodesk.ADN.InvGalleryUploader.GalleryUploaderCmd" useLargeIcon="True" isInSlideout="False" isPersistent="true" />
+    </RibbonPanel>
+  </RibbonTab>
+</Ribbon>
