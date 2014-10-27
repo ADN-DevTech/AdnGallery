@@ -15,3 +15,7 @@
     text-align: center;
     color: white;
 }
+
+.adsk-viewing-viewer input[type=range].slider-anim-in {
+    width: 200px;
+}
