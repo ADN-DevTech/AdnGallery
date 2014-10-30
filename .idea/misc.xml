@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{express-DefinitelyTyped}" />
-    <includedPredefinedLibrary name="Node.js Globals" />
-    <includedPredefinedLibrary name="WebGL" />
-  </component>
   <component name="JsBowerSettings">
     <exe-path>/usr/local/bin/bower</exe-path>
     <config-path />
-  </component>
-  <component name="ProjectDictionaryState">
-    <dictionary name="leefsmp" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">

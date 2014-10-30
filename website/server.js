@@ -37,8 +37,8 @@ var cors = function (req, res, next) {
         'GET,PUT,POST,DELETE');
 
     res.header('Access-Control-Allow-Headers',
-            'Content-Type, Authorization, ' +
-            'Content-Length, X-Requested-With');
+        'Content-Type, Authorization, ' +
+        'Content-Length, X-Requested-With');
 
     next();
 }
@@ -47,15 +47,16 @@ var cors = function (req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
-app.use(favicon(__dirname + '/public/images/adsk.64x64.png'));
+app.use(favicon(__dirname + '/www/public/images/adsk.64x64.png'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/node/gallery', express.static(__dirname));
+app.use('/node/gallery', express.static(__dirname + '/www'));
 app.use(cookieParser());
 app.use(logger('dev'));
-app.use(cors);
+
+//app.use(cors);
 
 app.use('/node/gallery/api', api);
 app.use('/node/gallery/embed', embed);

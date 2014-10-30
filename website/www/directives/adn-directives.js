@@ -38,6 +38,7 @@ angular.module('AdnDirectives', []).
                 var value = "rotateY(" + angle + "deg)";
 
                 jQuery(element).css({
+                    "transform": value,
                     "-moz-transform": value,
                     "-webkit-transform": value,
                     "-ms-transform": value,
