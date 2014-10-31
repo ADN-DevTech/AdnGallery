@@ -496,7 +496,7 @@ router.post('/extensions', function (req, res) {
 
             var uploadPath = path.join(
                 __dirname,
-                '../uploads/extensions/', file.name);
+                '../www/uploads/extensions/', file.name);
 
             fs.readFile(filePath, function (err, data) {
 

@@ -29,7 +29,7 @@ router.get('/', function(req, res) {
 
     var rootPath = path.join(
         __dirname,
-        '../views/embed');
+        '../www/views/embed');
 
     res.sendFile('embed.html', { root: rootPath });
 });
