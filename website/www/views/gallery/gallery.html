@@ -113,24 +113,37 @@
 
 
             <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'" style="overflow-y: auto;">
-                <a class="list-group-item"
-                   href="#/viewer?id={{model._id}}"
-                   style="{{['background-color:#C3DBFA', 'background-color:#E7FCFC'][$index %2]}}">
-                    <div >
-                        <img ng-src={{model.src}} style="float:left; margin-right: 20px">
-                        <div style="float:left;">
-                            <b>{{model.name}}</b>
-                            <br> <br>
-                            <b>Author:</b> {{model.author.name}}
-                            <br>
-                            <b>Type:</b> {{model.type}}
-                            <br>
-                            <b>Progress:</b> {{model.progress}}
-                        </div>
-                        <div style="clear:both;"> </div>
+
+                <div class="row" style="{{['background-color:#C3DBFA', 'background-color:#EDF5FF'][$index %2]}}">
+
+                    <div class="col-md-3">
+                        <a href="#/viewer?id={{model._id}}">
+                            <img class="img-responsive" ng-src={{model.src}} alt="">
+                        </a>
                     </div>
-                </a>
+
+                    <div class="col-md-3">
+
+                        <h3>{{model.name}}</h3>
+                        <div ng-if="model.author.name">
+                            <h5><b>Author: </b>{{model.author.name}}</h5>
+                        </div>
+
+                        <h5><b>Type: </b>{{model.type}}</h5>
+
+                        <h5><b>Progress: </b>{{model.progress}}</h5>
+
+                        <a class="btn btn-primary" href="#/viewer?id={{model._id}}">
+                              Show in Viewer
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
 
     </div>

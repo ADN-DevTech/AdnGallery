@@ -47,7 +47,7 @@ var cors = function (req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
-app.use(favicon(__dirname + '/www/public/images/adsk.64x64.png'));
+app.use(favicon(__dirname + '/www/public/images/Adsk.ico'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
