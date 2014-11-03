@@ -40,8 +40,11 @@ namespace Autodesk.ADN.RvtGalleryUploader
 
       FileUploadForm fUp = new FileUploadForm();
 
-      fUp.UserName = UserSettings.DEFAULT_USER_NAME;
-      fUp.EMail = UserSettings.DEFAULT_EMAIL;
+      //fUp.UserName = UserSettings.DEFAULT_USER_NAME;
+      //fUp.EMail = UserSettings.DEFAULT_EMAIL;
+
+      fUp.UserName = Util.GetUser();
+      fUp.EMail = Util.GetEmail();
 
       var dialogResult = fUp.ShowDialog( revit_window );
 
@@ -126,16 +129,17 @@ namespace Autodesk.ADN.RvtGalleryUploader
         string url = Util.GalleryUrl;
 
         AdnGalleryClient galleryClient = new AdnGalleryClient( 
-          url ); 
-        
-        var modelResponse 
+          url );
+
+        DBModelResponse modelResponse 
           = await Util.AddModelToGalleryAsync( 
             dbModel );
 
         if( !modelResponse.IsOk() )
         {
-          Util.LogError( "Error: " 
-            + modelResponse.Error.ToString() );
+          Util.LogError( string.Format( "Error: '{0}' {1}",
+            modelResponse.Error.ToString(),
+            null == modelResponse.Model ? "model is null" : "" ) );
 
           return;
         }

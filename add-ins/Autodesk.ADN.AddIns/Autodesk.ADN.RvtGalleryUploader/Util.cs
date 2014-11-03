@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autodesk.ADN.Toolkit.Gallery;
@@ -20,14 +21,27 @@ namespace Autodesk.ADN.RvtGalleryUploader
     private static Configuration GetConfig()
     {
       string path = Assembly.GetExecutingAssembly().Location;
-      string dir = Path.GetDirectoryName( path );
-      string configPath = Path.Combine( dir, "addin.config" );
+      string configPath = path + ".addin.config";
 
       Configuration config =
         ConfigurationManager.OpenMappedExeConfiguration(
           new ExeConfigurationFileMap { ExeConfigFilename = configPath },
           ConfigurationUserLevel.None );
 
+      string[] keys = config.AppSettings.Settings.AllKeys;
+
+      if( !keys.Contains<string>( "GalleryUrl" ) )
+      {
+        config.AppSettings.Settings.Add( "GalleryUrl", "http://viewer-stg.autodesk.io/node/gallery" );
+      }
+      if( !keys.Contains<string>( "Username" ) )
+      {
+        config.AppSettings.Settings.Add( "Username", "Jeremy" );
+      }
+      if( !keys.Contains<string>( "Email" ) )
+      {
+        config.AppSettings.Settings.Add( "Email", "jeremy.tammik@eur.autodesk.com" );
+      }
       return config;
     }
 
@@ -54,8 +68,6 @@ namespace Autodesk.ADN.RvtGalleryUploader
     {
       get
       {
-        //return "http://54.68.100.140:3000";
-
         Configuration config = GetConfig();
 
         var url = config.AppSettings.Settings["GalleryUrl"].Value;
