@@ -1,6 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+      None
+    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -31,13 +37,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="accoremgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2015\accoremgd.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2015\accoremgd.dll</HintPath>
     </Reference>
     <Reference Include="AcDbMgd">
-      <HintPath>..\..\..\..\..\..\..\ObjectARX 2015\inc\AcDbMgd.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2015\acdbmgd.dll</HintPath>
     </Reference>
     <Reference Include="acmgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2015\acmgd.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2015\acmgd.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
