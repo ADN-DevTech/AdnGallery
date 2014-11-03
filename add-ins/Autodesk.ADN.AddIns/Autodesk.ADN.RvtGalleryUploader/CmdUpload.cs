@@ -52,6 +52,11 @@ namespace Autodesk.ADN.RvtGalleryUploader
         return;
       }
 
+      if( fUp.StoreDetails )
+      {
+        Util.StoreUserInfo( fUp.UserName, fUp.EMail );
+      }
+
       SynchronizationContext.SetSynchronizationContext(
         syncContext );
 
@@ -118,6 +123,11 @@ namespace Autodesk.ADN.RvtGalleryUploader
           fileId,
           fileId.ToBase64() );
 
+        string url = Util.GalleryUrl;
+
+        AdnGalleryClient galleryClient = new AdnGalleryClient( 
+          url ); 
+        
         var modelResponse 
           = await Util.AddModelToGalleryAsync( 
             dbModel );
@@ -130,8 +140,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
           return;
         }
 
-        var url = Util.GalleryUrl + "/#/viewer?id=" +
-          modelResponse.Model.Id;
+        url = url + "/#/viewer?id=" + modelResponse.Model.Id;
 
         if( fUp.ShowProgress )
         {
