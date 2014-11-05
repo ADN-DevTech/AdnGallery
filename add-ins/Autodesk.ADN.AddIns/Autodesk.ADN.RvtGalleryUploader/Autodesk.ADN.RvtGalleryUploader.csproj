@@ -46,6 +46,7 @@
   <ItemGroup>
     <Reference Include="AdWindows">
       <HintPath>C:\Program Files\Autodesk\Revit 2015\AdWindows.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPI">
       <HintPath>$(ProgramW6432)\Autodesk\Revit 2015\RevitAPI.dll</HintPath>
@@ -87,6 +88,7 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)Autodesk.ADN.RvtGalleryUploader.addin" "$(AppData)\Autodesk\REVIT\Addins\2015"
-copy "$(ProjectDir)bin\debug\*" "$(AppData)\Autodesk\REVIT\Addins\2015"</PostBuildEvent>
+copy "$(ProjectDir)bin\debug\*" "$(AppData)\Autodesk\REVIT\Addins\2015"
+"$(ProjectDir)makebundle.bat" $(ProjectDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>
