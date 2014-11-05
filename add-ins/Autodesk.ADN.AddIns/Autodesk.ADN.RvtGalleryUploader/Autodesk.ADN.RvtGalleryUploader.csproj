@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Autodesk.ADN.RvtGalleryUploader.addin" />
+    <None Include="makebundle.bat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Autodesk.ADN.Toolkit\Autodesk.ADN.Toolkit.Gallery\Autodesk.ADN.Toolkit.Gallery.csproj">

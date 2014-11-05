@@ -14,6 +14,8 @@ add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.RvtGalleryUploader/obj/**
 add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.AcadGalleryUploader/bin/**
 add-ins/Autodesk.ADN.Toolkit/Autodesk.ADN.Toolkit.Gallery/bin/**
 add-ins/Autodesk.ADN.Toolkit/Autodesk.ADN.Toolkit.ViewData/bin/**
+add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.InvGalleryUploader/obj/**
+add-ins/Autodesk.ADN.AddIns/Autodesk.ADN.RvtGalleryUploader/RvtGalleryUploader.bundle.zip
 add-ins/packages/**
 
 # OS generated files #
