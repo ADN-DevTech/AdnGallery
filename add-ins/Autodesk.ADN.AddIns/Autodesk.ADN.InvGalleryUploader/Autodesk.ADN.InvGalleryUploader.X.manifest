@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
-<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-
-  <assemblyIdentity name="Autodesk.ADN.InvGalleryUploader" version="1.0.0.0"></assemblyIdentity>
-
-  <clrClass clsid="{10050201-2ea3-497d-bab2-a9117154bc97}" progid="Autodesk.StandardAddInServer" threadingModel="Both" name="Autodesk.ADN.InvGalleryUploader.StandardAddInServer" runtimeVersion=""></clrClass>
-
-  <file name="Autodesk.ADN.InvGalleryUploader.dll" hashalg="SHA1"></file>
-
-</assembly>
-=======
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
@@ -26,4 +13,3 @@
   <file name="Autodesk.ADN.InvGalleryUploader.dll" hashalg="SHA1"></file>
 
 </assembly>
->>>>>>> FETCH_HEAD
