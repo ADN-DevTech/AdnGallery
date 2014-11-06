@@ -133,7 +133,7 @@ namespace Autodesk.ADN.RvtGalleryUploader
     private static Configuration GetConfig()
     {
       string path = Assembly.GetExecutingAssembly().Location;
-      string configPath = path + ".addin.config";
+      string configPath = path + ".config";
 
       Configuration config =
         ConfigurationManager.OpenMappedExeConfiguration(
@@ -144,21 +144,24 @@ namespace Autodesk.ADN.RvtGalleryUploader
 
       if( !keys.Contains<string>( "GalleryUrl" ) )
       {
-        config.AppSettings.Settings.Add( "GalleryUrl", "http://viewer-stg.autodesk.io/node/gallery" );
+        config.AppSettings.Settings.Add( "GalleryUrl", 
+          "http://viewer-stg.autodesk.io/node/gallery" );
       }
       if( !keys.Contains<string>( "Username" ) )
       {
-        config.AppSettings.Settings.Add( "Username", "Jeremy" );
+        config.AppSettings.Settings.Add( "Username", 
+          "Jeremy" );
       }
       if( !keys.Contains<string>( "Email" ) )
       {
-        config.AppSettings.Settings.Add( "Email", "jeremy.tammik@eur.autodesk.com" );
+        config.AppSettings.Settings.Add( "Email", 
+          "jeremy.tammik@eur.autodesk.com" );
       }
       return config;
     }
 
     async public static Task<DBModelResponse> AddModelToGalleryAsync(
-        DBModel model )
+      DBModel model )
     {
       AdnGalleryClient galleryClient 
         = new AdnGalleryClient(
