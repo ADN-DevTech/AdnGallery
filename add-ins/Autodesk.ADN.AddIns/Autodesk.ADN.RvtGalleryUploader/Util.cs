@@ -34,6 +34,10 @@ namespace Autodesk.ADN.RvtGalleryUploader
       + "\r\n\r\n{1}"
       + "\r\n\r\nPlease add {2} = ...";
 
+    /// <summary>
+    /// Report a syntax error reading 
+    /// settings from text file.
+    /// </summary>
     static bool SyntaxError( 
       string path, 
       string s, 
@@ -45,6 +49,10 @@ namespace Autodesk.ADN.RvtGalleryUploader
       return false;
     }
 
+    /// <summary>
+    /// Retrieve a value for the specified variable
+    /// from the given text file contents.
+    /// </summary>
     static bool GetVariableValue(
       string path, 
       string s1,
@@ -83,12 +91,23 @@ namespace Autodesk.ADN.RvtGalleryUploader
       return true;
     }
 
+    /// <summary>
+    /// Remove averything following a hash character
+    /// '#' from a line of text to trim it of comments.
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
     static string TrimComment( string s )
     {
       int i = s.IndexOf( '#' );
-      return 0 <= i ? s.Substring( 0, i ) : s;
+      if( 0 <= i ) { s = s.Substring( 0, i ); }
+      return s.Trim();
     }
 
+    /// <summary>
+    /// Retrieve Autodesk View and Data API consumer 
+    /// credentials from the given text file.
+    /// </summary>
     public static bool GetConsumerCredentials(
       string path,
       out string key,
