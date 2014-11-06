@@ -7,16 +7,109 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autodesk.ADN.Toolkit.Gallery;
+using WinForms = System.Windows.Forms;
 #endregion // Namespaces
 
 namespace Autodesk.ADN.RvtGalleryUploader
 {
   class Util
   {
+    const string _caption = "RvtGalleryUploader";
+
+    /// <summary>
+    /// Display an error message to the user.
+    /// </summary>
     public static void LogError( string msg )
     {
-      Debug.Print( msg );
+      Debug.WriteLine( msg );
+      WinForms.MessageBox.Show( msg,
+        _caption,
+        WinForms.MessageBoxButtons.OK,
+        WinForms.MessageBoxIcon.Error );
     }
+
+    #region Get Consumer Credentials
+    const string _error_msg_format
+      = "Invalid settings in '{0}':"
+      + "\r\n\r\n{1}"
+      + "\r\n\r\nPlease add {2} = ...";
+
+    static bool SyntaxError( 
+      string path, 
+      string s, 
+      string variable_name )
+    {
+      LogError( string.Format(
+        _error_msg_format, path, s, variable_name ) );
+
+      return false;
+    }
+
+    static bool GetVariableValue(
+      string path, 
+      string s1,
+      string variable_name,
+      out string variable_value )
+    {
+      variable_value = null;
+
+      int i = s1.IndexOf( variable_name );
+
+      if( 0 > i )
+      {
+        return SyntaxError( path, s1, variable_name );
+      }
+
+      string s = s1.Substring( i + variable_name.Length );
+
+      i = s.IndexOf( '=' );
+
+      if( 0 > i )
+      {
+        return SyntaxError( path, s1, variable_name );
+      }
+
+      s = s.Substring( i + 1 );
+      
+      i = s.IndexOf( '\n' );
+
+      if( 0 <= i )
+      {
+        s = s.Substring( 0, i );
+      }
+
+      variable_value = s.Trim();
+
+      return true;
+    }
+
+    static string TrimComment( string s )
+    {
+      int i = s.IndexOf( '#' );
+      return 0 <= i ? s.Substring( 0, i ) : s;
+    }
+
+    public static bool GetConsumerCredentials(
+      string path,
+      out string key,
+      out string secret )
+    {
+      if( !File.Exists(path))
+      {
+				throw new ArgumentException( string.Format( 
+          "Credentials file '{0}' not found", path ) );
+      }
+      key = secret = null;
+
+      string s = string.Join( "\n", 
+        File.ReadLines( path )
+          .Select<string, string>( a => TrimComment( a ) )
+          .Where<string>( a => 0 < a.Length ));
+
+      return GetVariableValue( path, s, "ConsumerKey", out key )
+        &&  GetVariableValue( path, s, "ConsumerSecret", out secret );
+    }
+    #endregion // Get Consumer Credentials
 
     private static Configuration GetConfig()
     {

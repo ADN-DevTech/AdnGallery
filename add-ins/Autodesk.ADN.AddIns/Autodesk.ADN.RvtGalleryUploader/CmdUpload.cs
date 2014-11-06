@@ -40,9 +40,6 @@ namespace Autodesk.ADN.RvtGalleryUploader
 
       FileUploadForm fUp = new FileUploadForm();
 
-      //fUp.UserName = UserSettings.DEFAULT_USER_NAME;
-      //fUp.EMail = UserSettings.DEFAULT_EMAIL;
-
       fUp.UserName = Util.GetUser();
       fUp.EMail = Util.GetEmail();
 
@@ -67,10 +64,21 @@ namespace Autodesk.ADN.RvtGalleryUploader
 
       var bucketKey = "adn-viewer-gallery";
 
+      string consumer_key, consumer_secret;
+
+      if( !Util.GetConsumerCredentials( 
+        "C:/credentials.txt", 
+        out consumer_key, 
+        out consumer_secret ) )
+      {
+        Util.LogError( "Consumer credentials retrieval failed." );
+        return;
+      }
+
       AdnViewDataClient viewDataClient = new AdnViewDataClient(
         UserSettings.BASE_URL,
-        UserSettings.CONSUMER_KEY,
-        UserSettings.CONSUMER_SECRET );
+        consumer_key,
+        consumer_secret );
 
       var tokenResult = await viewDataClient.AuthenticateAsync();
 
@@ -219,11 +227,13 @@ namespace Autodesk.ADN.RvtGalleryUploader
       // because otherwise Revit will not allow access 
 
       //string filename = Path.GetTempFileName() + ".rvt";
-      string filename = "C:/tmp/RvtGalleryUploader.tmp.rvt";
+      //string filename = "C:/tmp/RvtGalleryUploader.tmp.rvt";
+      string filename = Path.GetTempPath() + "RvtGalleryUploader.tmp.rvt";
 
       filename = filename.Replace( '\\', '/' ); // easier to read in debugger
 
-      Debug.Print( filename );
+      Debug.Print( "Copy '{0}' to '{1}' for upload", 
+        doc.PathName, filename );
 
       File.Copy( doc.PathName, filename, true );
 
