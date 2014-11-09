@@ -76,6 +76,8 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////////
         function getModelInfo(model) {
 
+            model.src = "public/images/adsk.64x64.png";
+
             // Thumbnail
             var fileId = $scope.viewDataClient.fromBase64(model.urn);
 

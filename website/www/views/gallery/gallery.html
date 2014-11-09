@@ -112,7 +112,8 @@
             </nav>
 
 
-            <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'" style="overflow-y: auto;">
+            <div ng-repeat="model in models | filter: searchFilter | orderBy:'name'"
+                 style="overflow-y: auto; overflow-x: hidden;">
 
                 <div class="row" style="{{['background-color:#C3DBFA', 'background-color:#EDF5FF'][$index %2]}}">
 
@@ -139,13 +140,8 @@
                         </a>
 
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
