@@ -19,7 +19,7 @@
 var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
 var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
 var BASE_URL = 'https://developer.api.autodesk.com';
-var ADMIN_PASSWORD = 'kow@bung@';
+
 
 //var CONSUMER_KEY = "****** place holder - replace with your creds ******";
 //var CONSUMER_SECRET = "****** place holder - replace with your creds ******";
@@ -350,23 +350,6 @@ function checkTranslationStatus(
 ///////////////////////////////////////////////////////////////////////////////
 function sendMail(url, email, modelInfo) {
 
-    /*var transporter = nodemailer.createTransport("SMTP", {
-     host: '127.0.0.1',
-     port: 587,
-     auth: {
-     user: 'adngallery',
-     pass: '@utod3sker113'
-     }
-     });*/
-
-    /*var transporter = nodemailer.createTransport("SMTP", {
-     service: 'gmail',
-     auth: {
-     user: 'adn.autodesk@gmail.com',
-     pass: 'autodesk913'
-     }
-     });*/
-
     var transporter = nodemailer.createTransport(transport({
         name: 'smtp.orange.fr'
     }));
@@ -467,14 +450,6 @@ function getExtensionsAsync(callback) {
             });
     });
 }
-
-// Start fiber
-/*Sync(function(){
-
-    var res = getExtensionsAsync.sync(null);
-
-    console.log(res);
-})*/
 
 ///////////////////////////////////////////////////////////////////////////////
 //
