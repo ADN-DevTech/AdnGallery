@@ -6,38 +6,6 @@
 AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
 
 
-Autodesk.ADN.Viewing.Extension.AdnPropertyPanel = function (viewer) {
-
-    this.viewer = viewer;
-
-    Autodesk.Viewing.Extensions.ViewerPropertyPanel.call(
-        this,
-        this.viewer);
-
-    this.setNodeProperties = function(nodeId) {
-
-        Autodesk.Viewing.Extensions.ViewerPropertyPanel.prototype.setNodeProperties.call(
-            this, nodeId);
-
-        this.selectedNodeId = nodeId;
-    };
-
-    this.setProperties = function (properties) {
-
-        Autodesk.Viewing.Extensions.ViewerPropertyPanel.prototype.setProperties.call(
-            this, properties);
-
-        this.addProperty("Node Id", this.selectedNodeId, "Customization");
-    };
-};
-
-Autodesk.ADN.Viewing.Extension.AdnPropertyPanel.prototype =
-    Object.create(Autodesk.Viewing.Extensions.ViewerPropertyPanel.prototype);
-
-Autodesk.ADN.Viewing.Extension.AdnPropertyPanel.prototype.constructor =
-    Autodesk.ADN.Viewing.Extension.AdnPropertyPanel;
-
-
 Autodesk.ADN.Viewing.Extension.PropertyPanel = function (viewer, options) {
 
     // base constructor
@@ -52,6 +20,43 @@ Autodesk.ADN.Viewing.Extension.PropertyPanel = function (viewer, options) {
     //
     ///////////////////////////////////////////////////////////////////////////
     _self.load = function () {
+
+        Autodesk.ADN.Viewing.Extension.AdnPropertyPanel = function (viewer) {
+
+            this.viewer = viewer;
+
+            Autodesk.Viewing.Extensions.ViewerPropertyPanel.call(
+                this,
+                this.viewer);
+
+            this.setNodeProperties = function(nodeId) {
+
+                Autodesk.Viewing.Extensions.ViewerPropertyPanel.
+                    prototype.setNodeProperties.call(
+                        this, nodeId);
+
+                this.selectedNodeId = nodeId;
+            };
+
+            this.setProperties = function (properties) {
+
+                Autodesk.Viewing.Extensions.ViewerPropertyPanel.
+                    prototype.setProperties.call(
+                        this, properties);
+
+                this.addProperty(
+                    "Node Id",
+                    this.selectedNodeId,
+                    "Customization");
+            };
+        };
+
+        Autodesk.ADN.Viewing.Extension.AdnPropertyPanel.prototype =
+            Object.create(
+                Autodesk.Viewing.Extensions.ViewerPropertyPanel.prototype);
+
+        Autodesk.ADN.Viewing.Extension.AdnPropertyPanel.prototype.constructor =
+            Autodesk.ADN.Viewing.Extension.AdnPropertyPanel;
 
         var panel = new Autodesk.ADN.Viewing.Extension.AdnPropertyPanel(
             _viewer);

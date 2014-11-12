@@ -87,6 +87,8 @@ angular.module('AdnGallery.viewer',
 
                     $scope.viewer = viewer;
 
+                    $scope.viewer.onResize = null;
+
                     viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
 
                     var lightPreset = 8;
@@ -321,18 +323,15 @@ angular.module('AdnGallery.viewer',
                     true,
 
                 center__onresize: function () {
-                    if($scope.viewer)
-                        $scope.viewer.resize();
+                    onResize();
                 },
 
                 west__onresize: function () {
-                    if($scope.viewer)
-                        $scope.viewer.resize();
+                    onResize();
                 },
 
                 east__onresize: function () {
-                    if($scope.viewer)
-                        $scope.viewer.resize();
+                    onResize();
                 }
             });
 
@@ -372,6 +371,17 @@ angular.module('AdnGallery.viewer',
                         mainLayout.hide('west');
                     }
                 });
+        }
+
+        function onResize(){
+
+            if($scope.viewer) {
+                $scope.viewer.resize();
+
+                if($scope.viewer.onResize){
+                    $scope.viewer.onResize();
+                }
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////
