@@ -126,14 +126,6 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
             Autodesk.Viewing.SELECTION_CHANGED_EVENT,
             _self.onItemSelected);
 
-        _viewer.removeEventListener(
-            Autodesk.Viewing.CAMERA_CHANGE_EVENT,
-            _self.onCameraChanged);
-
-        /*_viewer.removeEventListener(
-            Autodesk.Viewing.EXPLODE_CHANGE_EVENT,
-            _self.onExplode);*/
-
         console.log("Autodesk.ADN.Viewing.Extension.Annotation unloaded");
 
         return true;
@@ -239,6 +231,8 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     //
     ///////////////////////////////////////////////////////////////////////////
     _self.onItemSelected = function (event) {
+
+        _viewer.select([]);
 
         var dbId = event.dbIdArray[0];
 

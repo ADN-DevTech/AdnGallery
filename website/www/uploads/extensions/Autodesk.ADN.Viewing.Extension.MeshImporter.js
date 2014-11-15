@@ -17,6 +17,8 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
 
     var _importedModel = null;
 
+    var _running = false;
+
     var _viewer = viewer;
 
     var _self = this;
@@ -30,12 +32,6 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
         console.log("Autodesk.ADN.Viewing.Extension.MeshImporter loaded");
 
         _viewer = _self.viewer;
-
-        //_self.material = _self.addMaterial(0xf571d6);
-
-        //create a scene to contain some overlay geometry
-        //_viewer.impl.createOverlayScene(
-        //    'AdnOverlay', _self.material, null);
 
         $('<div/>').
             attr('id', 'meshImporterDivId').
@@ -64,14 +60,6 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
                 _self.loadFromFile(file);
             });
 
-        $(document).bind(
-            'keyup', _self.onKeyup);
-
-
-        //var mesh = _self.createMesh();
-
-        //_viewer.impl.scene.add(mesh);
-
         return true;
     };
 
@@ -85,10 +73,6 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
 
         $('#meshImporterDivId').remove();
 
-        _viewer.impl.removeOverlayScene('AdnOverlay');
-
-        _viewer.impl.invalidate(false, false, true);
-
         return true;
     };
 
@@ -100,7 +84,20 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
 
         if (event.keyCode == 27) {
 
+            _viewer.impl.scene.remove(_importedModel);
 
+            _viewer.impl.invalidate(true);
+
+            $("#" + _viewer.clientContainer.id).
+                unbind("mousemove", _self.onMouseMove);
+
+            $("#" + _viewer.clientContainer.id).
+                unbind("click", _self.onMouseClick);
+
+            $(document).unbind(
+                'keyup', _self.onKeyup);
+
+            _running = false;
         }
     }
 
@@ -124,13 +121,8 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
 
                 _importedModel = createModel(meshEntityList);
 
-                _self.previousPos = null;
-
                 $("#" + _viewer.clientContainer.id).
                     bind("mousemove", _self.onMouseMove);
-
-                $("#" + _viewer.clientContainer.id).
-                    bind("click", _self.onMouseClick);
             };
 
             reader.onerror = function (event) {
@@ -247,8 +239,6 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
             mesh.geometry.__dirtyNormals = true;
 
             meshArray.push(mesh);
-
-            //_viewer.impl.scene.add(mesh);
         }
 
         center[0] = center[0] / len;
@@ -307,36 +297,23 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
 
         var pos = _self.screenToWorld(e);
 
-        if(!_self.previousPos) {
+        if(!_running) {
 
-            _self.previousPos = pos;
+            _running = true;
 
             _viewer.impl.scene.add(_importedModel);
 
-            //_viewer.impl.addOverlay('AdnOverlay', _importedModel);
+            $("#" + _viewer.clientContainer.id).
+                bind("click", _self.onMouseClick);
 
-            _importedModel.applyMatrix(new THREE.Matrix4().makeTranslation(
-                pos.x,
-                pos.y,
-                pos.z));
+            $(document).bind(
+                'keyup', _self.onKeyup);
         }
 
-        var translation = {
-            x: pos.x - _self.previousPos.x,
-            y: pos.y - _self.previousPos.y,
-            z: pos.z - _self.previousPos.z
-        };
-
-        _self.previousPos = pos;
-
-        //_importedModel.matrixWorld.setPosition(pos);
-
-        _importedModel.applyMatrix(new THREE.Matrix4().makeTranslation(
-            translation.x,
-            translation.y,
-            translation.z));
-
-        //_viewer.impl.invalidate(false, false, true);
+        _importedModel.position.set(
+            pos.x,
+            pos.y,
+            pos.z);
 
         _viewer.impl.invalidate(true);
     }
@@ -347,24 +324,12 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.onMouseClick = function(e) {
 
-        if(!_self.previousPos) {
-            return;
-        }
-
         var pos = _self.screenToWorld(e);
 
-        var translation = {
-            x: pos.x - _self.previousPos.x,
-            y: pos.y - _self.previousPos.y,
-            z: pos.z - _self.previousPos.z
-        };
-
-        _importedModel.applyMatrix(new THREE.Matrix4().makeTranslation(
-            translation.x,
-            translation.y,
-            translation.z));
-
-        //_viewer.impl.invalidate(false, false, true);
+        _importedModel.position.set(
+            pos.x,
+            pos.y,
+            pos.z);
 
         _viewer.impl.invalidate(true);
 
@@ -373,6 +338,11 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
 
         $("#" + _viewer.clientContainer.id).
             unbind("click", _self.onMouseClick);
+
+        $(document).unbind(
+            'keyup', _self.onKeyup);
+
+        _running = false;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -381,8 +351,10 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.screenToWorld = function(event) {
 
-        var screenPoint =
-            getMousePosition(event);
+        var screenPoint = {
+            x: event.clientX,
+            y: event.clientY
+        };
 
         var viewport =
             _viewer.navigation.getScreenViewport();
@@ -393,36 +365,6 @@ Autodesk.ADN.Viewing.Extension.MeshImporter = function (viewer, options) {
         };
 
         return _viewer.navigation.getWorldPoint(n.x, n.y);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // return mouse position
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    function getMousePosition(event) {
-
-        var element = event.currentTarget;
-
-        var x = 0;
-        var y = 0;
-
-        while (element) {
-
-            x += element.offsetLeft -
-                element.scrollLeft +
-                element.clientLeft;
-
-            y += element.offsetTop -
-                element.scrollTop +
-                element.clientTop;
-
-            element = element.offsetParent;
-        }
-
-        x = event.clientX - x;
-        y = event.clientY - y;
-
-        return { x: x, y: y };
     }
 };
 

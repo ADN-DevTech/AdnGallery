@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// 2D Annotation viewer Extension
+// Move viewer Extension
 // by Philippe Leefsma, October 2014
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
 
     var _initialMeshMap = {};
 
-    var _currentDbId = 0;
+    var _running = false;
 
     var _viewer = viewer;
 
@@ -32,17 +32,9 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
 
         console.log("Autodesk.ADN.Viewing.Extension.Move loaded");
 
-        _viewer = _self.viewer;
-
         _viewer.addEventListener(
             Autodesk.Viewing.SELECTION_CHANGED_EVENT,
             _self.onItemSelected);
-
-        $("#" + _viewer.clientContainer.id).bind(
-            "mousedown", _self.onMouseDown);
-
-        $(document).mousedown(
-            _self.onMouseDown);
 
         $(document).bind(
             'keyup', _self.onKeyup);
@@ -65,21 +57,10 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
         $(document).unbind(
             'keyup', _self.onKeyup);
 
-        $("#" + _viewer.clientContainer.id).
-            unbind("click", _self.onMouseClick);
-
-        $("#" + _viewer.clientContainer.id).
-            unbind("click", _self.onMouseMouse);
-
-        _self.restorePositions( _initialMeshMap);
+        _self.cancel();
 
         return true;
     };
-
-    _self.onMouseDown = function(e) {
-
-        console.log('down');
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     // keyup callback callback
@@ -89,8 +70,30 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
 
         if (event.keyCode == 27) {
 
-            _self.restorePositions(_selectedMeshMap);
+            _self.cancel();
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // cancel
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    _self.cancel = function(){
+
+        $("#" + _viewer.clientContainer.id).
+            unbind("click", _self.onMouseClickInit);
+
+        $("#" + _viewer.clientContainer.id).
+            unbind("click", _self.onMouseClickEnd);
+
+        $("#" + _viewer.clientContainer.id).
+            unbind("mousemove", _self.onMouseMouse);
+
+        _self.restorePositions(_selectedMeshMap);
+
+        _selectedMeshMap = {};
+
+        _running = false;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -105,8 +108,9 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
                 _viewer,
                 fragId);
 
-            mesh.matrixWorld.setPosition(
-                meshMap[fragId]);
+            var pos = meshMap[fragId].position;
+
+            mesh.matrixWorld.setPosition(pos);
         }
 
         _viewer.impl.invalidate(true);
@@ -118,14 +122,11 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.onItemSelected = function (event) {
 
-        var dbId = event.dbIdArray[0];
+        _viewer.select([]);
 
-        if(_currentDbId === dbId){
-
+        if(_running) {
             return;
         }
-
-        _selectedMeshMap = {};
 
         var fragId = event.fragIdsArray[0];
 
@@ -134,47 +135,34 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
             _self.previousPos = null;
 
             $("#" + _viewer.clientContainer.id).
-                unbind("click", _self.onMouseClick);
-
-            $("#" + _viewer.clientContainer.id).
                 bind("mousemove", _self.onMouseMove);
 
-            if(Array.isArray(fragId)) {
+            $("#" + _viewer.clientContainer.id).
+                bind("click", _self.onMouseClickInit);
 
-                fragId.forEach(function(subFragId){
+            var fragIdsArray = (Array.isArray(fragId) ?
+                fragId :
+                [fragId]);
 
-                    var mesh = _viewer.impl.getRenderProxy(
-                        _viewer,
-                        subFragId);
-
-                    if (mesh) {
-                        _selectedMeshMap[subFragId] =
-                            _self.getMeshPosition(mesh);
-
-                        if(!_initialMeshMap[subFragId]) {
-                            _initialMeshMap[subFragId] =
-                                _self.getMeshPosition(mesh);
-                        }
-                    }
-                });
-            }
-            else {
+            fragIdsArray.forEach(function(subFragId){
 
                 var mesh = _viewer.impl.getRenderProxy(
                     _viewer,
-                    fragId);
+                    subFragId);
 
-                if (mesh) {
+                _selectedMeshMap[subFragId] = {
 
-                    _selectedMeshMap[fragId] =
-                        _self.getMeshPosition(mesh);
+                    position: _self.getMeshPosition(mesh)
+                }
 
-                    if(!_initialMeshMap[fragId]) {
-                        _initialMeshMap[fragId] =
-                            _self.getMeshPosition(mesh);
+                if(!_initialMeshMap[subFragId]) {
+
+                    _initialMeshMap[subFragId] = {
+
+                        position: _self.getMeshPosition(mesh)
                     }
                 }
-            }
+            });
         }
     }
 
@@ -192,63 +180,78 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // translate mesh
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    _self.translateMesh = function (mesh, translation) {
-
-        var pos = new THREE.Vector3();
-
-        pos.setFromMatrixPosition(mesh.matrixWorld);
-
-        pos.x += translation.x;
-        pos.y += translation.y;
-        pos.z += translation.z;
-
-        mesh.matrixWorld.setPosition(pos);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // mouse click callback
     //
     ///////////////////////////////////////////////////////////////////////////
-    _self.onMouseClick = function(e) {
-
-        _self.previousPos = _self.screenToWorld(e);
-
-        if(Object.keys(_selectedMeshMap).length > 0) {
-
-            $("#" + _viewer.clientContainer.id).
-                unbind("mousemove", _self.onMouseMove);
-        }
+    _self.onMouseClickInit = function(event) {
 
         $("#" + _viewer.clientContainer.id).
-            unbind("click", _self.onMouseClick);
+            unbind("click", _self.onMouseClickInit);
+
+        $("#" + _viewer.clientContainer.id).
+            bind("click", _self.onMouseClickEnd);
+
+        _running = true;
+
+        var screenPoint = {
+            x: event.clientX,
+            y: event.clientY
+        };
+
+        var n = _self.normalizeCoords(screenPoint);
+
+        var hitPoint = _viewer.utilities.getHitPoint(
+            n.x,
+            n.y);
+
+        if (hitPoint) {
+
+            for(var fragId in _selectedMeshMap) {
+
+                console.log("FragId: " + fragId);
+
+                var mesh = _viewer.impl.getRenderProxy(
+                    _viewer,
+                    fragId);
+
+                var pos = _self.getMeshPosition(mesh);
+
+                var offset = {
+
+                    x: hitPoint.x - pos.x,
+                    y: hitPoint.y - pos.y,
+                    z: hitPoint.z - pos.z
+                }
+
+                _selectedMeshMap[fragId].offset = offset;
+
+                console.log(offset);
+            }
+        }
+    }
+
+    _self.onMouseClickEnd = function(event) {
+
+        _self.previousPos = _self.screenToWorld(event);
+
+        $("#" + _viewer.clientContainer.id).
+            unbind("mousemove", _self.onMouseMove);
+
+        $("#" + _viewer.clientContainer.id).
+            unbind("click", _self.onMouseClickEnd);
+
+        _selectedMeshMap = {};
+
+        _running = false;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     // mouse move callback
     //
     ///////////////////////////////////////////////////////////////////////////
-    _self.onMouseMove = function(e) {
+    _self.onMouseMove = function(event) {
 
-        var pos = _self.screenToWorld(e);
-
-        if(!_self.previousPos) {
-
-            _self.previousPos = pos;
-
-            $("#" + _viewer.clientContainer.id).bind(
-                "click", _self.onMouseClick);
-        }
-
-        var translation = {
-            x: pos.x - _self.previousPos.x,
-            y: pos.y - _self.previousPos.y,
-            z: pos.z - _self.previousPos.z
-        };
-
-        _self.previousPos = pos;
+        var pos = _self.screenToWorld(event);
 
         for(var fragId in _selectedMeshMap) {
 
@@ -256,9 +259,19 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
                 _viewer,
                 fragId);
 
-            _self.translateMesh(mesh, translation);
+            var offset = _selectedMeshMap[fragId].offset;
 
-            //mesh.matrixWorld.setPosition(pos);
+            //var offset = { x: 0, y: 0, z: 0 };
+
+            console.log(offset);
+
+            pos = {
+                x: pos.x - offset.x,
+                y: pos.y - offset.y,
+                z: pos.z - offset.z
+            };
+
+            mesh.matrixWorld.setPosition(pos);
         }
 
         _viewer.impl.invalidate(true);
@@ -275,15 +288,25 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
             y: event.clientY
         };
 
-        var viewport =
-            _viewer.navigation.getScreenViewport();
-
-        var n = {
-            x: (screenPoint.x - viewport.left) / viewport.width,
-            y: (screenPoint.y - viewport.top) / viewport.height
-        };
+        var n = _self.normalizeCoords(screenPoint);
 
         return _viewer.navigation.getWorldPoint(n.x, n.y);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // normalize screen coordinates
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    _self.normalizeCoords = function(screenPoint) {
+
+        var vp = _viewer.navigation.getScreenViewport();
+
+        var n = {
+            x: (screenPoint.x - vp.left) / vp.width,
+            y: (screenPoint.y - vp.top) / vp.height
+        };
+
+        return n;
     }
 };
 
