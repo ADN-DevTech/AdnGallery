@@ -47,19 +47,31 @@
 
             <nav id="navbarMenuId" class="navbar navbar-default" role="navigation" style="z-index:998; top:50px">
 
-                <a class="list-group-item" href="#/showcase" style="color:#C3DBFA">
+                <a ng-if="!collapsedMode()" class="list-group-item" href="#/showcase" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-eye-open"></span>
                     &nbsp; Showcase
                 </a>
 
-                <a id="btnGalleryLoadUrnId" class="list-group-item" href="" style="color:#C3DBFA">
+                <a ng-if="collapsedMode()" class="list-group-item" href="#/showcase" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+
+                <a ng-if="!collapsedMode()" id="btnGalleryLoadUrnId" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-barcode"></span>
                     &nbsp; Load from urn
                 </a>
 
-                <a id="btnGalleryUploadDocId" class="list-group-item" href="" style="color:#C3DBFA">
+                <a ng-if="collapsedMode()" id="btnGalleryLoadUrnId2" class="list-group-item" href="" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-barcode"></span>
+                </a>
+
+                <a ng-if="!collapsedMode()" id="btnGalleryUploadDocId" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-upload"></span>
                     &nbsp; Upload
+                </a>
+
+                <a ng-if="collapsedMode()" id="btnGalleryUploadDocId2" class="list-group-item" href="" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-upload"></span>
                 </a>
 
             </nav>

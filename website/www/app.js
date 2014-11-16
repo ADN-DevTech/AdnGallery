@@ -45,6 +45,12 @@ angular.module('AdnGallery',
         //
         //
         ///////////////////////////////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
         function initializeMenu() {
 
             $('#btnAboutId').unbind().click(
@@ -368,7 +374,7 @@ angular.module('AdnGallery',
                 var getAllMethods = Object.getOwnPropertyNames(mobile).filter(
                     function(property) {
                         return typeof mobile[property] == 'function';
-                });
+                    });
 
                 for (var index in getAllMethods) {
 
@@ -388,6 +394,13 @@ angular.module('AdnGallery',
         };
 
         $rootScope.mobile = mobile;
+
+        $rootScope.collapsedMode = function () {
+
+            var w = $(window).width();
+
+            return (w < 399 ? true : false);
+        }
     }).
 
     ///////////////////////////////////////////////////////////////////////////

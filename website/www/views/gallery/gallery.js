@@ -204,6 +204,19 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                     $('#uploadDlg').modal('show');
                 }
             );
+
+            $('#btnGalleryLoadUrnId2').unbind().click(
+                function() {
+                    $('#loadUrnDlg').modal('show');
+                }
+            );
+
+            $('#btnGalleryUploadDocId2').unbind().click(
+                function() {
+                    $scope.clearContent('uploadDlgBody');
+                    $('#uploadDlg').modal('show');
+                }
+            );
         }
 
         ///////////////////////////////////////////////////////////////////
