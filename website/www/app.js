@@ -45,12 +45,6 @@ angular.module('AdnGallery',
         //
         //
         ///////////////////////////////////////////////////////////////////////
-
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //
-        ///////////////////////////////////////////////////////////////////////
         function initializeMenu() {
 
             $('#btnAboutId').unbind().click(
@@ -398,6 +392,8 @@ angular.module('AdnGallery',
         $rootScope.collapsedMode = function () {
 
             var w = $(window).width();
+
+            console.log(w);
 
             return (w < 399 ? true : false);
         }

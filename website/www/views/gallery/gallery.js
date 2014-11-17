@@ -191,32 +191,25 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                     $location.path('/viewer').search({urn: urn});
                 }
             );
+        }
 
-            $('#btnGalleryLoadUrnId').unbind().click(
-                function() {
-                    $('#loadUrnDlg').modal('show');
-                }
-            );
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        $scope.onLoadUrn = function() {
 
-            $('#btnGalleryUploadDocId').unbind().click(
-                function() {
-                    $scope.clearContent('uploadDlgBody');
-                    $('#uploadDlg').modal('show');
-                }
-            );
+            $('#loadUrnDlg').modal('show');
+        }
 
-            $('#btnGalleryLoadUrnId2').unbind().click(
-                function() {
-                    $('#loadUrnDlg').modal('show');
-                }
-            );
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        $scope.onUpload = function() {
 
-            $('#btnGalleryUploadDocId2').unbind().click(
-                function() {
-                    $scope.clearContent('uploadDlgBody');
-                    $('#uploadDlg').modal('show');
-                }
-            );
+            $scope.clearContent('uploadDlgBody');
+            $('#uploadDlg').modal('show');
         }
 
         ///////////////////////////////////////////////////////////////////

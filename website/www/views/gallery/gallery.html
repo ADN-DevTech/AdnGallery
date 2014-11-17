@@ -56,21 +56,21 @@
                     <span class="glyphicon glyphicon-eye-open"></span>
                 </a>
 
-                <a ng-if="!collapsedMode()" id="btnGalleryLoadUrnId" class="list-group-item" href="" style="color:#C3DBFA">
+                <a ng-if="!collapsedMode()" ng-click="onLoadUrn()" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-barcode"></span>
                     &nbsp; Load from urn
                 </a>
 
-                <a ng-if="collapsedMode()" id="btnGalleryLoadUrnId2" class="list-group-item" href="" style="color:#C3DBFA">
+                <a ng-if="collapsedMode()" ng-click="onLoadUrn()" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-barcode"></span>
                 </a>
 
-                <a ng-if="!collapsedMode()" id="btnGalleryUploadDocId" class="list-group-item" href="" style="color:#C3DBFA">
+                <a ng-if="!collapsedMode()" ng-click="onUpload()" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-upload"></span>
                     &nbsp; Upload
                 </a>
 
-                <a ng-if="collapsedMode()" id="btnGalleryUploadDocId2" class="list-group-item" href="" style="color:#C3DBFA">
+                <a ng-if="collapsedMode()" ng-click="onUpload()" class="list-group-item" href="" style="color:#C3DBFA">
                     <span class="glyphicon glyphicon-upload"></span>
                 </a>
 
@@ -81,13 +81,15 @@
         <div id="column2">
 
             <nav id="navbarGalleryId" class="navbar navbar-default" role="navigation" style="z-index:998; top:50px">
+
                 <div class="container-fluid">
 
-                    <div class="collapse navbar-collapse collapse" style="float:left;">
+                    <div class="collapse navbar-collapse">
 
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav navbar-left">
 
                             <div id="menuSearchGalleryId" class="navbar-form navbar-right" role="search">
+
                                 <div class="input-group">
 
                                     <input type="text"
@@ -130,12 +132,12 @@
                 <div class="row" style="{{['background-color:#C3DBFA', 'background-color:#EDF5FF'][$index %2]}}">
 
                     <div class="col-md-3">
-                        <a href="#/viewer?id={{model._id}}">
+                        <a>
                             <img class="img-responsive" ng-src={{model.src}} alt="">
                         </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="padding-left: 50px; padding-bottom: 20px;">
 
                         <h3>{{model.name}}</h3>
                         <div ng-if="model.author.name">
