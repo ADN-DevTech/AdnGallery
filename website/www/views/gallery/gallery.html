@@ -131,15 +131,16 @@
 
                 <div class="row" style="{{['background-color:#C3DBFA', 'background-color:#EDF5FF'][$index %2]}}">
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="padding-left: 30px; padding-top: 10px; padding-bottom: 10px;">
                         <a>
                             <img class="img-responsive" ng-src={{model.src}} alt="">
                         </a>
                     </div>
 
-                    <div class="col-md-3" style="padding-left: 50px; padding-bottom: 20px;">
+                    <div class="col-md-3" style="padding-left: 40px; padding-bottom: 20px;">
 
                         <h3>{{model.name}}</h3>
+
                         <div ng-if="model.author.name">
                             <h5><b>Author: </b>{{model.author.name}}</h5>
                         </div>

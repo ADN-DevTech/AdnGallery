@@ -395,7 +395,7 @@ angular.module('AdnGallery',
 
             console.log(w);
 
-            return (w < 399 ? true : false);
+            return (w < 480 ? true : false);
         }
     }).
 

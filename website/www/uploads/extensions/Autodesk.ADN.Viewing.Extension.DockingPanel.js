@@ -65,10 +65,10 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
 
             this.initializeMoveHandlers(this.container);
 
-            this.closer = document.createElement("div");
+            //this.closer = document.createElement("div");
 
-            this.closer.className = "AdnPanelClose";
-            this.closer.textContent = "Close";
+            //this.closer.className = "AdnPanelClose";
+            //this.closer.textContent = "Close";
 
             //this.initializeCloseHandler(this.closer);
 
@@ -79,14 +79,14 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
 
         content.id = 'adnPanelId';
 
-        $('#adnPanelId').text('Docking Panel Content');
-
         _panel = new Autodesk.ADN.AdnPanel(
             _viewer.clientContainer,
             'adn-panel',
             'ADN Demo Panel',
             content,
             0, 0);
+
+        $('#adnPanelId').text('Docking Panel Content');
 
         _panel.setVisible(true);
 
