@@ -393,8 +393,6 @@ angular.module('AdnGallery',
 
             var w = $(window).width();
 
-            console.log(w);
-
             return (w < 480 ? true : false);
         }
     }).

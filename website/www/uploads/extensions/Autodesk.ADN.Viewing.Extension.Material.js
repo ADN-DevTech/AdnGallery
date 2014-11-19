@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// 2D Annotation viewer Extension
+// Material viewer Extension
 // by Philippe Leefsma, October 2014
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,6 +22,8 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
     var _self = this;
 
+    var _texMaterials = [];
+
     ///////////////////////////////////////////////////////////////////////////
     // load callback
     //
@@ -32,7 +34,10 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
         _viewer = _self.viewer;
 
-        _self.addMaterial(0xf571d6);
+        _material = _self.addMaterial(0xf571d6);
+
+        _texMaterials.push(_self.addTexMaterial("public/images/textures/wood.jpg"));
+        _texMaterials.push(_self.addTexMaterial("public/images/textures/steel.jpg"));
 
         _viewer.addEventListener(
             Autodesk.Viewing.SELECTION_CHANGED_EVENT,
@@ -45,12 +50,50 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
         $('#colorPickerDivId').css({
 
-            'right': '20%',
+            'right': '25%',
             'top': '5%',
             'position':'absolute',
             'visibility':'visible',
             'z-index':'100'
         });
+
+        $('<div/>').
+            attr('id', 'tex1DivId').
+            append('<img width="30" height="30" src="public/images/textures/wood.jpg"/>').
+            appendTo('#' + _viewer.clientContainer.id);
+
+        $('#tex1DivId').css({
+
+            'right': '23%',
+            'top': '5%',
+            'position':'absolute',
+            'visibility':'visible',
+            'z-index':'100'
+        });
+
+        $('#tex1DivId').click(function() {
+                _material = _texMaterials[0];
+            }
+        );
+
+        $('<div/>').
+            attr('id', 'tex2DivId').
+            append('<img width="30" height="30" src="public/images/textures/steel.jpg"/>').
+            appendTo('#' + _viewer.clientContainer.id);
+
+        $('#tex2DivId').css({
+
+            'right': '21%',
+            'top': '5%',
+            'position':'absolute',
+            'visibility':'visible',
+            'z-index':'100'
+        });
+
+        $('#tex2DivId').click(function() {
+                _material = _texMaterials[1];
+            }
+        );
 
         $(".spectrum").spectrum({
             color: "#f571d6",
@@ -61,7 +104,7 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
                 var value = parseInt(colorHexStr, 16);
 
-                _self.addMaterial(value);
+                _material = _self.addMaterial(value);
             }
         });
 
@@ -95,35 +138,22 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
         _viewer.select([]);
 
-        var dbId = event.dbIdArray[0];
-
         var fragId = event.fragIdsArray[0];
 
         if(typeof fragId !== 'undefined') {
 
-            if(Array.isArray(fragId)) {
+            var fragIdsArray = (Array.isArray(fragId) ?
+                fragId :
+                [fragId]);
 
-                fragId.forEach(function(subFragId){
-
-                    var mesh = _viewer.impl.getRenderProxy(
-                        _viewer,
-                        subFragId);
-
-                    if (mesh) {
-                        _self.setMaterial(subFragId, mesh, _material);
-                    }
-                });
-            }
-            else {
+            fragIdsArray.forEach(function(subFragId) {
 
                 var mesh = _viewer.impl.getRenderProxy(
                     _viewer,
-                    fragId);
+                    subFragId);
 
-                if (mesh) {
-                    _self.setMaterial(fragId, mesh, _material);
-                }
-            }
+                _self.setMaterial(subFragId, mesh, _material);
+            });
         }
     }
 
@@ -152,28 +182,50 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.addMaterial = function (color) {
 
-        function newGuid () {
-
-            var d = new Date().getTime();
-
-            var guid = 'xxxx-xxxx-xxxx-xxxx'.replace(
-                /[xy]/g,
-                function (c) {
-                    var r = (d + Math.random() * 16) % 16 | 0;
-                    d = Math.floor(d / 16);
-                    return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
-                });
-
-            return guid;
-        };
-
-        _material = new THREE.MeshPhongMaterial({color: color});
+        var material = new THREE.MeshPhongMaterial({color: color});
 
         _viewer.impl.matman().addMaterial(
             'ADN-Material-' + newGuid(),
-            _material,
+            material,
             true);
+
+        return material;
     }
+
+    _self.addTexMaterial = function(texture) {
+
+        var tex = THREE.ImageUtils.loadTexture(
+            texture);
+
+        tex.wrapS  = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+
+        var material = new THREE.MeshPhongMaterial({
+            map: tex
+        });
+
+        _viewer.impl.matman().addMaterial(
+            'adn-tex-Material-' + newGuid(),
+            material,
+            true);
+
+        return material;
+    }
+
+    function newGuid () {
+
+        var d = new Date().getTime();
+
+        var guid = 'xxxx-xxxx-xxxx-xxxx'.replace(
+            /[xy]/g,
+            function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+            });
+
+        return guid;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     // restore initial materials
