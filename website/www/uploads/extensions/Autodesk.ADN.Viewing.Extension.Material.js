@@ -38,6 +38,7 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
         _texMaterials.push(_self.addTexMaterial("public/images/textures/wood.jpg"));
         _texMaterials.push(_self.addTexMaterial("public/images/textures/steel.jpg"));
+        _texMaterials.push(_self.addTexMaterial("public/images/textures/brick.jpg"));
 
         _viewer.addEventListener(
             Autodesk.Viewing.SELECTION_CHANGED_EVENT,
@@ -59,39 +60,61 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
         $('<div/>').
             attr('id', 'tex1DivId').
-            append('<img width="30" height="30" src="public/images/textures/wood.jpg"/>').
+            append('<a href=""><img width="30" height="30" src="public/images/textures/wood.jpg"/></a>').
             appendTo('#' + _viewer.clientContainer.id);
 
         $('#tex1DivId').css({
 
-            'right': '23%',
+            'right': '22%',
             'top': '5%',
             'position':'absolute',
             'visibility':'visible',
             'z-index':'100'
         });
 
-        $('#tex1DivId').click(function() {
+        $('#tex1DivId').click(function(e) {
+                e.preventDefault();
                 _material = _texMaterials[0];
             }
         );
 
         $('<div/>').
             attr('id', 'tex2DivId').
-            append('<img width="30" height="30" src="public/images/textures/steel.jpg"/>').
+            append('<a href=""><img width="30" height="30" src="public/images/textures/steel.jpg"/></a>').
             appendTo('#' + _viewer.clientContainer.id);
 
         $('#tex2DivId').css({
 
-            'right': '21%',
+            'right': '19%',
             'top': '5%',
             'position':'absolute',
             'visibility':'visible',
             'z-index':'100'
         });
 
-        $('#tex2DivId').click(function() {
+        $('#tex2DivId').click(function(e) {
+                e.preventDefault();
                 _material = _texMaterials[1];
+            }
+        );
+
+        $('<div/>').
+            attr('id', 'tex3DivId').
+            append('<a href=""><img width="30" height="30" src="public/images/textures/brick.jpg"/></a>').
+            appendTo('#' + _viewer.clientContainer.id);
+
+        $('#tex3DivId').css({
+
+            'right': '16%',
+            'top': '5%',
+            'position':'absolute',
+            'visibility':'visible',
+            'z-index':'100'
+        });
+
+        $('#tex3DivId').click(function(e) {
+                e.preventDefault();
+                _material = _texMaterials[2];
             }
         );
 
