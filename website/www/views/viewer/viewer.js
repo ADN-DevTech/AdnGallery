@@ -54,7 +54,9 @@ angular.module('AdnGallery.viewer',
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
                     'http://' + window.location.host + '/node/gallery/api/token',
-                    document.getElementById('ViewerDiv'));
+                    document.getElementById('ViewerDiv'),
+                    'AutodeskStaging'
+                    );
 
             $scope.setViewerManager($scope.adnViewerMng);
 
@@ -225,7 +227,7 @@ angular.module('AdnGallery.viewer',
                     dbId,
                     function (result) {
 
-                        if (result.properties) {
+                        if (result.properties && $scope.propertyGrid) {
 
                             var properties = result.properties;
 

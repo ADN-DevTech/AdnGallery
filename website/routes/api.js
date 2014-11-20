@@ -16,10 +16,15 @@
 // UNINTERRUPTED OR ERROR FREE.
 ///////////////////////////////////////////////////////////////////////////////
 
-var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
-var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
-var BASE_URL = 'https://developer.api.autodesk.com';
+//production
+// var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
+// var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
+// var BASE_URL = 'https://developer.api.autodesk.com';
 
+//staging
+var CONSUMER_KEY = 'cMsd7pD49AbrZMIfs8sFwhPKEWb96TGh';
+var CONSUMER_SECRET = '1AMdJnV6TLXj2UG8';
+var BASE_URL = 'https://developer-stg.api.autodesk.com';
 
 //var CONSUMER_KEY = "****** place holder - replace with your creds ******";
 //var CONSUMER_SECRET = "****** place holder - replace with your creds ******";
@@ -275,7 +280,7 @@ function translateModel(modelInfo, emailInfo) {
 
             var viewDataClient =
                 new AdnViewDataClient(
-                    'https://developer.api.autodesk.com',
+                    BASE_URL,
                     token);
 
             checkTranslationStatus(
