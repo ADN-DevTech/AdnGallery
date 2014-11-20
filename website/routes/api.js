@@ -20,11 +20,6 @@ var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
 var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
 var BASE_URL = 'https://developer.api.autodesk.com';
 
-
-//var CONSUMER_KEY = "****** place holder - replace with your creds ******";
-//var CONSUMER_SECRET = "****** place holder - replace with your creds ******";
-//var BASE_URL = "https://developer.api.autodesk.com";
-
 var AdnViewDataClient = require('./Autodesk.ADN.Toolkit.ViewDataClient.js');
 var transport = require('nodemailer-direct-transport');
 var formidable = require('formidable');
@@ -79,10 +74,23 @@ db.open(function (err, db) {
 ///////////////////////////////////////////////////////////////////////////////
 router.get('/models', function (req, res) {
 
-    console.log('Retrieving all models');
+    console.log('Retrieving models');
+
+    var skip = 0;
+
+    var limit = 10;
+
+    if (typeof skip !== 'undefined')
+        skip = req.query.skip;
+
+    if (typeof limit !== 'undefined')
+        limit = req.query.limit;
 
     db.collection('models', function (err, collection) {
-        collection.find().toArray(
+        collection.find(null, null, {
+            skip: skip,
+            limit: limit
+        }).sort({ name: 1 }).toArray(
 
             function (err, items) {
 
@@ -221,8 +229,6 @@ router.post('/model', function (req, res) {
 
     var item = req.body;
 
-    console.log('host: ' + host);
-
     console.log('Adding model: ' + JSON.stringify(item));
 
     var email = item.author.email;
@@ -328,9 +334,9 @@ function checkTranslationStatus(
                 function (response) {
 
                     console.log(
-                            'Progress ' +
-                            fileId + ': ' +
-                            response.progress);
+                        'Progress ' +
+                        fileId + ': ' +
+                        response.progress);
 
                     if (response.progress === 'complete') {
                         clearInterval(timer);
@@ -431,20 +437,9 @@ function getExtensionsAsync(callback) {
 
     db.collection('extensions', function (err, collection) {
 
-        collection.find().toArray(
+        collection.find().sort({ name: 1 }).toArray(
 
             function (err, items) {
-
-                items.sort(function(a, b){
-
-                    if (a.name < b.name)
-                        return -1;
-
-                    if (a.name > b.name)
-                        return 1;
-
-                    return 0;
-                });
 
                 callback(null, items);
             });
@@ -620,41 +615,3 @@ function findExtensions(str) {
         start = end;
     }
 }
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////////
-
-//disabled delete
-
-/*router.delete('/model/:id', function (req, res) {
-
- var id = req.params.id;
-
- //Check password
- var pwd = req.query.pwd;
-
- if (pwd !== ADMIN_PASSWORD) {
- var error = 'Invalid admin password, cannot delete model: ' + id;
- console.log(error);
- res.send({ 'error': error });
- return;
- }
-
- console.log('Deleting model: ' + id);
-
- db.collection('models', function (err, collection) {
- collection.remove(
- { '_id': new BSON.ObjectID(id) },
- { safe: true },
- function (err, result) {
- if (err) {
- res.send({ 'error': 'An error has occurred - ' + err });
- } else {
- console.log('' + result + ' document(s) deleted');
- res.send(req.body);
- }
- });
- });
- });*/
