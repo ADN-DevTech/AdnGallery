@@ -76,21 +76,30 @@ router.get('/models', function (req, res) {
 
     console.log('Retrieving models');
 
-    var skip = 0;
+    var fieldQuery = {};
 
-    var limit = 10;
+    var limitQuery = {};
 
-    if (typeof skip !== 'undefined')
-        skip = req.query.skip;
+    if (typeof req.query.skip !== 'undefined')
+        limitQuery.skip = req.query.skip;
 
-    if (typeof limit !== 'undefined')
-        limit = req.query.limit;
+    if (typeof req.query.limit !== 'undefined')
+        limitQuery.limit = req.query.limit;
+
+    if (typeof req.query.field !== 'undefined' &&
+        typeof req.query.value !== 'undefined') {
+
+        var field = req.query.field;
+
+        var value = req.query.value;
+
+        //case insensitive search
+        fieldQuery[field] = new RegExp(["^", value, "$"].join(""), "i");
+    }
 
     db.collection('models', function (err, collection) {
-        collection.find(null, null, {
-            skip: skip,
-            limit: limit
-        }).sort({ name: 1 }).toArray(
+        collection.find(fieldQuery, null, null)
+            .sort({ name: 1 }).toArray(
 
             function (err, items) {
 
@@ -189,22 +198,18 @@ router.get('/model/:id', function (req, res) {
 ///////////////////////////////////////////////////////////////////////////////
 router.get('/search/models', function (req, res) {
 
-    var field = req.query.field;
+    var query = {};
 
-    var value = req.query.value;
+    if (typeof req.query.field !== 'undefined' &&
+        typeof req.query.value !== 'undefined') {
 
-    if (typeof field === 'undefined' ||
-        typeof value === 'undefined') {
+        var field = req.query.field;
 
-        console.log('findByField invalid query ');
-        res.send([]);
-        return;
+        var value = req.query.value;
+
+        //case insensitive search
+        query[field] = new RegExp(["^", value, "$"].join(""), "i");
     }
-
-    var query = new Object();
-
-    //case insensitive search
-    query[field] = new RegExp(["^", value, "$"].join(""), "i");
 
     console.log('Retrieving items: ' + field + '=' + value);
 
