@@ -9,9 +9,9 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
-    _viewer = viewer;
+    var _viewer = viewer;
 
-    _self = this;
+    var _self = this;
 
     var htmlDlg = '<div id="demoDlg" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
         + '<div class="modal-dialog">'
@@ -82,7 +82,10 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
         var toolbar = new Autodesk.Viewing.UI.ToolBar(
             document.getElementById('demoToolbarId'));
 
-        var subToolbar = toolbar.addSubToolbar('sub1', false);
+
+        var viewerToolbar = _viewer.getToolbar(true);
+
+        var subToolbar = viewerToolbar.addSubToolbar('sub1', false);
 
         var bTool = Autodesk.Viewing.UI.ToolBar.createMenuButton(
             "bTool",
@@ -95,7 +98,7 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
 
         subToolbar.setToolImage(
             bTool.id,
-            'public/images/embed.png');
+            'public/images/adsk.24x24.png');
 
         $('#' + bTool.id + 'Button').css({
             'background-position': '3px 0px'

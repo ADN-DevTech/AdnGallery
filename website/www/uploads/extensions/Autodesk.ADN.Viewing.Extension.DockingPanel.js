@@ -9,11 +9,11 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
-    _self = this;
+    var _self = this;
 
-    _panel = null;
+    var _panel = null;
 
-    _viewer = viewer;
+    var _viewer = viewer;
 
     _self.load = function () {
 
@@ -73,6 +73,16 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
             //this.initializeCloseHandler(this.closer);
 
             //this.container.appendChild(this.closer);
+        };
+
+        Autodesk.ADN.AdnPanel.prototype.setVisible =
+            function (show, skipTransition) {
+                console.log("show=" + show + ", skipTransition=" + skipTransition + ")");
+                Autodesk.Viewing.UI.DockingPanel.prototype.
+                    setVisible.call(
+                        this,
+                        show,
+                        skipTransition);
         };
 
         var content = document.createElement('div');

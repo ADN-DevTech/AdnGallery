@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Autodesk.ADN.Viewing.Extension.ContextMenu
+// ContextMenu viewer extension
 // by Philippe Leefsma, October 2014
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -10,11 +10,11 @@ Autodesk.ADN.Viewing.Extension.ContextMenu = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
-    _self = this;
+    var _self = this;
 
-    _viewer = viewer;
+    var _viewer = viewer;
 
-    _selectedId = null;
+    var _selectedId = null;
 
     _self.load = function () {
 

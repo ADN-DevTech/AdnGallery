@@ -42,6 +42,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
         // context menu stuff
 
         Autodesk.ADN.Viewing.Extension.MarkUpContextMenu = function (viewer) {
+
             Autodesk.Viewing.Extensions.ViewerObjectContextMenu.call(
                 this, viewer);
         };
@@ -79,7 +80,8 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
             };
 
         _self.viewer.setContextMenu(
-            new Autodesk.ADN.Viewing.Extension.MarkUpContextMenu(_self.viewer));
+            new Autodesk.ADN.Viewing.Extension.MarkUpContextMenu(
+                _self.viewer));
 
         $("#" + _viewer.clientContainer.id).
             bind("click", _self.onMouseClick);
@@ -96,7 +98,10 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
         _viewer.onResize = function() {
 
-            _self.updateMarkUps();
+            // force update
+            var view = _viewer.getCurrentView();
+
+            _viewer.setView(view);
         }
 
         _viewer.setPropertyPanel(null);
@@ -271,7 +276,6 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
             x: event.clientX,
             y: event.clientY
         };
-
 
         switch (_mode) {
 

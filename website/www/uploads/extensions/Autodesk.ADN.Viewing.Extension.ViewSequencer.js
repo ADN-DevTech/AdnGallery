@@ -9,9 +9,9 @@ Autodesk.ADN.Viewing.Extension.ViewSequencer = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
-    _self = this;
+    var _self = this;
 
-    _viewer = viewer;
+    var _viewer = viewer;
 
     _self.load = function () {
 

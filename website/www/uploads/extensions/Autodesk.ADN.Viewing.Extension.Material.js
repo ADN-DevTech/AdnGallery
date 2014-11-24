@@ -150,6 +150,10 @@ Autodesk.ADN.Viewing.Extension.Material = function (viewer, options) {
 
         $('#colorPickerDivId').remove();
 
+        $('#tex1DivId').remove();
+        $('#tex2DivId').remove();
+        $('#tex3DivId').remove();
+
         return true;
     };
 

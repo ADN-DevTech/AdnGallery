@@ -73,7 +73,7 @@ Autodesk.ADN.Viewing.Extension.PropertyPanel = function (viewer, options) {
     //
     ///////////////////////////////////////////////////////////////////////////
     _self.unload = function () {
-        
+
         _viewer.setPropertyPanel(null);
 
         console.log("Autodesk.ADN.Viewing.Extension.PropertyPanel unloaded");
