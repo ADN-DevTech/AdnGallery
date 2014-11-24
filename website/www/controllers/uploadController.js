@@ -27,7 +27,7 @@ angular.module('AdnGallery.upload',[])
     //
     //
     ///////////////////////////////////////////////////////////////////////////
-    .controller('uploadController', function($scope) {
+    .controller('uploadController', function($scope, $http) {
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -140,7 +140,7 @@ angular.module('AdnGallery.upload',[])
                 $scope.viewDataClient.uploadFileAsync(
                     file,
                     'adn-viewer-gallery',
-                     id + '.' + getFileExt(file),
+                    id + '.' + getFileExt(file),
 
                     function (uploadResponse) {
 
@@ -152,7 +152,7 @@ angular.module('AdnGallery.upload',[])
                             $scope.viewDataClient.register(fileId);
 
                         console.log("Registration result: " +
-                            registerResponse.Result);
+                        registerResponse.Result);
 
                         var modelName = getFileName(uploadResponse.file);
 
@@ -162,7 +162,7 @@ angular.module('AdnGallery.upload',[])
                             '<b>Model: </b>' + modelName +
                             '<br>' +
                             '<b>Status: </b>' + 'Registration = ' +
-                                registerResponse.Result);
+                            registerResponse.Result);
 
                         if (registerResponse.Result === "Success") {
 
@@ -174,10 +174,10 @@ angular.module('AdnGallery.upload',[])
                                 views: []
                             };
 
-                            postModel(modelInfo, true, function(modelResponse) {
+                            postModel(modelInfo, function (modelResponse) {
 
                                 console.log("New model added to DB: " +
-                                    JSON.stringify(modelResponse.model));
+                                JSON.stringify(modelResponse.model));
 
                                 var url = 'http://' + window.location.host +
                                     '/node/gallery/#/viewer?id=' + modelResponse.model._id;
@@ -189,23 +189,23 @@ angular.module('AdnGallery.upload',[])
                                     function (viewable) {
 
                                         console.log("Translation successful: " +
-                                            uploadResponse.file.name);
+                                        uploadResponse.file.name);
 
                                         $('#' + dialogId).html(
                                             '<b>Model: </b>' + modelName +
                                             '<br>' +
                                             '<b>Status: </b>' + 'Registration = ' +
-                                                registerResponse.Result +
+                                            registerResponse.Result +
                                             '<br>' +
                                             '<b>Link: </b>' +
-                                                '<a target="_blank" href=' + url + '>' + modelName + '</a>');
+                                            '<a target="_blank" href=' + url + '>' + modelName + '</a>');
                                     });
                             });
 
 
                         }
                     },
-                    function(error){
+                    function (error) {
                         console.log("Upload error: " + error);
                     });
             }
@@ -261,14 +261,13 @@ angular.module('AdnGallery.upload',[])
         //
         //
         ///////////////////////////////////////////////////////////////////////
-        function postModel(modelInfo, translate, onSuccess) {
+        function postModel(modelInfo, onSuccess) {
 
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST',
                 'http://' + window.location.host +
-                '/node/gallery/api/model?host=' + window.location.host + '/node/gallery' +
-                '&translate=' + translate,
+                '/node/gallery/api/model?host=' + window.location.host + '/node/gallery',
                 true);
 
             xhr.setRequestHeader(

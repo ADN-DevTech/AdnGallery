@@ -16,7 +16,10 @@
 // UNINTERRUPTED OR ERROR FREE.
 ///////////////////////////////////////////////////////////////////////////////
 
-var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+//var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+
+var XMLHttpRequest = require('xhr2');
+var request = require('request');
 
 ///////////////////////////////////////////////////////////////////////////////
 // Namespace declaration
@@ -33,34 +36,59 @@ Autodesk.ADN.Toolkit.ViewData = Autodesk.ADN.Toolkit.ViewData || {};
 ///////////////////////////////////////////////////////////////////////////////
 Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
     baseUrl,
-    accessTokenOrUrl) {
+    consumerKey,
+    consumerSecret) {
 
     ///////////////////////////////////////////////////////////////////////////
     // Private Members
     //
     ///////////////////////////////////////////////////////////////////////////
-    _acessTokenUrl = accessTokenOrUrl;
+    var _tokenResponse = null;
 
-    _accessToken = accessTokenOrUrl;
-
-    _baseUrl = baseUrl;
+    var _baseUrl = baseUrl;
 
     ///////////////////////////////////////////////////////////////////////////
-    // Get access token from the server
+    // Get access token
     //
     ///////////////////////////////////////////////////////////////////////////
-    this.getToken = function () {
+    this.getTokenResponse = function () {
 
-        var xhr = new XMLHttpRequest();
+        return _tokenResponse;
+    }
 
-        xhr.open("GET", _acessTokenUrl, false);
+    ///////////////////////////////////////////////////////////////////////////
+    // request access token from Autodesk server
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    var _requestToken = function () {
 
-        xhr.send(null);
+        var params = {
+            client_id: consumerKey,
+            client_secret: consumerSecret,
+            grant_type: 'client_credentials'
+        }
 
-        _accessToken = xhr.responseText;
+        request.post(baseUrl + '/authentication/v1/authenticate',
+            { form: params },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
 
-        return _accessToken;
+                    _tokenResponse = JSON.parse(body);
+
+                    setTimeout(
+                        _requestToken,
+                        _tokenResponse.expires_in * 1000);
+                }
+                else {
+
+                    _tokenResponse = null;
+
+                    console.log(error);
+                }
+            });
     };
+
+    _requestToken();
 
     ///////////////////////////////////////////////////////////////////////////
     // Set the cookie upon server response
@@ -81,7 +109,9 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
             'application/x-www-form-urlencoded');
 
         xhr.withCredentials = true;
-        xhr.send("access-token=" + _accessToken);
+
+        xhr.send("access-token=" +
+            _tokenResponse.access_token);
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -122,7 +152,7 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
         xhr.setRequestHeader(
            'Authorization',
-           'Bearer ' + _accessToken);
+           'Bearer ' + _tokenResponse.access_token);
 
         xhr.setRequestHeader(
           'Content-Type',
@@ -179,7 +209,7 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
         xhr.setRequestHeader(
            'Authorization',
-           'Bearer ' + _accessToken);
+           'Bearer ' + _tokenResponse.access_token);
 
         xhr.setRequestHeader(
           'Content-Type',
@@ -241,7 +271,7 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
         xhr.setRequestHeader(
           'Authorization',
-          'Bearer ' + _accessToken);
+          'Bearer ' + _tokenResponse.access_token);
 
         xhr.setRequestHeader(
           'Content-Type',
@@ -299,7 +329,7 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
         xhr.setRequestHeader(
            'Authorization',
-           'Bearer ' + _accessToken);
+           'Bearer ' + _tokenResponse.access_token);
 
         xhr.setRequestHeader(
           'Content-Type',
@@ -357,18 +387,23 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
         xhr.setRequestHeader(
            'Authorization',
-           'Bearer ' + _accessToken);
+           'Bearer ' + _tokenResponse.access_token);
 
         xhr.responseType = 'arraybuffer';
 
         xhr.onload = function (e) {
             if (this.status == 200) {
 
-                //converts raw data to base64 img
-                var base64 = btoa(String.fromCharCode.apply(
-                    null, new Uint8Array(this.response)));
+                try {
 
-                onSuccess(base64);
+                    var base64 = encodeBase64(this.response);
+
+                    onSuccess(base64);
+                }
+                catch (ex)
+                {
+                    onError(ex);
+                }
             }
         };
 
@@ -455,7 +490,7 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
         xhr.setRequestHeader(
            'Authorization',
-           'Bearer ' + _accessToken);
+           'Bearer ' + _tokenResponse.access_token);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -556,6 +591,61 @@ Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient = function (
 
     this.fromBase64 = function (str) {
         return new Buffer(str, 'base64').toString('ascii');
+    };
+
+    var encodeBase64 = function(arraybuffer) {
+
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+        var bytes = new Uint8Array(arraybuffer),
+            i, len = bytes.length, base64 = "";
+
+        for (i = 0; i < len; i+=3) {
+            base64 += chars[bytes[i] >> 2];
+            base64 += chars[((bytes[i] & 3) << 4) | (bytes[i + 1] >> 4)];
+            base64 += chars[((bytes[i + 1] & 15) << 2) | (bytes[i + 2] >> 6)];
+            base64 += chars[bytes[i + 2] & 63];
+        }
+
+        if ((len % 3) === 2) {
+            base64 = base64.substring(0, base64.length - 1) + "=";
+        } else if (len % 3 === 1) {
+            base64 = base64.substring(0, base64.length - 2) + "==";
+        }
+
+        return base64;
+    };
+
+    var decodeBase64 =  function(base64) {
+
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+        var bufferLength = base64.length * 0.75,
+            len = base64.length, i, p = 0,
+            encoded1, encoded2, encoded3, encoded4;
+
+        if (base64[base64.length - 1] === "=") {
+            bufferLength--;
+            if (base64[base64.length - 2] === "=") {
+                bufferLength--;
+            }
+        }
+
+        var arraybuffer = new ArrayBuffer(bufferLength),
+            bytes = new Uint8Array(arraybuffer);
+
+        for (i = 0; i < len; i+=4) {
+            encoded1 = chars.indexOf(base64[i]);
+            encoded2 = chars.indexOf(base64[i+1]);
+            encoded3 = chars.indexOf(base64[i+2]);
+            encoded4 = chars.indexOf(base64[i+3]);
+
+            bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
+            bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
+            bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+        }
+
+        return arraybuffer;
     };
 }
 

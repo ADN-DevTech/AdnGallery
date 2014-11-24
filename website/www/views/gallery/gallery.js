@@ -57,7 +57,9 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////////
         function loadModels() {
 
-            var url =  "http://" + window.location.host + '/node/gallery/api/models';
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/api/models';
 
             $http.get(url).success(function(response){
 
@@ -89,15 +91,32 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
                     if(items.length > 0) {
                         model.type = items[0].role;
                     }
-                });
-
-            $scope.viewDataClient.getThumbnailAsync(
-                fileId,
-                function (data) {
-                    model.src = "data:image/png;base64," + data;
                 },
-                function(error) {
-                    model.src = "public/images/adsk.64x64.png"
+                function (error) {
+
+                }
+            );
+
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/api/thumbnail/' + model._id;
+
+            $http.get(url).
+                success(function(response){
+
+                    model.src = "data:image/png;base64," +
+                        response.thumbnail.data;
+                }).
+                error(function() {
+
+                    /*$scope.viewDataClient.getThumbnailAsync(
+                        fileId,
+                        function (data) {
+                            model.src = "data:image/png;base64," + data;
+                        },
+                        function(error) {
+                            model.src = "public/images/adsk.64x64.png"
+                        });*/
                 });
 
             $scope.viewDataClient.getViewableAsync(

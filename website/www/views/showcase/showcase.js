@@ -320,7 +320,7 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             var url =  "http://" +
                 window.location.host +
-                '/node/gallery/api/search/models?field=urn&value=' + urn;
+                '/node/gallery/api/models?field=urn&value=' + urn;
 
             $scope.setCurrentDbModel(null);
 

@@ -294,12 +294,14 @@ angular.module('AdnGallery',
     ///////////////////////////////////////////////////////////////////////////
     run(function($rootScope) {
 
+        var url =  "http://" +
+            window.location.host +
+            '/node/gallery/api/token';
+
         $rootScope.viewDataClient =
             new Autodesk.ADN.Toolkit.ViewData.AdnViewDataClient(
                 'https://developer.api.autodesk.com',
-                'http://' + window.location.host + '/node/gallery/api/token');
-
-        $rootScope.viewDataClient.getToken();
+                url);
 
         $rootScope.currentDbModel = null;
 

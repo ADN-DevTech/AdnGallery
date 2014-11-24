@@ -16,21 +16,21 @@
 // UNINTERRUPTED OR ERROR FREE.
 ///////////////////////////////////////////////////////////////////////////////
 
-var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
-var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
-var BASE_URL = 'https://developer.api.autodesk.com';
-
-var AdnViewDataClient = require('./Autodesk.ADN.Toolkit.ViewDataClient.js');
-var transport = require('nodemailer-direct-transport');
+var AdnViewDataClient = require(
+    './Autodesk.ADN.Toolkit.ViewDataClient.js');
+var transport = require(
+    'nodemailer-direct-transport');
 var formidable = require('formidable');
 var nodemailer = require('nodemailer');
 var express = require('express');
-var request = require('request');
 var mongo = require('mongodb');
 var path = require('path');
+var sync = require('sync');
 var fs = require('fs');
 
-var Sync = require('sync');
+var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
+var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
+var BASE_URL = 'https://developer.api.autodesk.com';
 
 var Server = mongo.Server,
     Db = mongo.Db,
@@ -41,9 +41,15 @@ var server = new Server(
     27017,
     { auto_reconnect: true });
 
-db = new Db('NodeViewDb', server);
+var db = new Db('NodeViewDb', server);
 
 var router = express.Router();
+
+var viewDataClient =
+    new AdnViewDataClient(
+        BASE_URL,
+        CONSUMER_KEY,
+        CONSUMER_SECRET);
 
 module.exports = router;
 
@@ -56,16 +62,19 @@ db.open(function (err, db) {
     if (!err) {
 
         console.log("Connected to 'NodeViewDb' database");
-
-        db.collection(
-            'models',
-            { strict: true },
-            function (err, collection) {
-                if (err) {
-                    console.log("Models DB is empty ...");
-                }
-            });
     }
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+router.get('/token', function (req, res) {
+
+    var response = viewDataClient.getTokenResponse();
+
+    res.status((response ? 200 : 404));
+    res.send(response);
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,15 +85,15 @@ router.get('/models', function (req, res) {
 
     console.log('Retrieving models');
 
+    var pageQuery = {};
+
     var fieldQuery = {};
 
-    var limitQuery = {};
-
     if (typeof req.query.skip !== 'undefined')
-        limitQuery.skip = req.query.skip;
+        pageQuery.skip = req.query.skip;
 
     if (typeof req.query.limit !== 'undefined')
-        limitQuery.limit = req.query.limit;
+        pageQuery.limit = req.query.limit;
 
     if (typeof req.query.field !== 'undefined' &&
         typeof req.query.value !== 'undefined') {
@@ -94,11 +103,13 @@ router.get('/models', function (req, res) {
         var value = req.query.value;
 
         //case insensitive search
-        fieldQuery[field] = new RegExp(["^", value, "$"].join(""), "i");
+        var exp = ["^", value, "$"].join("");
+
+        fieldQuery[field] = new RegExp(exp, "i");
     }
 
     db.collection('models', function (err, collection) {
-        collection.find(fieldQuery, null, null)
+        collection.find(fieldQuery, pageQuery)
             .sort({ name: 1 }).toArray(
 
             function (err, items) {
@@ -111,54 +122,6 @@ router.get('/models', function (req, res) {
             });
     });
 });
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////////
-router.get('/token', function (req, res) {
-
-    var params = {
-        client_id: CONSUMER_KEY,
-        client_secret: CONSUMER_SECRET,
-        grant_type: 'client_credentials'
-    }
-
-    request.post(BASE_URL + '/authentication/v1/authenticate',
-        { form: params },
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-
-                var authResponse = JSON.parse(body);
-
-                res.send(authResponse.access_token);
-            }
-        });
-});
-
-// get token server side
-function getToken(onSuccess, onError) {
-
-    var params = {
-        client_id: CONSUMER_KEY,
-        client_secret: CONSUMER_SECRET,
-        grant_type: 'client_credentials'
-    }
-
-    request.post(BASE_URL + '/authentication/v1/authenticate',
-        { form: params },
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-
-                var authResponse = JSON.parse(body);
-
-                onSuccess(authResponse.access_token);
-            }
-            else {
-                onError(error)
-            }
-        });
-};
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -184,10 +147,12 @@ router.get('/model/:id', function (req, res) {
 
             function (err, item) {
 
-                if(typeof item === 'undefined')
-                    res.status(404);
+                var response = {
+                    model: item
+                };
 
-                res.send(item);
+                res.status((item ? 200 : 404));
+                res.send(response);
             });
     });
 });
@@ -196,39 +161,7 @@ router.get('/model/:id', function (req, res) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-router.get('/search/models', function (req, res) {
-
-    var query = {};
-
-    if (typeof req.query.field !== 'undefined' &&
-        typeof req.query.value !== 'undefined') {
-
-        var field = req.query.field;
-
-        var value = req.query.value;
-
-        //case insensitive search
-        query[field] = new RegExp(["^", value, "$"].join(""), "i");
-    }
-
-    console.log('Retrieving items: ' + field + '=' + value);
-
-    db.collection('models',
-        function (err, collection) {
-            collection.find(query).toArray(
-                function (err, items) {
-                    res.send(items);
-                });
-        });
-});
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////////
 router.post('/model', function (req, res) {
-
-    var translate = req.query.translate;
 
     var host = req.query.host;
 
@@ -250,65 +183,70 @@ router.post('/model', function (req, res) {
             function (err, result) {
 
                 if (err) {
+
+                    res.status(404);
                     res.send({ 'error': 'An error has occurred' });
 
                 } else {
 
-                    console.log('Success: ' + JSON.stringify(result[0]));
+                    console.log('Success: ' +
+                        JSON.stringify(result[0]));
 
                     var modelInfo = result[0];
 
-                    var url = 'http://' + host + '/#/viewer?id=' + modelInfo._id;
+                    var response = {
+                        model: modelInfo
+                    };
+
+                    res.send(response);
+
+                    var url = 'http://' + host +
+                        '/#/viewer?id=' + modelInfo._id;
 
                     var emailInfo = {
                         url: url,
                         email: email
                     }
 
-                    if(translate) {
-                        translateModel(modelInfo, emailInfo);
-                    }
+                    checkTranslationStatus(
+                        viewDataClient,
+                        modelInfo.fileId,
+                        1000 * 60 * 60 * 24 * 2, //2 days timeout :),
+                        function (viewable) {
 
-                    var response = {
-                        model: result[0]
-                    };
+                            sendMail(emailInfo.url, emailInfo.email, modelInfo);
 
-                    res.send(response);
+                            getThumbnail(modelInfo);
+
+                            console.log("Translation successful: " +
+                                modelInfo.name + " - FileId: " +
+                                modelInfo.fileId);
+                        },
+                        function(error) {
+
+                        });
                 }
             });
     });
 });
 
-function translateModel(modelInfo, emailInfo) {
+function getThumbnail(modelInfo) {
 
-    getToken(
-        function(token) {
+    viewDataClient.getThumbnailAsync(
+        modelInfo.fileId,
+        function (data) {
 
-            var viewDataClient =
-                new AdnViewDataClient(
-                    'https://developer.api.autodesk.com',
-                    token);
+            var thumbnail = {
+                modelId: modelInfo._id,
+                data: data
+            }
 
-            checkTranslationStatus(
-                viewDataClient,
-                modelInfo.fileId,
-                    1000 * 60 * 60 * 24 * 2, //2 days timeout :),
-                function (viewable) {
-
-                    sendMail(emailInfo.url, emailInfo.email, modelInfo);
-
-                    console.log("Translation successful: " +
-                        modelInfo.name + " - FileId: " +
-                        modelInfo.fileId);
-                },
-                function(error) {
-
-                });
+            addThumbnail(thumbnail);
         },
-        function(error) {
+        function (error) {
 
-        }
-    );
+            console.log('getThumbnail error:' + error)
+        });
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -511,7 +449,7 @@ router.post('/extensions', function (req, res) {
                         };
 
                         // Start fiber
-                        Sync(function(){
+                        sync(function(){
 
                             var res = getExtensionsByIdAsync.sync(null, id);
 
@@ -558,7 +496,6 @@ function addExtension(extension) {
             { safe: true },
 
             function (err, result) {
-
 
             });
     });
@@ -620,3 +557,110 @@ function findExtensions(str) {
         start = end;
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// add new thumbnail
+//
+// thumbnail:
+// {
+//      _id: id
+//      modelId: modelId
+//      data: thumbnail_base64
+// }
+//
+///////////////////////////////////////////////////////////////////////////////
+function addThumbnail(thumbnail) {
+
+    db.collection('thumbnails', function (err, collection) {
+
+        collection.insert(
+            thumbnail,
+            { safe: true },
+
+            function (err, result) {
+
+            });
+    });
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+router.get('/thumbnail/:modelId', function (req, res) {
+
+    var modelId = req.params.modelId;
+
+    db.collection('thumbnails',
+        function (err, collection) {
+
+            collection.findOne(
+
+                { 'modelId': new BSON.ObjectID(modelId) },
+
+                function (err, item) {
+
+                    var response = {
+                        thumbnail: item
+                    };
+
+                    res.status((item ? 200 : 404));
+                    res.send(response);
+                });
+        });
+});
+
+router.post('/thumbnail', function (req, res) {
+
+    var item = req.body;
+
+    db.collection('thumbnails', function (err, collection) {
+        collection.insert(
+            item,
+            { safe: true },
+
+            function (err, result) {
+
+            });
+    });
+});
+
+
+router.get('/reload', function (req, res) {
+
+    var pageQuery = {};
+
+    var fieldQuery = {};
+
+    db.collection('models', function (err, collection) {
+        collection.find(fieldQuery, pageQuery)
+            .sort({ name: 1 }).toArray(
+
+            function (err, items) {
+
+                var response = {
+                    models: items
+                };
+
+                items.forEach(function(item) {
+                    getThumbnail({
+                        fileId: item.fileId,
+                        _id: item._id
+                    });
+                });
+
+                res.send(response);
+            });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+

@@ -135,9 +135,9 @@ angular.module('AdnGallery.viewer',
                 window.location.host +
                 '/node/gallery/api/model/' + id;
 
-            $http.get(url).success(function(model){
+            $http.get(url).success(function(response){
 
-                loadFromUrn(model.urn);
+                loadFromUrn(response.model.urn);
             });
         }
 
@@ -149,7 +149,7 @@ angular.module('AdnGallery.viewer',
 
             var url =  "http://" +
                 window.location.host +
-                '/node/gallery/api/search/models?field=urn&value=' + urn;
+                '/node/gallery/api/models?field=urn&value=' + urn;
 
             $scope.setCurrentDbModel(null);
 

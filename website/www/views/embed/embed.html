@@ -57,14 +57,14 @@
 
             var url =  'http://' + window.location.host + '/node/gallery/api/model/' + id;
 
-            $.getJSON(url, function(model){
+            $.getJSON(url, function(response){
 
                 var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
                     'http://' + window.location.host + '/node/gallery/api/token',
                     document.getElementById('ViewerDiv'));
 
                 adnViewerMng.loadDocument(
-                    model.urn,
+                        response.model.urn,
                     function (viewer) {
 
                         var parent = document.getElementById(
