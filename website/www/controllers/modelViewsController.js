@@ -59,11 +59,11 @@ angular.module('AdnGallery.views',[])
 
                 getModelById(dbModel._id,
 
-                    function (model) {
+                    function (response) {
 
-                        model.views.push(view);
+                        response.model.views.push(view);
 
-                        putModel(model);
+                        putModel(response.model);
                     });
             }
         }
@@ -78,14 +78,14 @@ angular.module('AdnGallery.views',[])
 
             getModelById(dbModel._id,
 
-                function (model) {
+                function (response) {
 
                     showLoadViewDlg();
 
                     var content = document.getElementById(
                         'loadViewDlgBodyContent');
 
-                    model.views.forEach(function (view) {
+                    response.model.views.forEach(function (view) {
                         addViewItem(
                             view,
                             content,
@@ -203,7 +203,7 @@ angular.module('AdnGallery.views',[])
 
             getModelById(dbModel._id,
 
-                function (model) {
+                function (response) {
 
                     showItemSuppressDlg(
                         'Select views to suppress',
@@ -212,7 +212,7 @@ angular.module('AdnGallery.views',[])
                     var content = document.getElementById(
                         'itemSuppressDlgBodyContent');
 
-                    model.views.forEach(function (view) {
+                    response.model.views.forEach(function (view) {
                         addViewItem(
                             view,
                             content,
@@ -226,7 +226,8 @@ angular.module('AdnGallery.views',[])
             console.log('doSuppressView');
 
             getModelById($scope.currentDbModel._id,
-                function (model) {
+
+                function (response) {
 
                     var content = document.getElementById(
                         'itemSuppressDlgBodyContent');
@@ -240,8 +241,8 @@ angular.module('AdnGallery.views',[])
 
                             for (var j = 0; j < model.views.length; ++j) {
 
-                                if (model.views[j].id === view.id) {
-                                    model.views.splice(j, 1);
+                                if (response.model.views[j].id === view.id) {
+                                    response.model.views.splice(j, 1);
                                 }
                             }
                         }

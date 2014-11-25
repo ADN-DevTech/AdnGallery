@@ -9,7 +9,7 @@ Autodesk.ADN.Viewing.Extension.ViewSequencer = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
-    var _self = this;
+    _self = this;
 
     var _viewer = viewer;
 
@@ -104,9 +104,9 @@ Autodesk.ADN.Viewing.Extension.ViewSequencer = function (viewer, options) {
 
         getModelById(dbModel._id,
 
-            function (model) {
+            function (response) {
 
-                model.views.forEach(function (view) {
+                response.model.views.forEach(function (view) {
 
                     _self._viewMap[view.id] = view;
                 });
