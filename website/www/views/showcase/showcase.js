@@ -324,11 +324,12 @@ angular.module('AdnGallery.showcase', ['ngRoute', 'textAngular'])
 
             $scope.setCurrentDbModel(null);
 
-            $http.get(url).success(function(models){
+            $http.get(url).success(function(response){
 
-                if(models.length > 0) {
+                if(response.models.length > 0) {
 
-                    $scope.setCurrentDbModel(models[0]);
+                    $scope.setCurrentDbModel(
+                        response.models[0]);
                 }
             });
         }
