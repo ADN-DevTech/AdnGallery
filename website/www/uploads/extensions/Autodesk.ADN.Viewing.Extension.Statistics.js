@@ -15,6 +15,10 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
 
     var _componentMap = {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    // load callback
+    //
+    ///////////////////////////////////////////////////////////////////////////
     _self.load = function () {
 
         console.log('Autodesk.ADN.Viewing.Extension.Statistics loaded');
@@ -42,17 +46,21 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
         return true;
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    // unload callback
+    //
+    ///////////////////////////////////////////////////////////////////////////
     _self.unload = function () {
 
         console.log('Autodesk.ADN.Viewing.Extension.Statistics unloaded');
 
-        $('#mainLayoutId').layout().hide('east');
+        $('#overlayPieDivId').remove();
 
         return true;
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // keyup callback callback
+    // keyup callback
     //
     ///////////////////////////////////////////////////////////////////////////
     _self.onKeyup = function(event){
@@ -64,6 +72,10 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////////
     _self.loadPie = function(map) {
 
         function getNameFromLabel(label) {
@@ -75,8 +87,6 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
 
         var raphael = _self.createOverlay();
 
-        var names = [];
-
         var data = [];
 
         var legend = [];
@@ -84,10 +94,6 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
         var colors = [];
 
         for(var key in map){
-
-            //console.log(key + ': ' + map[key].length)
-
-            names.push(key);
 
             data.push(map[key].length);
 
@@ -154,6 +160,10 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
         raphael.text(120, 20, "Components Chart").attr({ font: "20px sans-serif" });
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////////
     _self.createOverlay = function () {
 
         if (typeof Raphael === 'undefined') {

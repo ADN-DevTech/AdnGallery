@@ -23,31 +23,46 @@ Autodesk.ADN.Viewing.Extension.PropertyPanel = function (viewer, options) {
 
         Autodesk.ADN.Viewing.Extension.AdnPropertyPanel = function (viewer) {
 
-            this.viewer = viewer;
+            var _panel = this;
+
+            var _viewer = viewer;
+
+            var _selectedNodeId = '';
 
             Autodesk.Viewing.Extensions.ViewerPropertyPanel.call(
-                this,
-                this.viewer);
+                _panel,
+                _viewer);
 
-            this.setNodeProperties = function(nodeId) {
+            _panel.setNodeProperties = function(nodeId) {
 
                 Autodesk.Viewing.Extensions.ViewerPropertyPanel.
                     prototype.setNodeProperties.call(
-                        this, nodeId);
+                    _panel, nodeId);
 
-                this.selectedNodeId = nodeId;
+                _selectedNodeId = nodeId;
             };
 
-            this.setProperties = function (properties) {
+            _panel.setProperties = function (properties) {
 
                 Autodesk.Viewing.Extensions.ViewerPropertyPanel.
                     prototype.setProperties.call(
-                        this, properties);
+                    _panel, properties);
 
-                this.addProperty(
+                _panel.addProperty(
                     "Node Id",
-                    this.selectedNodeId,
+                    _selectedNodeId,
                     "Customization");
+
+                _self.GetQuoteData(function(response){
+
+                    response.quotes.forEach(function(quote){
+
+                        _panel.addProperty(
+                            quote.symbol,
+                            '$' + quote.LastTradePriceOnly,
+                            "Stocks");
+                    })
+                })
             };
         };
 
@@ -80,6 +95,32 @@ Autodesk.ADN.Viewing.Extension.PropertyPanel = function (viewer, options) {
 
         return true;
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // get stock market quotes from Yahoo
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    _self.GetQuoteData = function(onSuccess) {
+
+        var url = 'http://query.yahooapis.com/v1/public/yql' +
+            '?format=json' +
+            '&env=http://datatables.org/alltables.env' +
+            '&q='
+
+        var query = 'select * from yahoo.finance.quotes where symbol in ' +
+            '("AAPL", "ADSK","FB", "GOOG", "MSFT")';
+
+        url += encodeURIComponent(query);
+
+        $.getJSON(url, function(data){
+
+            var response = {
+                quotes : data.query.results.quote
+            }
+
+            onSuccess(response);
+        });
+    }
 };
 
 Autodesk.ADN.Viewing.Extension.PropertyPanel.prototype =

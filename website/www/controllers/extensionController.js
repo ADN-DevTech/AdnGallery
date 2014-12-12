@@ -207,17 +207,41 @@ angular.module('AdnGallery.extensions',[])
 
             var storageObj = JSON.parse(localStorage['extensions']);
 
+
+            //need to send disabled extensions before enabled
+
+            var enabledList = [];
+
+            var disabledList = [];
+
             $scope.Extensions.forEach(function(extension){
 
                 if(storageObj[extension._id] !== extension.enabled) {
 
-                    $scope.$emit('emit-extension-status-modified', extension);
+                    if(extension.enabled){
+
+                        enabledList.push(extension);
+                    }
+                    else {
+
+                        disabledList.push(extension);
+                    }
                 }
 
                 storageObj[extension._id] = extension.enabled;
             });
 
             localStorage['extensions'] = JSON.stringify(storageObj);
+
+            disabledList.forEach(function(extension){
+
+                $scope.$emit('emit-extension-status-modified', extension);
+            });
+
+            enabledList.forEach(function(extension){
+
+                $scope.$emit('emit-extension-status-modified', extension);
+            });
         }
 
         ///////////////////////////////////////////////////////////////////////

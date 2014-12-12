@@ -22,8 +22,8 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
         + ' <span class="sr-only"> Close </span>'
         + '</button>'
         + '<h4 class="modal-title">'
-        //+ '<img  height="24" width="24" src="public/images/adsk.24x24.png"/>'
-        + '<adn-spinning-img step="5.0" period="100" height="32" width="32" src="public/images/adsk.32x32.png" style="position:relative; bottom:5px;"/>'
+        + '<img  height="24" width="24" src="public/images/adsk.24x24.png"/>'
+        //+ '<adn-spinning-img step="5.0" period="100" height="32" width="32" src="public/images/adsk.32x32.png" style="position:relative; bottom:5px;"/>'
         + 'Just a Demo Dialog ...'
         + '</h4>'
         + '</div>'
@@ -43,24 +43,20 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
 
     _self.load = function () {
 
-        console.log('Autodesk.ADN.Viewing.Extension.Toolbar loaded');
-
         _self.createToolbar();
 
         $(htmlDlg).appendTo('#appBodyId');
 
-        var controller = angular.element($('#appBodyId')).scope();
-
-        controller.$apply();
+        console.log('Autodesk.ADN.Viewing.Extension.Toolbar loaded');
 
         return true;
     };
 
     _self.unload = function () {
 
-        console.log('Autodesk.ADN.Viewing.Extension.Toolbar unloaded');
-
         $('#demoToolbarId').remove();
+
+        console.log('Autodesk.ADN.Viewing.Extension.Toolbar unloaded');
 
         return true;
     };
@@ -82,10 +78,9 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
         var toolbar = new Autodesk.Viewing.UI.ToolBar(
             document.getElementById('demoToolbarId'));
 
+        //var viewerToolbar = _viewer.getToolbar(true);
 
-        var viewerToolbar = _viewer.getToolbar(true);
-
-        var subToolbar = viewerToolbar.addSubToolbar('sub1', false);
+        var subToolbar = toolbar.addSubToolbar('sub1', false);
 
         var bTool = Autodesk.Viewing.UI.ToolBar.createMenuButton(
             "bTool",

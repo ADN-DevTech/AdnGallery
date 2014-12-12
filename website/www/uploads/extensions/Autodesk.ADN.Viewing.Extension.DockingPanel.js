@@ -77,7 +77,9 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
 
         Autodesk.ADN.AdnPanel.prototype.setVisible =
             function (show, skipTransition) {
+
                 console.log("show=" + show + ", skipTransition=" + skipTransition + ")");
+
                 Autodesk.Viewing.UI.DockingPanel.prototype.
                     setVisible.call(
                         this,
