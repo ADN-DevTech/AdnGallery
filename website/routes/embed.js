@@ -42,7 +42,13 @@ router.get('/:id', function(req, res) {
 
     var id = req.params.id;
 
-    res.redirect('/node/gallery/embed?id=' + id);
+    var extIds = '';
+
+    if(typeof req.query.extIds !== 'undefined') {
+        extIds = '&extIds=' + req.query.extIds;
+    }
+
+    res.redirect('/node/gallery/embed?id=' + id + extIds);
 });
 
 module.exports = router;

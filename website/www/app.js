@@ -120,6 +120,10 @@ angular.module('AdnGallery',
             $scope.setHoverStyle('manageExtDlgFrame',
                 dlgClr,
                 dlgClrHover);
+
+            $scope.setHoverStyle('showSourceExtDlgFrame',
+                dlgClr,
+                dlgClrHover);
         }
 
         ///////////////////////////////////////////////////////////////////////

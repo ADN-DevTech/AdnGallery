@@ -100,11 +100,17 @@
     <script src="components/touche/js/touche.min.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
-    // Viewer Autodesk
+   // Cannon
+   //
+   ////////////////////////////////////////////////////////////////////////-->
+    <script src="components/cannon/js/cannon.min.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // Viewer Autodesk ?v=0.1.86
     //
     ////////////////////////////////////////////////////////////////////////-->
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=0.1.86" type="text/css">
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=0.1.86"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
     // Viewer ADN
@@ -288,6 +294,13 @@
                             <a id="btnManageExtId">
                                 <span class="glyphicon glyphicon-wrench"></span>
                                 &nbsp; Manage
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a id="btnShowSourceExtId">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                &nbsp; Source
                             </a>
                         </li>
                     </ul>
@@ -896,6 +909,46 @@
             </div>
         </div>
     </div>
+
+
+    <!--///////////////////////////////////////////////////////////////////////
+   // Manage Extensions Dialog
+   //
+   ////////////////////////////////////////////////////////////////////////-->
+    <div id="showSourceExtDlg"
+         class="modal fade"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content"
+                 id="showSourceExtDlgFrame">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">
+                            Close
+                        </span>
+                    </button>
+                    <h4 class="modal-title">Show Extensions Source</h4>
+                </div>
+
+                <div id="showSourceExtDlgBody" class="modal-body" style="max-height:400px; overflow:auto">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="btnShowSourceExtOkId" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </div>

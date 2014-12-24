@@ -254,6 +254,58 @@ angular.module('AdnGallery.extensions',[])
         }
 
         ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function addExtensionSource(extension) {
+
+            var item = document.createElement('a');
+
+            var id = 'viewElement' +  $scope.newGUID();
+
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/uploads/extensions/' +
+                extension.file;
+
+            item.id = id;
+            item.extension = extension;
+            item.className = 'list-group-item';
+            item.href = url;
+            item.target="_blank";
+
+            var parent = document.getElementById(
+                'showSourceExtDlgBodyContent');
+
+            parent.appendChild(item);
+
+            $scope.setHoverStyle(item.id,
+                'rgba(136, 180, 221, 0.5)',
+                'rgba(136, 180, 221, 1.0)');
+
+            item.innerHTML = extension.name;
+        }
+
+        function onShowSource() {
+
+            $scope.clearContent('showSourceExtDlgBody');
+
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/api/extensions';
+
+            $http.get(url).success(function(response){
+
+                response.extensions.forEach(function(extension) {
+
+                    addExtensionSource(extension);
+                });
+
+                $('#showSourceExtDlg').modal('show');
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////////
         // Utilities
         //
         ///////////////////////////////////////////////////////////////////////
@@ -293,6 +345,12 @@ angular.module('AdnGallery.extensions',[])
         $('#btnLoadExtOkId').unbind().click(
             function() {
                 doUpload();
+            }
+        );
+
+        $('#btnShowSourceExtId').unbind().click(
+            function() {
+                onShowSource();
             }
         );
     });

@@ -393,6 +393,43 @@ function getExtensionsAsync(callback) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
+router.get('/extension/:name', function (req, res) {
+
+    console.log('Retrieving extension by name');
+
+    /*
+    if (typeof req.query.field !== 'undefined' &&
+        typeof req.query.value !== 'undefined') {
+
+        var field = req.query.field;
+
+        var value = req.query.value;
+
+        //case insensitive search
+        var exp = ["^", value, "$"].join("");
+
+        fieldQuery[field] = new RegExp(exp, "i");
+    }
+
+    db.collection('extensions', function (err, collection) {
+        collection.find(fieldQuery, {})
+            .sort({ name: 1 }).toArray(
+
+            function (err, items) {
+
+                var response = {
+                    models: items
+                };
+
+                res.send(response);
+            });
+    });*/
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 router.post('/extensions', function (req, res) {
 
     function getFileExt(file) {
