@@ -181,11 +181,13 @@ angular.module('AdnGallery.extensions',[])
 
                 $scope.Extensions.forEach(function(extension) {
 
-                    extension.enabled = isExtensionEnabled(extension);
+                    //check if extension is not hidden (id start with '_')
+                    if(extension.id.indexOf('_') !== 0) {
 
-                    $scope.Extensions.push(extension);
+                        extension.enabled = isExtensionEnabled(extension);
 
-                    addExtension(extension);
+                        addExtension(extension);
+                    }
                 });
 
                 $('#manageExtDlg').modal('show');
@@ -298,7 +300,10 @@ angular.module('AdnGallery.extensions',[])
 
                 response.extensions.forEach(function(extension) {
 
-                    addExtensionSource(extension);
+                    //check if extension is not hidden (id start with '_')
+                    if(extension.id.indexOf('_') !== 0) {
+                        addExtensionSource(extension);
+                    }
                 });
 
                 $('#showSourceExtDlg').modal('show');

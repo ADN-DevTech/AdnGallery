@@ -94,7 +94,9 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
             Autodesk.Viewing.EXPLODE_CHANGE_EVENT,
             _self.onExplode);
 
-        _self.overlay = _self.createOverlay();
+        _self.createOverlay(function(overlay) {
+            _self.overlay = overlay;
+        });
 
         _viewer.onResize = function() {
 
@@ -116,6 +118,8 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     //
     ///////////////////////////////////////////////////////////////////////////
     _self.unload = function () {
+
+        _viewer.onResize = null;
 
         var panel = new Autodesk.Viewing.Extensions.ViewerPropertyPanel(
             _viewer);
@@ -550,33 +554,41 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     // create overlay 2d canvas
     //
     ///////////////////////////////////////////////////////////////////////////
-    _self.createOverlay = function () {
+    _self.createOverlay = function (callback) {
 
-        if (typeof Raphael === 'undefined') {
-            return null;
-        }
+        jQuery.getScript('http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js')
+            .done(function () {
 
-        var overlayDiv = document.createElement("div");
+                if (typeof Raphael === 'undefined') {
+                    callback(null);
+                }
 
-        overlayDiv.id = 'overlayDivId';
+                var overlayDiv = document.createElement("div");
 
-        _viewer.clientContainer.appendChild(
-            overlayDiv);
+                overlayDiv.id = 'overlayDivId';
 
-        overlayDiv.style.top = "0";
-        overlayDiv.style.left = "0";
-        overlayDiv.style.right = "0";
-        overlayDiv.style.bottom = "0";
-        overlayDiv.style.zIndex = "999";
-        overlayDiv.style.position = "absolute";
-        overlayDiv.style.pointerEvents = "none";
+                _viewer.clientContainer.appendChild(
+                    overlayDiv);
 
-        var overlay = new Raphael(
-            overlayDiv,
-            overlayDiv.clientWidth,
-            overlayDiv.clientHeight);
+                overlayDiv.style.top = "0";
+                overlayDiv.style.left = "0";
+                overlayDiv.style.right = "0";
+                overlayDiv.style.bottom = "0";
+                overlayDiv.style.zIndex = "999";
+                overlayDiv.style.position = "absolute";
+                overlayDiv.style.pointerEvents = "none";
 
-        return overlay;
+                var overlay = new Raphael(
+                    overlayDiv,
+                    overlayDiv.clientWidth,
+                    overlayDiv.clientHeight);
+
+                callback(overlay);
+            })
+            .fail(function(jqxhr, settings, exception) {
+                console.log("Load failed createOverlay: " + exception);
+                callback(null);
+            });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -648,6 +660,6 @@ Autodesk.ADN.Viewing.Extension.Annotation.prototype.constructor =
     Autodesk.ADN.Viewing.Extension.Annotation;
 
 Autodesk.Viewing.theExtensionManager.registerExtension(
-    'Autodesk.ADN.Viewing.Extension.2dAnnotation',
+    'Autodesk.ADN.Viewing.Extension.Annotation',
     Autodesk.ADN.Viewing.Extension.Annotation);
 

@@ -10,7 +10,6 @@
     // JQuery
     //
     ////////////////////////////////////////////////////////////////////////-->
-    <!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script-->
     <script type="text/javascript" src="components/jquery/js/jquery.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
@@ -20,8 +19,11 @@
     <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
     <script  type="text/javascript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Viewing.Extension.API.js"></script>
 
     <script>
+
+        var adnViewerMng = null;
 
         function addToolbar(parent, id) {
 
@@ -59,7 +61,7 @@
 
             $.getJSON(url, function(response){
 
-                var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
+                adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
                     'http://' + window.location.host + '/node/gallery/api/token',
                     document.getElementById('ViewerDiv'));
 
@@ -67,12 +69,36 @@
                         response.model.urn,
                     function (viewer) {
 
+                        viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
+
                         var parent = document.getElementById(
                             viewer.clientContainer.id);
 
                         addToolbar(parent, id);
+
+                        var extIdsParam = Autodesk.Viewing.Private.getParameterByName("extIds");
+
+                        var extIds = extIdsParam.split(';');
+
+                        extIds.forEach(function(extId){
+
+                            loadExtension(extId);
+                        })
                     });
             });
+        }
+
+        function loadExtension(extId) {
+
+            jQuery.getScript('/node/gallery/uploads/extensions/' + extId + '.js')
+                .done(function () {
+
+                    adnViewerMng.getViewer().loadExtension(
+                        extId);
+                })
+                .fail(function(jqxhr, settings, exception) {
+                    console.log("Load failed: " + extId);
+                });
         }
 
         $(document).ready(function () {
