@@ -21,7 +21,7 @@
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-angular.module('AdnGallery',
+var AdnGalleryApp = angular.module('AdnGallery',
     [
       'ngRoute',
       'AdnDirectives',
@@ -32,14 +32,15 @@ angular.module('AdnGallery',
       'AdnGallery.upload',
       'AdnGallery.showcase',
       'AdnGallery.quickLoad',
-      'AdnGallery.extensions'
+      'AdnGallery.extensions',
+      'AdnGallery.editable'
     ]).
 
     ///////////////////////////////////////////////////////////////////////////
     //
     //
     ///////////////////////////////////////////////////////////////////////////
-    controller('appController', function($scope, $location) {
+    controller('appController', function($scope, $location, $compile) {
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -254,6 +255,15 @@ angular.module('AdnGallery',
 
             return uuid;
         };
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        $scope.compile = function(html) {
+
+            return $compile(html)($scope);
+        }
 
         ///////////////////////////////////////////////////////////////////////
         //

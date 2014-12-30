@@ -27,11 +27,44 @@
       <file leaf-file-name="Autodesk.ADN.Viewing.Extension.Physics.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Physics/Autodesk.ADN.Viewing.Extension.Physics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33730158" vertical-offset="2130" max-vertical-offset="6465">
-              <caret line="159" column="55" selection-start-line="159" selection-start-column="55" selection-end-line="159" selection-end-column="55" />
+            <state vertical-scroll-proportion="1.468254" vertical-offset="0" max-vertical-offset="10425">
+              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1419956036000" expanded="true" signature="9800:9825" placeholder="..." />
+                <marker date="1419956036000" expanded="true" signature="9903:9928" placeholder="..." />
+                <marker date="1419956036000" expanded="true" signature="10027:10047" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="viewer.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.5" vertical-offset="60" max-vertical-offset="1080">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Autodesk.ADN.Viewing.Extension.DockingPanel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.DockingPanel/Autodesk.ADN.Viewing.Extension.DockingPanel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="2520">
+              <caret line="77" column="50" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="embed.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/views/embed/embed.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.875" vertical-offset="45" max-vertical-offset="1890">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -39,55 +72,24 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.125" vertical-offset="660" max-vertical-offset="14790">
-              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state vertical-scroll-proportion="-5.0" vertical-offset="1650" max-vertical-offset="15090">
+              <caret line="118" column="46" selection-start-line="118" selection-start-column="46" selection-end-line="118" selection-end-column="46" />
               <folding>
+                <element signature="n#style#0;n#a#1;n#div#0;n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1419467495000" expanded="true" signature="36058:36207" placeholder="..." />
+                <marker date="1419953093000" expanded="true" signature="36940:37089" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ammo.html" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/other/ammo/ammo.html">
+      <file leaf-file-name="adn.html" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/demos/adn.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="5460">
-              <caret line="4" column="84" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="84" />
-              <folding>
-                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../AdnViewerBasic/www/views/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="1605">
-              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Autodesk.ADN.Viewing.Extension.API.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Viewing.Extension.API.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="5070">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Autodesk.ADN.Toolkit.Viewer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="834" max-vertical-offset="4560">
-              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state vertical-scroll-proportion="-15.5" vertical-offset="7323" max-vertical-offset="8565">
+              <caret line="513" column="22" selection-start-line="513" selection-start-column="7" selection-end-line="513" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -103,9 +105,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/www/controllers/uploadController.js" />
-        <option value="$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js" />
-        <option value="$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js" />
         <option value="$PROJECT_DIR$/../../../AU/Viewer/Autodesk.ADN.Viewing.Extension.AU.js" />
         <option value="$PROJECT_DIR$/routes/Autodesk.ADN.Toolkit.ViewDataClient.js" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -139,7 +138,6 @@
         <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/cannon.js/demos/bunny.html" />
         <option value="$PROJECT_DIR$/www/components/cannon/js/cannon.js" />
         <option value="$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Physics/Autodesk.ADN.Viewing.Extension.Cannon.js" />
-        <option value="$PROJECT_DIR$/www/app.js" />
         <option value="$PROJECT_DIR$/routes/api.js" />
         <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/cannon.js/demos/blog.html" />
         <option value="$PROJECT_DIR$/routes/embed.js" />
@@ -150,9 +148,13 @@
         <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/examples/adn2.html" />
         <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/examples/adn.html" />
         <option value="$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Physics/Autodesk.ADN.Viewing.Extension.Ammo.js" />
-        <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/other/ammo/ammo.html" />
-        <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/views/embed/embed.html" />
+        <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/other/ammo/ammo.html" />
+        <option value="$PROJECT_DIR$/www/app.js" />
+        <option value="$PROJECT_DIR$/www/controllers/editableController.js" />
+        <option value="$USER_HOME$/Desktop/ammo.html" />
+        <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/demos/adn.html" />
+        <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Physics/Autodesk.ADN.Viewing.Extension.Physics.js" />
       </list>
     </option>
@@ -237,7 +239,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -259,15 +261,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="viewer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="showcase" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -285,7 +283,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AdnGallery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="embed" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -300,7 +320,7 @@
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/d3-master" />
-    <property name="options.lastSelected" value="preferences.editor" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -327,14 +347,10 @@
       <ConfigurationWrapper RunnerId="debuggableProgram" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -342,6 +358,14 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
       <method />
     </configuration>
     <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
@@ -354,15 +378,11 @@
       <setting name="jsFile" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
-      <node-js-remote-debug />
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="NodeWebKit" factoryName="Node-webkit">
       <option name="name" value="" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
@@ -446,9 +466,9 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908162" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25369978" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16560958" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2627551" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.375" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29464287" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908162" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -475,9 +495,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23608175" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20408164" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -508,125 +528,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/xhr2/lib/xhr2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12750">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.25" vertical-offset="0" max-vertical-offset="480">
-          <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/gallery/gallery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="4920">
-          <caret line="108" column="19" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/Autodesk.ADN.Toolkit.ViewDataClient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-127.03846" vertical-offset="5337" max-vertical-offset="9615">
-          <caret line="592" column="59" selection-start-line="592" selection-start-column="8" selection-end-line="592" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/controllers/uploadController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5820">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/controllers/modelViewsController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.27171904" vertical-offset="3552" max-vertical-offset="4980">
-          <caret line="227" column="12" selection-start-line="227" selection-start-column="12" selection-end-line="227" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/uploads/extensions/Autodesk.ADN.Viewing.Extension.ViewSequencer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4074074" vertical-offset="2184" max-vertical-offset="2940">
-          <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1560">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../extensions/Extension Demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="33" max-vertical-offset="2055">
-          <caret line="20" column="62" selection-start-line="18" selection-start-column="2" selection-end-line="20" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/showcase/showcase.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2835" max-vertical-offset="10560">
-          <caret line="427" column="34" selection-start-line="427" selection-start-column="23" selection-end-line="427" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/Jit/Examples/RGraph/example1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36885247" vertical-offset="90" max-vertical-offset="960">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/Jit/Examples/css/RGraph.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/Jit/Examples/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3125" vertical-offset="0" max-vertical-offset="1725">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/components/spectrum/spectrum.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7695">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/components/jit/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1860">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/components/jit/js/jit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.9837544" vertical-offset="191397" max-vertical-offset="257520">
-          <caret line="12870" column="22" selection-start-line="12870" selection-start-column="12" selection-end-line="12870" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/Jit/Examples/RGraph/example1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2579365" vertical-offset="255" max-vertical-offset="7260">
-          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/bower_components/d3/d3.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
@@ -676,13 +577,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Material/Autodesk.ADN.Viewing.Extension.Material.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.28481013" vertical-offset="2790" max-vertical-offset="4395">
-          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/cannon.js/demos/bunny.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.875" vertical-offset="255" max-vertical-offset="1395">
@@ -694,17 +588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
           <caret line="15" column="15" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="51" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3937008" vertical-offset="0" max-vertical-offset="6135">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -712,7 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41243863" vertical-offset="4728" max-vertical-offset="5460">
           <caret line="332" column="33" selection-start-line="332" selection-start-column="33" selection-end-line="332" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -720,7 +602,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="7.4603176" vertical-offset="930" max-vertical-offset="10395">
           <caret line="454" column="0" selection-start-line="454" selection-start-column="0" selection-end-line="454" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -728,15 +609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49726775" vertical-offset="281" max-vertical-offset="2475">
           <caret line="43" column="74" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/controllers/extensionController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.807693" vertical-offset="4167" max-vertical-offset="5265">
-          <caret line="316" column="0" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -744,7 +616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,9 +623,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.55813956" vertical-offset="0" max-vertical-offset="10065">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -762,15 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8310">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="23" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="834" max-vertical-offset="4560">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -778,7 +637,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1260" max-vertical-offset="3120">
           <caret line="101" column="77" selection-start-line="101" selection-start-column="30" selection-end-line="101" selection-end-column="77" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -786,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.52380955" vertical-offset="4929" max-vertical-offset="5685">
           <caret line="359" column="41" selection-start-line="0" selection-start-column="0" selection-end-line="377" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,41 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2424" max-vertical-offset="5685">
           <caret line="189" column="37" selection-start-line="189" selection-start-column="18" selection-end-line="189" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../AdnViewerBasic/www/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="1605">
-          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/other/ammo/ammo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="5460">
-          <caret line="4" column="84" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="84" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Annotation/Autodesk.ADN.Viewing.Extension.Annotation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10005">
-          <caret line="5" column="49" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="14.5" vertical-offset="348" max-vertical-offset="1080">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -836,44 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8664" max-vertical-offset="9990">
           <caret line="622" column="35" selection-start-line="614" selection-start-column="28" selection-end-line="622" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/embed/embed.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="1890">
-          <caret line="11" column="79" selection-start-line="11" selection-start-column="79" selection-end-line="11" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.125" vertical-offset="660" max-vertical-offset="14790">
-          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1419467495000" expanded="true" signature="36058:36207" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Move/Autodesk.ADN.Viewing.Extension.Move.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1800" max-vertical-offset="4860">
-          <caret line="150" column="31" selection-start-line="142" selection-start-column="11" selection-end-line="150" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Viewing.Extension.API.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="5070">
-          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -881,16 +665,255 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33730158" vertical-offset="240" max-vertical-offset="5715">
           <caret line="37" column="73" selection-start-line="37" selection-start-column="73" selection-end-line="37" selection-end-column="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/other/ammo/ammo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="8055">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Viewing.Extension.API.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="5070">
+          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/WebGL Viewer/ADN Viewer/webviewer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.036885247" vertical-offset="378" max-vertical-offset="1110">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/WebGL Viewer/ADN Viewer/js/viewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6626984" vertical-offset="2664" max-vertical-offset="4830">
+          <caret line="211" column="0" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="834" max-vertical-offset="4560">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Material/Autodesk.ADN.Viewing.Extension.Material.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44444445" vertical-offset="2214" max-vertical-offset="4335">
+          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.ContextMenu/Autodesk.ADN.Viewing.Extension.ContextMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1014" max-vertical-offset="1770">
+          <caret line="89" column="38" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Move/Autodesk.ADN.Viewing.Extension.Move.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22222222" vertical-offset="1722" max-vertical-offset="4860">
+          <caret line="130" column="42" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../AdnViewerBasic/www/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.0" vertical-offset="873" max-vertical-offset="1605">
+          <caret line="95" column="13" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/controllers/extensionController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="5505">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/controllers/modelViewsController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4980">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/controllers/uploadController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31034482" vertical-offset="135" max-vertical-offset="6060">
+          <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/angular-xeditable/angular-xeditable-starter/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5327869" vertical-offset="0" max-vertical-offset="732">
+          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/bower_components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1365" max-vertical-offset="102180">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/angular-xeditable/angular-xeditable-starter/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1984127" vertical-offset="0" max-vertical-offset="756">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3495" max-vertical-offset="6285">
+          <caret line="267" column="29" selection-start-line="267" selection-start-column="29" selection-end-line="267" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Toolbar/Autodesk.ADN.Viewing.Extension.Toolbar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1785">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Annotation/Autodesk.ADN.Viewing.Extension.Annotation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1304" max-vertical-offset="10005">
+          <caret line="105" column="34" selection-start-line="103" selection-start-column="11" selection-end-line="105" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/controllers/editableController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="211" max-vertical-offset="870">
+          <caret line="37" column="44" selection-start-line="37" selection-start-column="44" selection-end-line="37" selection-end-column="44" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/bower_components/x-editable/dist/jquery-editable/css/jquery-editable.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3285">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/bower_components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10035">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/bower_components/x-editable/dist/xeditable/css/xeditable.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/bower_components/x-editable/dist/xeditable/js/xeditable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="23049" max-vertical-offset="23925">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <marker date="1389369728000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/ammo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30327868" vertical-offset="7428" max-vertical-offset="8295">
+          <caret line="510" column="18" selection-start-line="510" selection-start-column="18" selection-end-line="510" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/demos/adn.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.5" vertical-offset="7323" max-vertical-offset="8565">
+          <caret line="513" column="22" selection-start-line="513" selection-start-column="7" selection-end-line="513" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.DockingPanel/Autodesk.ADN.Viewing.Extension.DockingPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="2520">
+          <caret line="77" column="50" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.0" vertical-offset="1650" max-vertical-offset="15090">
+          <caret line="118" column="46" selection-start-line="118" selection-start-column="46" selection-end-line="118" selection-end-column="46" />
+          <folding>
+            <element signature="n#style#0;n#a#1;n#div#0;n#nav#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#9;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1419953093000" expanded="true" signature="36940:37089" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5" vertical-offset="60" max-vertical-offset="1080">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/embed/embed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.875" vertical-offset="45" max-vertical-offset="1890">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Physics/Autodesk.ADN.Viewing.Extension.Physics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33730158" vertical-offset="2130" max-vertical-offset="6465">
-          <caret line="159" column="55" selection-start-line="159" selection-start-column="55" selection-end-line="159" selection-end-column="55" />
+        <state vertical-scroll-proportion="1.468254" vertical-offset="0" max-vertical-offset="10425">
+          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1419956036000" expanded="true" signature="9800:9825" placeholder="..." />
+            <marker date="1419956036000" expanded="true" signature="9903:9928" placeholder="..." />
+            <marker date="1419956036000" expanded="true" signature="10027:10047" placeholder="..." />
           </folding>
         </state>
       </provider>
