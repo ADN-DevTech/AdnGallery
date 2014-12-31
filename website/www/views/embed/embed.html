@@ -8,13 +8,21 @@
 
     <!--///////////////////////////////////////////////////////////////////////
     // JQuery
-    //
     ////////////////////////////////////////////////////////////////////////-->
     <script type="text/javascript" src="components/jquery/js/jquery.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
+    // RequireJS
+    ////////////////////////////////////////////////////////////////////////-->
+    <script src="components/require/js/require.min.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
+    // AngularJS
+    ////////////////////////////////////////////////////////////////////////-->
+    <script src="bower_components/angular/angular.min.js"></script>
+
+    <!--///////////////////////////////////////////////////////////////////////
     // Viewer
-    //
     ////////////////////////////////////////////////////////////////////////-->
     <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
@@ -80,10 +88,17 @@
 
                         var extIds = extIdsParam.split(';');
 
-                        extIds.forEach(function(extId){
+                        viewer.addEventListener(
 
-                            loadExtension(extId);
-                        })
+                            Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+
+                            function (event) {
+
+                                extIds.forEach(function(extId){
+
+                                    loadExtension(extId);
+                                })
+                            });
                     });
             });
         }

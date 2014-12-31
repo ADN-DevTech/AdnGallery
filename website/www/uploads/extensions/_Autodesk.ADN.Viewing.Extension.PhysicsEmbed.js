@@ -1,17 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Ammo.js Physics viewer extension
+// Ammo.js Physics viewer extension /embedded version
 // by Philippe Leefsma, December 2014
 //
 // Dependencies:
 //
 // https://rawgit.com/kripken/ammo.js/master/builds/ammo.js
 // https://rawgit.com/darsain/fpsmeter/master/dist/fpsmeter.min.js
-// https://rawgit.com/vitalets/angular-xeditable/master/dist/js/xeditable.min.js
 ///////////////////////////////////////////////////////////////////////////////
 
 AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
 
-Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
+Autodesk.ADN.Viewing.Extension.PhysicsEmbed = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
@@ -72,18 +71,11 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.load = function () {
 
-        console.log('Autodesk.ADN.Viewing.Extension.Physics loading ...');
+        console.log('Autodesk.ADN.Viewing.Extension.PhysicsEmbed loading ...');
 
-        $('<link/>', {
-            rel: 'stylesheet',
-            type: 'text/css',
-            href: 'https://rawgit.com/vitalets/angular-xeditable/master/dist/css/xeditable.css'
-        }).appendTo('head');
-        
         require([
             'https://rawgit.com/kripken/ammo.js/master/builds/ammo.js',
-            'https://rawgit.com/darsain/fpsmeter/master/dist/fpsmeter.min.js',
-            'https://rawgit.com/vitalets/angular-xeditable/master/dist/js/xeditable.min.js'
+            'https://rawgit.com/darsain/fpsmeter/master/dist/fpsmeter.min.js'
         ], function() {
 
             _self.initialize(function() {
@@ -94,7 +86,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
                     Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                     _self.onItemSelected);
 
-                console.log('Autodesk.ADN.Viewing.Extension.Physics loaded');
+                console.log('Autodesk.ADN.Viewing.Extension.PhysicsEmbed loaded');
             });
         });
 
@@ -179,52 +171,12 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    _self.displayVelocity = function(vLinear, vAngular) {
-
-        var editable = angular.element($("#editableDivId")).scope();
-
-        editable.editables.vx = parseFloat(vLinear[0].toFixed(3));
-        editable.editables.vy = parseFloat(vLinear[1].toFixed(3));
-        editable.editables.vz = parseFloat(vLinear[2].toFixed(3));
-
-        editable.editables.ax = parseFloat(vAngular[0].toFixed(3));
-        editable.editables.ay = parseFloat(vAngular[1].toFixed(3));
-        editable.editables.az = parseFloat(vAngular[2].toFixed(3));
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // item selected callback
     //
     ///////////////////////////////////////////////////////////////////////////
     _self.onItemSelected = function (event) {
 
-        var dbId = event.dbIdArray[0];
-
-        if(typeof dbId === 'undefined') {
-            $('#editableDivId').css('visibility','collapse');
-            return;
-        }
-
-        $('#editableDivId').css('visibility','visible');
-
-        var fragId = event.fragIdsArray[0]
-
-        var fragIdsArray = (Array.isArray(fragId) ?
-            fragId :
-            [fragId]);
-
-        var subFragId = fragIdsArray[0];
-
-        var vLinear = _meshMap[subFragId].vLinear;
-
-        var vAngular = _meshMap[subFragId].vAngular;
-
-        _self.displayVelocity(vLinear, vAngular);
-
-        _selectedEntry = _meshMap[subFragId];
+       _viewer.select([]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -233,7 +185,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.loadPanel = function() {
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel = function(
+        Autodesk.ADN.Viewing.Extension.PhysicsEmbed.ControlPanel = function(
             parentContainer,
             id,
             title,
@@ -251,21 +203,21 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
             // Auto-fit to the content and don't allow resize.
             // Position at the given coordinates
 
-            this.container.style.top = y + "px";
-            this.container.style.left = x + "px";
+            this.container.style.top = y;
+            this.container.style.left = x;
 
             this.container.style.width = "auto";
             this.container.style.height = "auto";
             this.container.style.resize = "none";
         };
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel.prototype = Object.create(
+        Autodesk.ADN.Viewing.Extension.PhysicsEmbed.ControlPanel.prototype = Object.create(
             Autodesk.Viewing.UI.DockingPanel.prototype);
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel.prototype.constructor =
-            Autodesk.ADN.Viewing.Extension.Physics.ControlPanel;
+        Autodesk.ADN.Viewing.Extension.PhysicsEmbed.ControlPanel.prototype.constructor =
+            Autodesk.ADN.Viewing.Extension.PhysicsEmbed.ControlPanel;
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel.prototype.initialize = function() {
+        Autodesk.ADN.Viewing.Extension.PhysicsEmbed.ControlPanel.prototype.initialize = function() {
 
             // Override DockingPanel initialize() to:
             // - create a standard title bar
@@ -295,71 +247,23 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
 
         content.id = 'physicsDivId';
 
-        var panel = new Autodesk.ADN.Viewing.Extension.Physics.ControlPanel(
+        var panel = new Autodesk.ADN.Viewing.Extension.PhysicsEmbed.ControlPanel(
             _viewer.clientContainer,
             'Physics',
             'Physics',
             content,
-            0, 0);
+            '1%', '20%');
 
         $('#physicsDivId').css('color', 'white');
 
         panel.setVisible(true);
 
-        var appScope = angular.element($("#appBodyId")).scope();
-
-        var format = '<a href="#" editable-number="editables.%1" ' +
-            'e-step="any" e-style="width:100px" ' +
-            'onaftersave="afterSave()">{{editables.%1}}</a>'
-
         var html =
-            '<button id="startBtnId" type="button" style="color:#000000;width:100px">Start</button>' +
-            '<button id="resetBtnId" type="button" style="color:#000000;width:100px">Reset</button>' +
-            '<div id="editableDivId" ng-controller="editableController" style="visibility: collapse">' +
-            '<br>' +
-            '<br>&nbsp Linear Velocity: ' +
-            '<br> &nbsp Vx = ' + format.replaceAll('%1', 'vx') +
-            '<br> &nbsp Vy = ' + format.replaceAll('%1', 'vy') +
-            '<br> &nbsp Vz = ' + format.replaceAll('%1', 'vz') +
-            '<br><br>&nbsp Angular Velocity: ' +
-            '<br> &nbsp Ax = ' + format.replaceAll('%1', 'ax') +
-            '<br> &nbsp Ay = ' + format.replaceAll('%1', 'ay') +
-            '<br> &nbsp Az = ' + format.replaceAll('%1', 'az') +
-            '</div>'
+            '<button id="startBtnId" type="button" style="color:#000000;width:55px">Start</button>' +
+            '<button id="resetBtnId" type="button" style="color:#000000;width:55px">Reset</button>' +
+            '<br>';
 
-        var element = appScope.compile(html);
-
-        $('#physicsDivId').append(element);
-
-        _self.displayVelocity([0,0,0], [0,0,0]);
-
-        var editable = angular.element($("#editableDivId")).scope();
-
-        editable.onAfterSave = function () {
-
-            var editables = editable.editables;
-
-            _selectedEntry.vAngular = [
-                editables.ax,
-                editables.ay,
-                editables.az
-            ];
-
-            _selectedEntry.vLinear = [
-                editables.vx,
-                editables.vy,
-                editables.vz
-            ];
-
-            if(!_started) {
-
-                _selectedEntry.vAngularInit =
-                    _selectedEntry.vAngular;
-
-                _selectedEntry.vLinearInit =
-                    _selectedEntry.vLinear;
-            }
-        }
+        $('#physicsDivId').append(html);
 
         _fps = new FPSMeter(content, {
             smoothing: 10,
@@ -372,7 +276,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
             theme: 'transparent',
             heat: 1,
             graph: 1,
-            history: 32});
+            history: 17});
 
         $('#startBtnId').click(function () {
 
@@ -678,13 +582,13 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     }
 };
 
-Autodesk.ADN.Viewing.Extension.Physics.prototype =
+Autodesk.ADN.Viewing.Extension.PhysicsEmbed.prototype =
     Object.create(Autodesk.Viewing.Extension.prototype);
 
-Autodesk.ADN.Viewing.Extension.Physics.prototype.constructor =
-    Autodesk.ADN.Viewing.Extension.Physics;
+Autodesk.ADN.Viewing.Extension.PhysicsEmbed.prototype.constructor =
+    Autodesk.ADN.Viewing.Extension.PhysicsEmbed;
 
 Autodesk.Viewing.theExtensionManager.registerExtension(
-    'Autodesk.ADN.Viewing.Extension.Physics',
-    Autodesk.ADN.Viewing.Extension.Physics);
+    '_Autodesk.ADN.Viewing.Extension.PhysicsEmbed',
+    Autodesk.ADN.Viewing.Extension.PhysicsEmbed);
 

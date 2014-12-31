@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Ammo.js Physics viewer extension
+// Ammo.js Physics viewer extension /embedded version
 // by Philippe Leefsma, December 2014
 //
 // Dependencies:
@@ -11,7 +11,7 @@
 
 AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
 
-Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
+_Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
 
@@ -72,7 +72,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.load = function () {
 
-        console.log('Autodesk.ADN.Viewing.Extension.Physics loading ...');
+        console.log('_Autodesk.ADN.Viewing.Extension.Physics loading ...');
 
         $('<link/>', {
             rel: 'stylesheet',
@@ -94,7 +94,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
                     Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                     _self.onItemSelected);
 
-                console.log('Autodesk.ADN.Viewing.Extension.Physics loaded');
+                console.log('_Autodesk.ADN.Viewing.Extension.Physics loaded');
             });
         });
 
@@ -115,7 +115,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
 
         _self.stop();
 
-        console.log('Autodesk.ADN.Viewing.Extension.Physics unloaded');
+        console.log('_Autodesk.ADN.Viewing.Extension.Physics unloaded');
 
         return true;
     };
@@ -678,13 +678,13 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     }
 };
 
-Autodesk.ADN.Viewing.Extension.Physics.prototype =
+_Autodesk.ADN.Viewing.Extension.Physics.prototype =
     Object.create(Autodesk.Viewing.Extension.prototype);
 
-Autodesk.ADN.Viewing.Extension.Physics.prototype.constructor =
-    Autodesk.ADN.Viewing.Extension.Physics;
+_Autodesk.ADN.Viewing.Extension.Physics.prototype.constructor =
+    _Autodesk.ADN.Viewing.Extension.Physics;
 
 Autodesk.Viewing.theExtensionManager.registerExtension(
-    'Autodesk.ADN.Viewing.Extension.Physics',
-    Autodesk.ADN.Viewing.Extension.Physics);
+    '_Autodesk.ADN.Viewing.Extension.Physics',
+    _Autodesk.ADN.Viewing.Extension.Physics);
 
