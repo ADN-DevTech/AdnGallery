@@ -389,41 +389,27 @@ function getExtensionsAsync(callback) {
     });
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-///////////////////////////////////////////////////////////////////////////////
-router.get('/extension/:name', function (req, res) {
+router.get('/extension/:extId', function (req, res) {
 
-    console.log('Retrieving extension by name');
+    var extId = req.params.extId;
 
-    /*
-    if (typeof req.query.field !== 'undefined' &&
-        typeof req.query.value !== 'undefined') {
+    var query = new Object();
 
-        var field = req.query.field;
+    query['id'] = extId;
 
-        var value = req.query.value;
+    db.collection('extensions',
+        function (err, collection) {
+            collection.find(query).toArray(
+                function (err, items) {
 
-        //case insensitive search
-        var exp = ["^", value, "$"].join("");
+                    var response = {
+                        extensions: items
+                    };
 
-        fieldQuery[field] = new RegExp(exp, "i");
-    }
-
-    db.collection('extensions', function (err, collection) {
-        collection.find(fieldQuery, {})
-            .sort({ name: 1 }).toArray(
-
-            function (err, items) {
-
-                var response = {
-                    models: items
-                };
-
-                res.send(response);
-            });
-    });*/
+                    res.status((items ? 200 : 404));
+                    res.send(response);
+                });
+        });
 });
 
 ///////////////////////////////////////////////////////////////////////////////

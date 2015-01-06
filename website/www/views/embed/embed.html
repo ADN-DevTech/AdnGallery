@@ -84,15 +84,16 @@
 
                         addToolbar(parent, id);
 
-                        var extIdsParam = Autodesk.Viewing.Private.getParameterByName("extIds");
-
-                        var extIds = extIdsParam.split(';');
-
                         viewer.addEventListener(
 
                             Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
 
                             function (event) {
+
+                                var extIdsParam =
+                                    Autodesk.Viewing.Private.getParameterByName("extIds");
+
+                                var extIds = extIdsParam.split(';');
 
                                 extIds.forEach(function(extId){
 
@@ -105,15 +106,24 @@
 
         function loadExtension(extId) {
 
-            jQuery.getScript('/node/gallery/uploads/extensions/' + extId + '.js')
-                .done(function () {
+            var url = 'http://' + window.location.host +
+                '/node/gallery/api/extension/' +
+                extId;
 
-                    adnViewerMng.getViewer().loadExtension(
-                        extId);
-                })
-                .fail(function(jqxhr, settings, exception) {
-                    console.log("Load failed: " + extId);
-                });
+            $.getJSON(url, function(response){
+
+                var file = response.extensions[0].file;
+
+                jQuery.getScript('/node/gallery/uploads/extensions/' + file)
+                        .done(function () {
+
+                            adnViewerMng.getViewer().loadExtension(extId);
+                        })
+                        .fail(function(jqxhr, settings, exception) {
+
+                            console.log("Load failed: " + extId);
+                        });
+            });
         }
 
         $(document).ready(function () {
@@ -121,6 +131,7 @@
             var id = Autodesk.Viewing.Private.getParameterByName("id");
 
             if (id !== '') {
+
                 loadFromId(id);
             };
         });
