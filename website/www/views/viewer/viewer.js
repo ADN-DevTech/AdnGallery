@@ -83,6 +83,8 @@ angular.module('AdnGallery.viewer',
                 urn,
                 function (viewer) {
 
+                    viewer.container.id = $scope.newGUID();
+
                     getModelByUrn(urn);
 
                     $scope.viewer = viewer;
@@ -175,10 +177,7 @@ angular.module('AdnGallery.viewer',
 
             var div = document.createElement("div");
 
-            var parent = document.getElementById(
-                $scope.viewer.clientContainer.id);
-
-            parent.appendChild(div);
+            $scope.viewer.clientContainer.appendChild(div);
 
             div.style.bottom = "0%";
             div.style.right = "20%";

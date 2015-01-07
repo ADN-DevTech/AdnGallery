@@ -43,7 +43,7 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
 
     _self.load = function () {
 
-        _self.createToolbar();
+        _self.createToolbar(_viewer.container);
 
         $(htmlDlg).appendTo('#appBodyId');
 
@@ -61,24 +61,18 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
         return true;
     };
 
-    _self.createToolbar = function() {
+    _self.createToolbar = function(parent) {
 
-        var toolbarDivHtml = '<div id="demoToolbarId"> </div>';
+        var div = document.createElement("div");
 
-        $(toolbarDivHtml).appendTo(
-            '#' + _viewer.clientContainer.id);
+        parent.appendChild(div);
 
-        $('#demoToolbarId').css({
-            'bottom':'0%',
-            'left':'20%',
-            'z-index': '2',
-            'position': 'absolute'
-        });
+        div.style.bottom = '20%';
+        div.style.left = "20%";
+        div.style.zIndex = "2";
+        div.style.position = "absolute";
 
-        var toolbar = new Autodesk.Viewing.UI.ToolBar(
-            document.getElementById('demoToolbarId'));
-
-        //var viewerToolbar = _viewer.getToolbar(true);
+        var toolbar = new Autodesk.Viewing.UI.ToolBar(div);
 
         var subToolbar = toolbar.addSubToolbar('sub1', false);
 
@@ -95,9 +89,9 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
             bTool.id,
             'public/images/adsk.24x24.png');
 
-        $('#' + bTool.id + 'Button').css({
+        /*$('#' + bTool.id + 'Button').css({
             'background-position': '3px 0px'
-        });
+        });*/
     }
 };
 

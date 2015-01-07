@@ -80,7 +80,7 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
 
         function getNameFromLabel(label) {
 
-            var idx = label.lastIndexOf('-') + 2;
+            var idx = label.indexOf('-') + 2;
 
             return label.substring(idx);
         }
@@ -97,18 +97,18 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
 
             data.push(map[key].length);
 
-            legend.push("%% - " + key);
+            legend.push("(" + map[key].length + ") - " + key);
 
             colors.push('#' + Math.floor(Math.random()*16777215).toString(16));
         }
 
         var pie = raphael.piechart(
-            120, 140, 100,
+            120, 250, 100,
             data,
             {
                 legend: legend,
                 legendpos: "east",
-                //href: ["http://raphaeljs.com", "http://g.raphaeljs.com"]
+                //href: ["http://g.raphaeljs.com"]
                 colors: colors
             });
 
@@ -157,7 +157,9 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
             }
         });
 
-        raphael.text(120, 20, "Components Chart").attr({ font: "20px sans-serif" });
+        raphael.text(120, 120, "Components Chart").attr({
+            font: "20px sans-serif"
+        });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -174,7 +176,7 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
 
         overlayDiv.id = 'overlayPieDivId';
 
-        _viewer.clientContainer.appendChild(
+        _viewer.container.appendChild(
             overlayDiv);
 
         overlayDiv.style.top = "0";
@@ -183,7 +185,7 @@ Autodesk.ADN.Viewing.Extension.Statistics = function (viewer, options) {
         overlayDiv.style.height = "90%";
         overlayDiv.style.zIndex = "999";
         overlayDiv.style.position = "absolute";
-        overlayDiv.style.overflow = "scroll";
+        overlayDiv.style.overflow = "hidden";
 
         var overlay = new Raphael(
             overlayDiv,

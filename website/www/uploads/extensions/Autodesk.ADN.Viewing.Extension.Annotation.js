@@ -73,7 +73,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
                     var menu =  Autodesk.Viewing.Extensions.ViewerObjectContextMenu.
                         prototype.buildMenu.call(
-                            this, event, status);
+                        this, event, status);
 
                     return menu;
                 }
@@ -83,7 +83,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
             new Autodesk.ADN.Viewing.Extension.MarkUpContextMenu(
                 _self.viewer));
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             bind("click", _self.onMouseClick);
 
         _viewer.addEventListener(
@@ -128,7 +128,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
         _viewer.setContextMenu(null);
 
-        $("#" + _viewer.clientContainer.id).
+        $(_viewer.container).
             unbind("click", _self.onMouseClick);
 
         _viewer.removeEventListener(
@@ -149,7 +149,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
         var divId = newGuid();
 
         $("<div></div>").attr('id', divId).appendTo(
-            "#ViewerDiv");
+            '#ViewerDiv');
 
         $('#' + divId).css({
 
@@ -301,7 +301,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
                     _self.updateMarkUp(markUp);
 
-                    $("#" + _viewer.clientContainer.id).
+                    $("#" + _viewer.container.id).
                         bind("mousemove", _self.onMouseMove);
 
                     _viewer.addEventListener(
@@ -326,7 +326,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
             case ModeEnum.kModeDrag:
 
-                $("#" + _viewer.clientContainer.id).
+                $("#" + _viewer.container.id).
                     unbind("mousemove", _self.onMouseMove);
 
                 var markUp = _currentMarkUp;
@@ -385,35 +385,35 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.worldToScreen = function(worldPoint, camera) {
 
-         var p = new THREE.Vector4();
+        var p = new THREE.Vector4();
 
-         p.x = worldPoint.x;
-         p.y = worldPoint.y;
-         p.z = worldPoint.z;
-         p.w = 1;
+        p.x = worldPoint.x;
+        p.y = worldPoint.y;
+        p.z = worldPoint.z;
+        p.w = 1;
 
-         p.applyMatrix4(camera.matrixWorldInverse);
-         p.applyMatrix4(camera.projectionMatrix);
+        p.applyMatrix4(camera.matrixWorldInverse);
+        p.applyMatrix4(camera.projectionMatrix);
 
-         // Don't want to mirror values with negative z (behind camera)
-         // if camera is inside the bounding box,
-         // better to throw markers to the screen sides.
-         if (p.w > 0)
-         {
-             p.x /= p.w;
-             p.y /= p.w;
-             p.z /= p.w;
-         }
+        // Don't want to mirror values with negative z (behind camera)
+        // if camera is inside the bounding box,
+        // better to throw markers to the screen sides.
+        if (p.w > 0)
+        {
+            p.x /= p.w;
+            p.y /= p.w;
+            p.z /= p.w;
+        }
 
-         // This one is multiplying by width/2 and –height/2,
-         // and offsetting by canvas location
-         var point = _viewer.impl.viewportToClient(p.x, p.y);
+        // This one is multiplying by width/2 and –height/2,
+        // and offsetting by canvas location
+        var point = _viewer.impl.viewportToClient(p.x, p.y);
 
-         // snap to the center of the pixel
-         point.x = Math.floor(point.x) + 0.5;
-         point.y = Math.floor(point.y) + 0.5;
+        // snap to the center of the pixel
+        point.x = Math.floor(point.x) + 0.5;
+        point.y = Math.floor(point.y) + 0.5;
 
-         return point;
+        return point;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -444,26 +444,26 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.getPropertyValue = function (dbId, displayName, callback) {
 
-            function _cb(result) {
+        function _cb(result) {
 
-                if (result.properties) {
+            if (result.properties) {
 
-                    for (var i = 0; i < result.properties.length; i++) {
+                for (var i = 0; i < result.properties.length; i++) {
 
-                        var prop = result.properties[i];
+                    var prop = result.properties[i];
 
-                        if (prop.displayName === displayName) {
+                    if (prop.displayName === displayName) {
 
-                            callback(prop.displayValue);
-                            return;
-                        }
+                        callback(prop.displayValue);
+                        return;
                     }
-
-                    callback('undefined');
                 }
-            }
 
-            _viewer.getProperties(dbId, _cb);
+                callback('undefined');
+            }
+        }
+
+        _viewer.getProperties(dbId, _cb);
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -512,7 +512,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
             _viewer.getCamera());
 
         var offset = getClientOffset(
-           document.getElementById('ViewerDiv'));
+            _viewer.container);
 
         markUp.screenPoint = screenPoint;
 
@@ -523,10 +523,10 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
         markUp.line.attr({
             path:
-                "M" + (screenPoint.x - offset.x) +
-                "," + (screenPoint.y - offset.y) +
-                "L" + (markUp.textPos.x - offset.x) +
-                "," + (markUp.textPos.y - offset.y)
+            "M" + (screenPoint.x - offset.x) +
+            "," + (screenPoint.y - offset.y) +
+            "L" + (markUp.textPos.x - offset.x) +
+            "," + (markUp.textPos.y - offset.y)
         });
 
         var divYOffset = 30;
@@ -567,7 +567,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
                 overlayDiv.id = 'overlayDivId';
 
-                _viewer.clientContainer.appendChild(
+                _viewer.container.appendChild(
                     overlayDiv);
 
                 overlayDiv.style.top = "0";

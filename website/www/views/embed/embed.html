@@ -79,10 +79,7 @@
 
                         viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
 
-                        var parent = document.getElementById(
-                            viewer.clientContainer.id);
-
-                        addToolbar(parent, id);
+                        addToolbar(viewer.container, id);
 
                         viewer.addEventListener(
 
