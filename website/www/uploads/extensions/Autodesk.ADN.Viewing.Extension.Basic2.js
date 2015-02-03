@@ -13,13 +13,17 @@ Autodesk.ADN.Viewing.Extension.Basic = function (viewer, options) {
 
     _self.load = function () {
 
-        alert('Autodesk.ADN.Viewing.Extension.Basic loaded');
+        alert('Autodesk.ADN.Viewing.Extension.Basic2 loaded');
         return true;
     };
 
     _self.unload = function () {
 
-        console.log('Autodesk.ADN.Viewing.Extension.Basic unloaded');
+        console.log('Autodesk.ADN.Viewing.Extension.Basic2 unloaded');
+
+        Autodesk.Viewing.theExtensionManager.unregisterExtension(
+            'Autodesk.ADN.Viewing.Extension.Basic');
+
         return true;
     };
 };

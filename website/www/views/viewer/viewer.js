@@ -438,14 +438,17 @@ angular.module('AdnGallery.viewer',
 
                     viewer.getObjectTree(function (rootComponent) {
 
-                        var rootNode = createNode(
-                            treeRef,
-                            '#',
-                            rootComponent);
+                        if(rootComponent) {
 
-                        buildTreeRec(treeRef, rootNode, rootComponent);
+                            var rootNode = createNode(
+                                treeRef,
+                                '#',
+                                rootComponent);
 
-                        $('#jstree').jstree("open_node", rootNode);
+                            buildTreeRec(treeRef, rootNode, rootComponent);
+
+                            $('#jstree').jstree("open_node", rootNode);
+                        }
                     });
                 });
 
@@ -567,7 +570,10 @@ angular.module('AdnGallery.viewer',
 
                     if(extension.enabled) {
 
-                        jQuery.getScript('/node/gallery/uploads/extensions/' + extension.file)
+                        jQuery.getScript(
+                            '/node/gallery/uploads/extensions/' +
+                            extension.file)
+
                             .done(function () {
 
                                 if ($scope.viewer) {
@@ -611,7 +617,10 @@ angular.module('AdnGallery.viewer',
 
                         if (isExtensionEnabled(extension)) {
 
-                            jQuery.getScript('/node/gallery/uploads/extensions/' + extension.file)
+                            jQuery.getScript(
+                                '/node/gallery/uploads/extensions/' +
+                                extension.file)
+
                                 .done(function () {
 
                                     $scope.viewer.loadExtension(

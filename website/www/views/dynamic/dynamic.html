@@ -1,0 +1,73 @@
+
+<link rel="stylesheet" type="text/css" href="components/w2ui/w2ui-1.4.2.min.css" />
+<script src="components/w2ui/w2ui-1.4.2.min.js"></script>
+<script src="components/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+
+
+<style type="text/css" media="screen">
+
+    #editor {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+</style>
+
+
+
+<div id="layout-container" style="width: 100%; height: 600px; ">
+
+
+
+<pre id="editor">
+
+</pre>
+
+</div>
+
+<pre id="default" style="visibility: collapse">
+///////////////////////////////////////////////////////////////////////
+// Basic viewer extension
+//
+///////////////////////////////////////////////////////////////////////
+AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
+
+
+Autodesk.ADN.Viewing.Extension.Basic = function (viewer, options) {
+
+    Autodesk.Viewing.Extension.call(this, viewer, options);
+
+    var _self = this;
+
+    _self.load = function () {
+
+        alert('Autodesk.ADN.Viewing.Extension.Basic loaded');
+        return true;
+    };
+
+    _self.unload = function () {
+
+        console.log('Autodesk.ADN.Viewing.Extension.Basic unloaded');
+
+        Autodesk.Viewing.theExtensionManager.unregisterExtension(
+            'Autodesk.ADN.Viewing.Extension.Basic');
+
+        return true;
+    };
+};
+
+Autodesk.ADN.Viewing.Extension.Basic.prototype =
+    Object.create(Autodesk.Viewing.Extension.prototype);
+
+Autodesk.ADN.Viewing.Extension.Basic.prototype.constructor =
+    Autodesk.ADN.Viewing.Extension.Basic;
+
+Autodesk.Viewing.theExtensionManager.registerExtension(
+    'Autodesk.ADN.Viewing.Extension.Basic',
+    Autodesk.ADN.Viewing.Extension.Basic);
+
+</pre>

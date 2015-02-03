@@ -558,7 +558,9 @@ function findExtensions(str) {
 
     while(true) {
 
-        start = str.indexOf('registerExtension', start);
+        start = str.indexOf(
+            'theExtensionManager.registerExtension',
+            start);
 
         if(start < 0) {
 
@@ -569,7 +571,7 @@ function findExtensions(str) {
 
         var substr = str.substring(start, end);
 
-        var ext = substr.replaceAll('registerExtension', '').
+        var ext = substr.replaceAll('theExtensionManager.registerExtension', '').
             replaceAll('\n', '').
             replaceAll('(', '').
             replaceAll('\'', '').

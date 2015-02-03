@@ -79,7 +79,7 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
             type: 'text/css',
             href: 'https://rawgit.com/vitalets/angular-xeditable/master/dist/css/xeditable.css'
         }).appendTo('head');
-        
+
         require([
             'https://rawgit.com/kripken/ammo.js/master/builds/ammo.js',
             'https://rawgit.com/darsain/fpsmeter/master/dist/fpsmeter.min.js',
@@ -140,7 +140,9 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
                         _viewer,
                         subFragId);
 
-                    _viewer.getPropertyValue(component.dbId, "Mass", function(mass) {
+                    _viewer.getPropertyValue(
+                        component.dbId,
+                        "Mass", function(mass) {
 
                         mass = (mass !== 'undefined' ? mass : 1.0);
 
@@ -149,24 +151,24 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
                             "vInit",
                             function (vInit) {
 
-                                vInit = (vInit !== 'undefined' ? vInit : "0;0;0");
+                                vInit =
+                                (vInit !== 'undefined' ? vInit : "0;0;0");
 
                                 vInit = parseArray(vInit, ';');
 
                                 _meshMap[subFragId] = {
+                                   transform: mesh.matrixWorld.clone(),
+                                   component: component,
 
-                                    transform: mesh.matrixWorld.clone(),
-                                    component: component,
+                                   vAngularInit: [0,0,0],
+                                   vAngular: [0,0,0],
 
-                                    vAngularInit: [0,0,0],
-                                    vAngular: [0,0,0],
+                                   vLinearInit: vInit,
+                                   vLinear: vInit,
 
-                                    vLinearInit: vInit,
-                                    vLinear: vInit,
-
-                                    mass: mass,
-                                    mesh: mesh,
-                                    body: null
+                                   mass: mass,
+                                   mesh: mesh,
+                                   body: null
                                 }
                             });
                     });
@@ -259,13 +261,16 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
             this.container.style.resize = "none";
         };
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel.prototype = Object.create(
-            Autodesk.Viewing.UI.DockingPanel.prototype);
+        Autodesk.ADN.Viewing.Extension.Physics.
+            ControlPanel.prototype = Object.create(
+                Autodesk.Viewing.UI.DockingPanel.prototype);
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel.prototype.constructor =
-            Autodesk.ADN.Viewing.Extension.Physics.ControlPanel;
+        Autodesk.ADN.Viewing.Extension.Physics.
+            ControlPanel.prototype.constructor =
+                Autodesk.ADN.Viewing.Extension.Physics.ControlPanel;
 
-        Autodesk.ADN.Viewing.Extension.Physics.ControlPanel.prototype.initialize = function() {
+        Autodesk.ADN.Viewing.Extension.Physics.
+            ControlPanel.prototype.initialize = function() {
 
             // Override DockingPanel initialize() to:
             // - create a standard title bar
@@ -295,12 +300,13 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
 
         content.id = 'physicsDivId';
 
-        var panel = new Autodesk.ADN.Viewing.Extension.Physics.ControlPanel(
-            _viewer.clientContainer,
-            'Physics',
-            'Physics',
-            content,
-            0, 0);
+        var panel = new Autodesk.ADN.Viewing.Extension.Physics.
+            ControlPanel(
+                _viewer.container,
+                'Physics',
+                'Physics',
+                content,
+                0, 0);
 
         $('#physicsDivId').css('color', 'white');
 
@@ -411,7 +417,8 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.createWorld = function() {
 
-        var collisionConfiguration = new Ammo.btDefaultCollisionConfiguration;
+        var collisionConfiguration =
+            new Ammo.btDefaultCollisionConfiguration;
 
         var world = new Ammo.btDiscreteDynamicsWorld(
             new Ammo.btCollisionDispatcher(collisionConfiguration),

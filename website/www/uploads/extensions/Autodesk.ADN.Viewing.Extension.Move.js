@@ -55,7 +55,8 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
             _self.onItemSelected);
 
         $(document).unbind(
-            'keyup', _self.onKeyup);
+            'keyup',
+            _self.onKeyup);
 
         _self.cancel();
 
@@ -80,13 +81,13 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.cancel = function(){
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             unbind("click", _self.onMouseClickInit);
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             unbind("click", _self.onMouseClickEnd);
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             unbind("mousemove", _self.onMouseMouse);
 
         _self.restorePositions(_selectedMeshMap);
@@ -134,10 +135,10 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
 
             _self.previousPos = null;
 
-            $("#" + _viewer.clientContainer.id).
+            $("#" + _viewer.container.id).
                 bind("mousemove", _self.onMouseMove);
 
-            $("#" + _viewer.clientContainer.id).
+            $("#" + _viewer.container.id).
                 bind("click", _self.onMouseClickInit);
 
             var fragIdsArray = (Array.isArray(fragId) ?
@@ -185,10 +186,10 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.onMouseClickInit = function(event) {
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             unbind("click", _self.onMouseClickInit);
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             bind("click", _self.onMouseClickEnd);
 
         _running = true;
@@ -234,10 +235,10 @@ Autodesk.ADN.Viewing.Extension.Move = function (viewer, options) {
 
         _self.previousPos = _self.screenToWorld(event);
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             unbind("mousemove", _self.onMouseMove);
 
-        $("#" + _viewer.clientContainer.id).
+        $("#" + _viewer.container.id).
             unbind("click", _self.onMouseClickEnd);
 
         _selectedMeshMap = {};
