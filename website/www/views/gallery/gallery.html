@@ -74,6 +74,15 @@
                     <span class="glyphicon glyphicon-upload"></span>
                 </a>
 
+                <a ng-if="!collapsedMode()" class="list-group-item" href="#/dynamic" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    &nbsp; Dynamic Editor
+                </a>
+
+                <a ng-if="collapsedMode()" class="list-group-item" href="#/dynamic" style="color:#C3DBFA">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+
             </nav>
         </div>
 

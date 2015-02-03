@@ -36,11 +36,108 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////////
+        function initializeViewer() {
+
+            $scope.adnViewerMng =
+                new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
+                    'http://' + window.location.host + '/node/gallery/api/token',
+                    document.getElementById('viewer-dynamic'));
+
+            $scope.setViewerManager($scope.adnViewerMng);
+
+            var id =
+                Autodesk.Viewing.Private.getParameterByName("id");
+
+
+            if(id !== '') {
+                loadFromId(id);
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function loadFromId(id) {
+
+            var url =  "http://" +
+                window.location.host +
+                '/node/gallery/api/model/' + id;
+
+            $http.get(url).success(function(response){
+
+                loadFromUrn(response.model.urn);
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
+        function loadFromUrn(urn) {
+
+            if (urn !== '') {
+
+                $scope.adnViewerMng.loadDocument(
+                    urn,
+                    function (viewer) {
+
+                        $scope.viewer = viewer;
+
+                        var lightPreset = 8;
+
+                        if($scope.mobile.isAny()) {
+
+                            lightPreset = 0;
+                            viewer.setQualityLevel(false, false);
+                        }
+
+                        viewer.impl.setLightPreset(lightPreset);
+
+                        viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
+
+                        viewer.addEventListener(
+                            Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+                            function (event) {
+
+                                // fusion files need setting preset again
+                                viewer.impl.setLightPreset(lightPreset);
+
+                            });
+                    },
+                    function(error) {
+                        console.log("Error loading document: " + error);
+                    });
+            };
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////////
         function initializeMenu() {
 
             $('#navBarId').removeClass("navbar-fixed-top");
 
+            $('#menuExtensionsId').css({"visibility": "collapse"});
+            $('#menuSearchId').css({"visibility": "collapse"});
+            $('#menuViewId').css({"visibility": "collapse"});
+            $('#menuDocId').css({"visibility": "visible"});
+            $('#menuUiId').css({"visibility": "collapse"});
         }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeEvents() {
+
+            $scope.$on('broadcast-modelSelected', function(event, data) {
+
+                loadFromUrn(data.urn);
+            });
+        }
+
 
         function getClientSize() {
 
@@ -76,11 +173,13 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
 
         var pstyle = 'border: 1px solid #dfdfdf;';
 
+        var layout = $scope.newGUID();
+
         $('#layout-container').w2layout({
-            name: 'layout',
+            name: layout,
             padding: 4,
             panels: [
-                { type: 'main', content: '<div id="viewerDiv"></div>'},
+                { type: 'main', content: $('#viewer-dynamic')},
                 //{ type: 'top', size: 30, resizable: false, style: pstyle, content: '' },
                 { type: 'bottom', size: 30, resizable: false, style: pstyle, content: '' },
                 { type: 'right', size: '45%', resizable: true, style: pstyle, content: $('#editor'),
@@ -120,36 +219,21 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
             ]
         });
 
+        w2ui[layout].on('resize', function(event) {
+
+            event.onComplete = function () {
+
+                if($scope.viewer)
+                    $scope.viewer.resize();
+            }
+        });
+
         $('#editor').html($('#default').html());
-
-        var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWRuLTE3LjA3LjIwMTQtMTAuNTYuMTYvRW5naW5lLmR3Zg==';
-
-        var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-            'http://' + window.location.host + '/node/gallery/api/token',
-            document.getElementById('viewerDiv'));
-
-        var paramUrn = Autodesk.Viewing.Private.getParameterByName('urn');
-
-        urn = (paramUrn !== '' ? paramUrn : urn);
-
-        adnViewerMng.loadDocument(urn,
-
-            function(viewer){
-
-                w2ui.layout.on('resize', function(event) {
-
-                    event.onComplete = function () {
-
-                        viewer.resize();
-                    }
-
-                });
-
-            });
 
         window.onresize = fitLayoutToWindow;
 
-
+        initializeViewer();
+        initializeEvents();
         initializeMenu();
         initEditor();
 
