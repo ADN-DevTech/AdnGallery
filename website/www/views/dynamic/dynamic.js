@@ -32,11 +32,27 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
     ///////////////////////////////////////////////////////////////////////////
     .controller('DynamicController', function($scope, $http, $location) {
 
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function fitLayoutToWindow() {
+
+            var size = getClientSize();
+
+            $('#layout-container').css(
+                'height',
+                size.y.toString() - 2 -
+                $('#navBarId').height());
+        }
+
         ///////////////////////////////////////////////////////////////////////
         //
         //
         ///////////////////////////////////////////////////////////////////////
         function initializeViewer() {
+
+            $scope.extensions = [];
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
@@ -136,9 +152,14 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
 
                 loadFromUrn(data.urn);
             });
+
+            window.onresize = fitLayoutToWindow;
         }
 
-
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
         function getClientSize() {
 
             var w = window,
@@ -151,90 +172,248 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
             return {x: sx, y: sy};
         }
 
-        function fitLayoutToWindow() {
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeEditor() {
 
-            var size = getClientSize();
+            $scope.editor = ace.edit("editor");
+            $scope.editor.setTheme("ace/theme/chrome");
+            $scope.editor.getSession().setMode("ace/mode/javascript");
 
-            $('#layout-container').css(
-                'height',
-                size.y.toString() - 2 -
-                $('#navBarId').height());
+            onResetEditor();
         }
 
-        function initEditor(){
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function onResetEditor () {
 
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/chrome");
-            editor.getSession().setMode("ace/mode/javascript");
+            var defaultCode =
 
+            '///////////////////////////////////////////////////////////////////////\n' +
+            '// Basic viewer extension\n' +
+            '//\n' +
+            '///////////////////////////////////////////////////////////////////////\n' +
+            'AutodeskNamespace("Autodesk.ADN.Viewing.Extension");\n' +
+            '\n' +
+            '\n' +
+            'Autodesk.ADN.Viewing.Extension.Basic = function (viewer, options) {\n' +
+            '\n' +
+            '   Autodesk.Viewing.Extension.call(this, viewer, options);\n' +
+            '\n' +
+            '   var _self = this;\n' +
+            '\n' +
+            '   _self.load = function () {\n' +
+            '\n' +
+            '       alert("Autodesk.ADN.Viewing.Extension.Basic loaded");\n' +
+            '       return true;\n' +
+            '   };\n' +
+            '\n' +
+            '   _self.unload = function () {\n' +
+            '\n' +
+            '       console.log("Autodesk.ADN.Viewing.Extension.Basic unloaded");\n' +
+            '\n' +
+            '       Autodesk.Viewing.theExtensionManager.unregisterExtension(\n' +
+            '           "Autodesk.ADN.Viewing.Extension.Basic");\n' +
+            '\n' +
+            '       return true;\n' +
+            '   };\n' +
+            '};\n' +
+            '\n' +
+            'Autodesk.ADN.Viewing.Extension.Basic.prototype =\n' +
+            '   Object.create(Autodesk.Viewing.Extension.prototype);\n' +
+            '\n' +
+            'Autodesk.ADN.Viewing.Extension.Basic.prototype.constructor =\n' +
+            '   Autodesk.ADN.Viewing.Extension.Basic;\n' +
+            '\n' +
+            'Autodesk.Viewing.theExtensionManager.registerExtension(\n' +
+            '   "Autodesk.ADN.Viewing.Extension.Basic",\n' +
+            '   Autodesk.ADN.Viewing.Extension.Basic);';
+
+
+            $scope.editor.setValue(defaultCode, 1);
         }
 
-        fitLayoutToWindow();
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function findExtensions(str) {
 
-        var pstyle = 'border: 1px solid #dfdfdf;';
+            String.prototype.replaceAll = function (find, replace) {
+                var str = this;
+                return str.replace(new RegExp(
+                        find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'),
+                    replace);
+            };
 
-        var layout = $scope.newGUID();
+            String.prototype.trim = function () {
+                return this.replace(/^\s+/, '').replace(/\s+$/, '');
+            };
 
-        $('#layout-container').w2layout({
-            name: layout,
-            padding: 4,
-            panels: [
-                { type: 'main', content: $('#viewer-dynamic')},
-                //{ type: 'top', size: 30, resizable: false, style: pstyle, content: '' },
-                { type: 'bottom', size: 30, resizable: false, style: pstyle, content: '' },
-                { type: 'right', size: '45%', resizable: true, style: pstyle, content: $('#editor'),
+            var extensions = [];
 
-                    toolbar: {
-                        items: [
-                            {
-                                type: 'button',
-                                id: 'bLoad',
-                                caption: 'Load',
-                                icon: 'w2ui-icon-check',
-                                hint: 'Load'
-                            },
-                            {type: 'break', id: 'break0'},
-                            {
-                                type: 'button',
-                                id: 'bUnload',
-                                caption: 'Unload',
-                                icon: 'w2ui-icon-check',
-                                hint: 'Unload'
-                            },
-                            {type: 'break', id: 'break1'},
-                            {
-                                type: 'button',
-                                id: 'bReset',
-                                caption: 'Reset',
-                                icon: 'w2ui-icon-check',
-                                hint: 'Reset'
+            var start = 0;
+
+            while(true) {
+
+                start = str.indexOf(
+                    'theExtensionManager.registerExtension',
+                    start);
+
+                if(start < 0) {
+
+                    return extensions;
+                }
+
+                var end = str.indexOf(',', start);
+
+                var substr = str.substring(start, end);
+
+                var ext = substr.replaceAll('theExtensionManager.registerExtension', '').
+                    replaceAll('\n', '').
+                    replaceAll('(', '').
+                    replaceAll('\'', '').
+                    replaceAll('"', '');
+
+                extensions.push(ext.trim());
+
+                start = end;
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function loadExtensions(extIds) {
+
+            if($scope.viewer) {
+
+                extIds.forEach(function(extId) {
+
+                    $scope.viewer.loadExtension(extId);
+
+                    $scope.extensions.push(extId);
+                });
+
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function unloadExtensions() {
+
+            $scope.extensions.forEach(function(extId) {
+                $scope.viewer.unloadExtension(extId);
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        function initializeLayout () {
+
+            var pstyle = 'border: 1px solid #dfdfdf;';
+
+            var layout = $scope.newGUID();
+
+            $('#layout-container').w2layout({
+                name: layout,
+                padding: 4,
+                panels: [
+                    {type: 'main', content: $('#viewer-dynamic')},
+                    //{ type: 'top', size: 30, resizable: false, style: pstyle, content: '' },
+                    {type: 'bottom', size: 30, resizable: false, style: pstyle, content: ''},
+                    {
+                        type: 'right', size: '45%', resizable: true, style: pstyle, content: $('#editor'),
+
+                        toolbar: {
+                            items: [
+                                {
+                                    type: 'button',
+                                    id: 'bLoad',
+                                    caption: 'Load',
+                                    icon: 'w2ui-icon-plus',
+                                    hint: 'Load'
+                                },
+                                {type: 'break', id: 'break0'},
+                                {
+                                    type: 'button',
+                                    id: 'bUnload',
+                                    caption: 'Unload',
+                                    icon: 'w2ui-icon-cross',
+                                    hint: 'Unload'
+                                },
+                                {type: 'break', id: 'break1'},
+                                {
+                                    type: 'button',
+                                    id: 'bReset',
+                                    caption: 'Reset',
+                                    icon: 'w2ui-icon-reload',
+                                    hint: 'Reset'
+                                }
+                            ],
+                            onClick: function (event) {
+
+                                switch (event.target) {
+
+                                    case 'bLoad':
+
+                                        var code = $scope.editor.getValue();
+
+                                        var extensions = findExtensions(code);
+
+                                        var res = eval(code);
+
+                                        console.log(res);
+
+                                        loadExtensions(extensions);
+
+                                        break;
+
+                                    case 'bUnload':
+
+                                        unloadExtensions();
+                                        break;
+
+                                    case 'bReset':
+                                        onResetEditor();
+                                        break;
+                                }
                             }
-
-                        ],
-                        onClick: function (event) {
-                            //this.owner.content('main', event);
                         }
                     }
+                ]
+            });
+
+            w2ui[layout].on('resize', function (event) {
+
+                event.onComplete = function () {
+
+                    if ($scope.viewer)
+                        $scope.viewer.resize();
                 }
-            ]
-        });
+            });
+        }
 
-        w2ui[layout].on('resize', function(event) {
-
-            event.onComplete = function () {
-
-                if($scope.viewer)
-                    $scope.viewer.resize();
-            }
-        });
-
-        $('#editor').html($('#default').html());
-
-        window.onresize = fitLayoutToWindow;
-
+        ///////////////////////////////////////////////////////////////////
+        //
+        //
+        ///////////////////////////////////////////////////////////////////
+        fitLayoutToWindow();
+        initializeLayout();
         initializeViewer();
         initializeEvents();
+        initializeEditor();
         initializeMenu();
-        initEditor();
-
     });
+
+
+
