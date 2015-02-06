@@ -19,6 +19,10 @@
 
 angular.module('AdnGallery.dynamic', ['ngRoute'])
 
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////////
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/dynamic', {
             templateUrl: 'views/dynamic/dynamic.html',
@@ -30,7 +34,7 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
     //
     //
     ///////////////////////////////////////////////////////////////////////////
-    .controller('DynamicController', function($scope, $http, $location) {
+    .controller('DynamicController', function($scope, $http) {
 
         ///////////////////////////////////////////////////////////////////
         //
@@ -51,8 +55,6 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
         //
         ///////////////////////////////////////////////////////////////////////
         function initializeViewer() {
-
-            $scope.extensions = [];
 
             $scope.adnViewerMng =
                 new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
@@ -214,7 +216,7 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
             '\n' +
             '   _self.unload = function () {\n' +
             '\n' +
-            '       console.log("Autodesk.ADN.Viewing.Extension.Basic unloaded");\n' +
+            '       alert("Autodesk.ADN.Viewing.Extension.Basic unloaded");\n' +
             '\n' +
             '       Autodesk.Viewing.theExtensionManager.unregisterExtension(\n' +
             '           "Autodesk.ADN.Viewing.Extension.Basic");\n' +
@@ -297,7 +299,7 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
 
                     $scope.viewer.loadExtension(extId);
 
-                    $scope.extensions.push(extId);
+                    addDropdownItem(extId);
                 });
 
             }
@@ -307,11 +309,9 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
         //
         //
         ///////////////////////////////////////////////////////////////////
-        function unloadExtensions() {
+        function unloadExtension(extId) {
 
-            $scope.extensions.forEach(function(extId) {
-                $scope.viewer.unloadExtension(extId);
-            });
+            $scope.viewer.unloadExtension(extId);
         }
 
         ///////////////////////////////////////////////////////////////////
@@ -347,9 +347,14 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
                                 {
                                     type: 'button',
                                     id: 'bUnload',
-                                    caption: 'Unload',
+                                    caption: 'Unload Extension:',
                                     icon: 'w2ui-icon-cross',
                                     hint: 'Unload'
+                                },
+                                { type: 'html',  id: 'item6', html:
+
+                                    $('#extDropdownDivId').html()
+                                    //'<input type="list">'
                                 },
                                 {type: 'break', id: 'break1'},
                                 {
@@ -372,15 +377,24 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
 
                                         var res = eval(code);
 
-                                        console.log(res);
+                                        if(res) {
 
-                                        loadExtensions(extensions);
+                                            loadExtensions(extensions);
+                                        }
 
                                         break;
 
                                     case 'bUnload':
 
-                                        unloadExtensions();
+                                        var extId = $("#extDropdownId option:selected").val();
+
+                                        unloadExtension(extId);
+
+
+                                        var id = $("#extDropdownId option:selected").attr('id');
+
+                                        removeDropdownItem(id);
+
                                         break;
 
                                     case 'bReset':
@@ -401,6 +415,32 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
                         $scope.viewer.resize();
                 }
             });
+        }
+
+        function addDropdownItem(extId) {
+
+            var idComponents = extId.split('.');
+
+            var nameComponents =
+                idComponents[idComponents.length - 1].
+                    match(/[A-Z]?[a-z]+|[0-9]+/g);
+
+            var name = '';
+
+            nameComponents.forEach(function(nameComp){
+                name += nameComp + ' ';
+            });
+
+            var option = '<option id=' + $scope.newGUID() +
+                ' value=' + extId + '>' + name +
+                '</option>';
+
+            $("#extDropdownId").append(option);
+        }
+
+        function removeDropdownItem(id) {
+
+            $("#" + id).remove();
         }
 
         ///////////////////////////////////////////////////////////////////

@@ -457,7 +457,7 @@ router.post('/extensions', function (req, res) {
 
                         var nameComponents =
                             idComponents[idComponents.length - 1].
-                                match(/[A-Z][a-z]+/g);
+                                match(/[A-Z]?[a-z]+|[0-9]+/g);
 
                         var name = '';
 
