@@ -34,7 +34,8 @@ var AdnGalleryApp = angular.module('AdnGallery',
       'AdnGallery.quickLoad',
       'AdnGallery.extensions',
       'AdnGallery.editable',
-      'AdnGallery.dynamic'
+      'AdnGallery.dynamic',
+      'AdnGallery.gearvr'
     ]).
 
     ///////////////////////////////////////////////////////////////////////////
