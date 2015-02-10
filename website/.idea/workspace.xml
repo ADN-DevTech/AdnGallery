@@ -27,31 +27,11 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8333333" vertical-offset="2242" max-vertical-offset="15240">
-              <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+            <state vertical-scroll-proportion="-14.25" vertical-offset="14508" max-vertical-offset="15255">
+              <caret line="990" column="0" selection-start-line="990" selection-start-column="0" selection-end-line="990" selection-end-column="0" />
               <folding>
-                <marker date="1423511175000" expanded="true" signature="37198:37347" placeholder="..." />
+                <marker date="1423566038000" expanded="true" signature="37198:37347" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Autodesk.ADN.Toolkit.Viewer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1590" max-vertical-offset="4575">
-              <caret line="93" column="10" selection-start-line="93" selection-start-column="10" selection-end-line="93" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Autodesk.ADN.Toolkit.ViewData.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/components/viewer/js/Autodesk.ADN.Toolkit.ViewData.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3345" max-vertical-offset="8310">
-              <caret line="240" column="0" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -59,34 +39,41 @@
       <file leaf-file-name="gearvr.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/views/vr/gearvr/gearvr.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48913044" vertical-offset="1065" max-vertical-offset="3855">
-              <caret line="92" column="44" selection-start-line="92" selection-start-column="44" selection-end-line="92" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.18442623" vertical-offset="0" max-vertical-offset="732">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewer.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.html">
+      <file leaf-file-name="gl.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/views/vr/gl/gl.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.5" vertical-offset="60" max-vertical-offset="1080">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state vertical-scroll-proportion="168.875" vertical-offset="4293" max-vertical-offset="5025">
+              <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_Autodesk.ADN.Viewing.Extension.Physics.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/uploads/extensions/_Autodesk.ADN.Viewing.Extension.Physics.js">
+      <file leaf-file-name="gl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/views/vr/gl/gl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10440">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="735">
+              <caret line="19" column="31" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="31" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1420050423000" expanded="true" signature="9805:9830" placeholder="..." />
-                <marker date="1420050423000" expanded="true" signature="9908:9933" placeholder="..." />
-                <marker date="1420050423000" expanded="true" signature="10032:10052" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6330">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,7 +97,17 @@
         <entry file="file://$PROJECT_DIR$/www/views/vr/gearvr/gearvr.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-              <caret line="38" column="55" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
+              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gallery.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/views/gallery/gallery.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2640" max-vertical-offset="3720">
+              <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="199" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -119,8 +116,8 @@
       <file leaf-file-name="viewer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10110">
-              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3120" max-vertical-offset="10110">
+              <caret line="246" column="38" selection-start-line="246" selection-start-column="27" selection-end-line="246" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -129,7 +126,7 @@
       <file leaf-file-name="adn.html" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Desktop/gl effects/adn.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-25.625" vertical-offset="1260" max-vertical-offset="3885">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1260" max-vertical-offset="3885">
               <caret line="125" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
               <folding />
             </state>
@@ -146,7 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Physics/_Autodesk.ADN.Viewing.Extension.Physics.js" />
         <option value="$USER_HOME$/Desktop/xmas-tree.html" />
         <option value="$USER_HOME$/Documents/Cloud and Mobile/Javascript/ammo.js/demos/adn.html" />
         <option value="$PROJECT_DIR$/../../extensions/Autodesk.ADN.Viewing.Extension.Cannon.js" />
@@ -174,7 +170,6 @@
         <option value="$USER_HOME$/Desktop/Autodesk.ADN.Viewing.Extension.Basic2.js" />
         <option value="$USER_HOME$/Desktop/w2ui-1.4.2/test.html" />
         <option value="$PROJECT_DIR$/www/views/gallery/gallery.html" />
-        <option value="$PROJECT_DIR$/www/views/gallery/gallery.js" />
         <option value="$USER_HOME$/Documents/Cloud/Android/ADT Workspaces/VR/ADN Gallery/assets/www/viewerPage.js" />
         <option value="$USER_HOME$/Documents/Cloud/Android/ADT Workspaces/VR/ADN Gallery/assets/www/ModelDetailPage.html" />
         <option value="$PROJECT_DIR$/www/views/embed/embed.html" />
@@ -183,8 +178,6 @@
         <option value="$PROJECT_DIR$/www/views/dynamic/dynamic.js" />
         <option value="$PROJECT_DIR$/www/views/vr/gearvr.html" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/www/app.js" />
-        <option value="$PROJECT_DIR$/www/views/vr/gearvr/gearvr.js" />
         <option value="$USER_HOME$/Desktop/RiftThree-master/examples/MediaPlayer/index.html" />
         <option value="$USER_HOME$/Desktop/vr.js-master/examples/rifteffect.html" />
         <option value="$USER_HOME$/Desktop/three.js/examples/css3dstereo_periodictable.html" />
@@ -195,7 +188,11 @@
         <option value="$PROJECT_DIR$/www/views/viewer/viewer.js" />
         <option value="$USER_HOME$/Desktop/gl effects/adn.html" />
         <option value="$PROJECT_DIR$/www/views/viewer/viewer.html" />
+        <option value="$PROJECT_DIR$/www/views/gallery/gallery.js" />
+        <option value="$PROJECT_DIR$/www/views/vr/gearvr/gearvr.js" />
+        <option value="$PROJECT_DIR$/www/views/vr/gl/gl.js" />
         <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/app.js" />
         <option value="$PROJECT_DIR$/www/views/vr/gearvr/gearvr.html" />
       </list>
     </option>
@@ -289,6 +286,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="gl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AdnGallery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="gearvr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -351,69 +374,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="gallery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AdnGallery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="website" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="dynamic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdnGallery" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="website" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uploads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdnGallery" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="website" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AdnGallery" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="website" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -450,11 +433,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/www/views/vr/gl" />
       <recent name="$PROJECT_DIR$/www/public/images" />
       <recent name="$USER_HOME$/Desktop/d3-master/adn" />
       <recent name="$USER_HOME$/Desktop/d3-master" />
       <recent name="$PROJECT_DIR$/../../extensions/js" />
-      <recent name="$PROJECT_DIR$/components/sortable/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/www/views/vr/gearvr" />
@@ -469,10 +452,14 @@
       <ConfigurationWrapper RunnerId="debuggableProgram" />
       <method />
     </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -480,14 +467,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
-      <node-js-remote-debug />
       <method />
     </configuration>
     <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
@@ -500,11 +479,15 @@
       <setting name="jsFile" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
       <method />
     </configuration>
     <configuration default="true" type="NodeWebKit" factoryName="Node-webkit">
       <option name="name" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
@@ -586,21 +569,21 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908162" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4872449" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24876674" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26145172" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17602041" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1122449" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2359694" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908162" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4872449" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -618,9 +601,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24617347" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24617347" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -651,13 +634,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Toolbar/Autodesk.ADN.Viewing.Extension.Toolbar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="723" max-vertical-offset="1635">
-          <caret line="93" column="13" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/uploads/extensions/Autodesk.ADN.Viewing.Extension.Move.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45634267" vertical-offset="4088" max-vertical-offset="4860">
@@ -693,20 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud/Android/ADT Workspaces/VR/ADN Gallery/assets/www/startScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23972602" vertical-offset="1805" max-vertical-offset="3570">
-          <caret line="134" column="11" selection-start-line="134" selection-start-column="11" selection-end-line="134" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud/Android/ADT Workspaces/VR/ADN Gallery/assets/www/files/views/assets/js/services/service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3968254" vertical-offset="0" max-vertical-offset="756">
-          <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../extensions/library-javascript-viewer-extensions/Autodesk.ADN.Viewing.Extension.Basic/Autodesk.ADN.Viewing.Extension.Basic.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
@@ -739,27 +701,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud/Android/ADT Workspaces/VR/ADN Gallery/assets/www/viewerPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1005" max-vertical-offset="2745">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/Cloud/Android/ADT Workspaces/VR/ADN Gallery/assets/www/viewerPage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5522388" vertical-offset="1047" max-vertical-offset="1695">
-          <caret line="92" column="18" selection-start-line="92" selection-start-column="18" selection-end-line="92" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/gallery/gallery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1006" max-vertical-offset="3690">
-          <caret line="108" column="19" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -799,7 +740,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="1545">
           <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -807,10 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="630">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="63" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -818,7 +754,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3660">
           <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -826,7 +761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.0" vertical-offset="1620" max-vertical-offset="2235">
           <caret line="116" column="41" selection-start-line="116" selection-start-column="41" selection-end-line="116" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -842,7 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="9804" max-vertical-offset="10560">
           <caret line="696" column="9" selection-start-line="696" selection-start-column="9" selection-end-line="696" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -850,7 +783,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6626984" vertical-offset="3234" max-vertical-offset="5070">
           <caret line="253" column="0" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -866,7 +798,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9126984" vertical-offset="0" max-vertical-offset="5025">
           <caret line="46" column="25" selection-start-line="46" selection-start-column="6" selection-end-line="46" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -874,7 +805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.375" vertical-offset="489" max-vertical-offset="1275">
           <caret line="54" column="0" selection-start-line="68" selection-start-column="16" selection-end-line="69" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -882,7 +812,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31746033" vertical-offset="2760" max-vertical-offset="4830">
           <caret line="200" column="44" selection-start-line="200" selection-start-column="21" selection-end-line="200" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -890,7 +819,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32786885" vertical-offset="195" max-vertical-offset="1110">
           <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -898,7 +826,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.12" vertical-offset="5339" max-vertical-offset="6735">
           <caret line="383" column="0" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -906,7 +833,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.375" vertical-offset="2628" max-vertical-offset="4500">
           <caret line="195" column="53" selection-start-line="195" selection-start-column="27" selection-end-line="195" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -914,7 +840,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-16.25" vertical-offset="4335" max-vertical-offset="8715">
           <caret line="315" column="14" selection-start-line="302" selection-start-column="12" selection-end-line="315" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -922,7 +847,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.25" vertical-offset="330" max-vertical-offset="2925">
           <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -930,7 +854,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8188" max-vertical-offset="10215">
           <caret line="460" column="0" selection-start-line="460" selection-start-column="0" selection-end-line="460" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -938,15 +861,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="9615">
           <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4200" max-vertical-offset="6315">
-          <caret line="320" column="0" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -954,7 +868,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1590" max-vertical-offset="4575">
           <caret line="93" column="10" selection-start-line="93" selection-start-column="10" selection-end-line="93" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -966,26 +879,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10110">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Desktop/gl effects/adn.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.625" vertical-offset="1260" max-vertical-offset="3885">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1260" max-vertical-offset="3885">
           <caret line="125" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/views/vr/gearvr/gearvr.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-          <caret line="38" column="55" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
           <folding />
         </state>
       </provider>
@@ -994,12 +891,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10440">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1420050423000" expanded="true" signature="9805:9830" placeholder="..." />
-            <marker date="1420050423000" expanded="true" signature="9908:9933" placeholder="..." />
-            <marker date="1420050423000" expanded="true" signature="10032:10052" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1020,24 +911,80 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.5" vertical-offset="60" max-vertical-offset="1080">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/gallery/gallery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2640" max-vertical-offset="3720">
+          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="199" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/uploads/extensions/Autodesk.ADN.Viewing.Extension.DockingPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.4954955" vertical-offset="330" max-vertical-offset="2055">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/viewer/viewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3120" max-vertical-offset="10110">
+          <caret line="246" column="38" selection-start-line="246" selection-start-column="27" selection-end-line="246" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/vr/gl/gl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="168.875" vertical-offset="4293" max-vertical-offset="5025">
+          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8333333" vertical-offset="2242" max-vertical-offset="15240">
-          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+        <state vertical-scroll-proportion="-14.25" vertical-offset="14508" max-vertical-offset="15255">
+          <caret line="990" column="0" selection-start-line="990" selection-start-column="0" selection-end-line="990" selection-end-column="0" />
           <folding>
-            <marker date="1423511175000" expanded="true" signature="37198:37347" placeholder="..." />
+            <marker date="1423566038000" expanded="true" signature="37198:37347" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/vr/gl/gl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="735">
+          <caret line="19" column="31" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6330">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/views/vr/gearvr/gearvr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/views/vr/gearvr/gearvr.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48913044" vertical-offset="1065" max-vertical-offset="3855">
-          <caret line="92" column="44" selection-start-line="92" selection-start-column="44" selection-end-line="92" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.18442623" vertical-offset="0" max-vertical-offset="732">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -197,6 +197,8 @@ angular.module('AdnGallery.gallery', ['ngRoute'])
         ///////////////////////////////////////////////////////////////////////
         function initializeMenu() {
 
+            $('#navBarId').css({'display':'initial'});
+
             $('#menuExtensionsId').css({"visibility": "collapse"});
             $('#menuSearchId').css({"visibility": "collapse"});
             $('#menuViewId').css({"visibility": "collapse"});
