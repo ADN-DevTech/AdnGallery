@@ -198,7 +198,20 @@ angular.module('AdnGallery.extensions',[])
 
             var storageObj = JSON.parse(localStorage['extensions']);
 
-            return storageObj[extension._id];
+            try {
+
+                if(extension._id in storageObj) {
+                    return storageObj[extension._id];
+                }
+
+                return false;
+            }
+            catch (ex) {
+
+                storageObj[extension._id] = false;
+
+                return false;
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -208,7 +221,6 @@ angular.module('AdnGallery.extensions',[])
         function onSaveExtensions() {
 
             var storageObj = JSON.parse(localStorage['extensions']);
-
 
             //need to send disabled extensions before enabled
 
