@@ -54,7 +54,7 @@ angular.module('AdnDirectives', []).
         return {
             restrict: 'E',
             replace: true,
-            template: '<img height={{height}} width={{width}} src={{src}} style={{style}}>',
+            template: '<img height={{height}}width={{width}}src={{src}}style={{style}}>',
             link: link
         }
     }]);

@@ -115,7 +115,7 @@ router.get('/models', function (req, res) {
             function (err, items) {
 
                 var response = {
-                    models: items
+                    models: (items ? items : [])
                 };
 
                 res.send(response);
@@ -678,12 +678,6 @@ router.get('/reload', function (req, res) {
             });
     });
 });
-
-
-
-
-
-
 
 
 
