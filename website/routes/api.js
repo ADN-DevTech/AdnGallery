@@ -81,6 +81,29 @@ router.get('/token', function (req, res) {
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
+router.get('/modelcount', function (req, res) {
+
+    db.collection('models', function (err, collection) {
+        collection.count(function(err, count) {
+            if (err) {
+                res.status(404);
+                res.send({'error': 'An error has occurred'});
+            }
+            else {
+
+                var response = {
+                    count: count
+                };
+
+                res.jsonp(response);
+            }
+        })});
+});
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 router.get('/models', function (req, res) {
 
     console.log('Retrieving models');
@@ -118,7 +141,7 @@ router.get('/models', function (req, res) {
                     models: (items ? items : [])
                 };
 
-                res.send(response);
+                res.jsonp(response);
             });
     });
 });
@@ -152,7 +175,7 @@ router.get('/model/:id', function (req, res) {
                 };
 
                 res.status((item ? 200 : 404));
-                res.send(response);
+                res.jsonp(response);
             });
     });
 });
@@ -372,7 +395,7 @@ router.get('/extensions', function (req, res) {
             extensions: items
         };
 
-        res.send(response);
+        res.jsonp(response);
     });
 });
 
@@ -407,7 +430,7 @@ router.get('/extension/:extId', function (req, res) {
                     };
 
                     res.status((items ? 200 : 404));
-                    res.send(response);
+                    res.jsonp(response);
                 });
         });
 });
@@ -630,7 +653,7 @@ router.get('/thumbnail/:modelId', function (req, res) {
                     };
 
                     res.status((item ? 200 : 404));
-                    res.send(response);
+                    res.jsonp(response);
                 });
         });
 });

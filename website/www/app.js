@@ -45,6 +45,10 @@ var AdnGalleryApp = angular.module('AdnGallery',
     ///////////////////////////////////////////////////////////////////////////
     controller('appController', function($scope, $location, $compile) {
 
+        requirejs.config({
+            waitSeconds: 0
+        });
+
         ///////////////////////////////////////////////////////////////////////
         //
         //

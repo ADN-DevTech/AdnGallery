@@ -42,9 +42,12 @@ var cors = function (req, res, next) {
     next();
 }
 
+app.use(cors);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
+app.set("jsonp callback", true);
 
 app.use(favicon(__dirname + '/www/public/images/Adsk.ico'));
 
@@ -54,8 +57,6 @@ app.use(bodyParser.json());
 app.use('/node/gallery', express.static(__dirname + '/www'));
 app.use(cookieParser());
 app.use(logger('dev'));
-
-//app.use(cors);
 
 app.use('/node/gallery/api', api);
 app.use('/node/gallery/embed', embed);
