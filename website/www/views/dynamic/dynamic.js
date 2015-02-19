@@ -207,10 +207,12 @@ angular.module('AdnGallery.dynamic', ['ngRoute'])
             '   Autodesk.Viewing.Extension.call(this, viewer, options);\n' +
             '\n' +
             '   var _self = this;\n' +
+            '   _self.viewer = viewer;\n' +
             '\n' +
             '   _self.load = function () {\n' +
             '\n' +
-            '       alert("Autodesk.ADN.Viewing.Extension.Basic loaded");\n' +
+            '       alert("Autodesk.ADN.Viewing.Extension.Basic loaded");\n\n' +
+            '       _self.viewer.setBackgroundColor(255,0,0, 255,255, 255);\n\n' +
             '       return true;\n' +
             '   };\n' +
             '\n' +

@@ -119,6 +119,81 @@ angular.module('AdnGallery.upload',[])
         //
         //
         ///////////////////////////////////////////////////////////////////////
+        function uploadFile(file, id, author) {
+
+            $scope.viewDataClient.uploadFileAsync (
+                file,
+                GalleryConfig.BucketName,
+                id + '.' + getFileExt(file),
+
+                function (uploadResponse) {
+
+                    var fileId = uploadResponse.objects[0].id;
+
+                    console.log("Upload successful: " + uploadResponse.file.name);
+
+                    var registerResponse =
+                        $scope.viewDataClient.register(fileId);
+
+                    console.log("Registration result: " +
+                    registerResponse.Result);
+
+                    var modelName = getFileName(uploadResponse.file);
+
+                    var dialogId = fileId.split('/')[1].split('.')[0];
+
+                    $('#' + dialogId).html(
+                        '<b>Model: </b>' + modelName +
+                        '<br>' +
+                        '<b>Status: </b>' + 'Registration = ' +
+                        registerResponse.Result);
+
+                    if (registerResponse.Result === "Success") {
+
+                        var modelInfo = {
+                            author: author,
+                            name: modelName,
+                            fileId: fileId,
+                            urn: $scope.viewDataClient.toBase64(fileId),
+                            views: []
+                        };
+
+                        postModel(modelInfo, function (modelResponse) {
+
+                            console.log("New model added to DB: " +
+                            JSON.stringify(modelResponse.model));
+
+                            var url = 'http://' + window.location.host +
+                                '/node/gallery/#/viewer?id=' + modelResponse.model._id;
+
+                            checkTranslationStatus(
+                                modelInfo.name,
+                                fileId,
+                                1000 * 60 * 60, //60 mins timeout
+                                function (viewable) {
+
+                                    console.log("Translation successful: " +
+                                    uploadResponse.file.name);
+
+                                    $('#' + dialogId).html(
+                                        '<b>Model: </b>' + modelName +
+                                        '<br>' +
+                                        '<b>Status: </b>' + 'Registration = ' +
+                                        registerResponse.Result +
+                                        '<br>' +
+                                        '<b>Link: </b>' +
+                                        '<a target="_blank" href=' + url + '>' + modelName + '</a>');
+                                });
+                        });
+
+
+                    }
+                },
+                function (error) {
+                    console.log("Upload error: " + error);
+                });
+        }
+
         function doUpload() {
 
             var content = document.getElementById(
@@ -137,76 +212,32 @@ angular.module('AdnGallery.upload',[])
 
                 showProgressDialog(getFileName(file), id);
 
-                $scope.viewDataClient.uploadFileAsync(
-                    file,
-                    'adn-viewer-gallery',
-                    id + '.' + getFileExt(file),
+                $scope.viewDataClient.getBucketDetailsAsync (
+                    GalleryConfig.BucketName,
+                    function(response) {
 
-                    function (uploadResponse) {
-
-                        var fileId = uploadResponse.objects[0].id;
-
-                        console.log("Upload successful: " + uploadResponse.file.name);
-
-                        var registerResponse =
-                            $scope.viewDataClient.register(fileId);
-
-                        console.log("Registration result: " +
-                        registerResponse.Result);
-
-                        var modelName = getFileName(uploadResponse.file);
-
-                        var dialogId = fileId.split('/')[1].split('.')[0];
-
-                        $('#' + dialogId).html(
-                            '<b>Model: </b>' + modelName +
-                            '<br>' +
-                            '<b>Status: </b>' + 'Registration = ' +
-                            registerResponse.Result);
-
-                        if (registerResponse.Result === "Success") {
-
-                            var modelInfo = {
-                                author: author,
-                                name: modelName,
-                                fileId: fileId,
-                                urn: $scope.viewDataClient.toBase64(fileId),
-                                views: []
-                            };
-
-                            postModel(modelInfo, function (modelResponse) {
-
-                                console.log("New model added to DB: " +
-                                JSON.stringify(modelResponse.model));
-
-                                var url = 'http://' + window.location.host +
-                                    '/node/gallery/#/viewer?id=' + modelResponse.model._id;
-
-                                checkTranslationStatus(
-                                    modelInfo.name,
-                                    fileId,
-                                    1000 * 60 * 60, //60 mins timeout
-                                    function (viewable) {
-
-                                        console.log("Translation successful: " +
-                                        uploadResponse.file.name);
-
-                                        $('#' + dialogId).html(
-                                            '<b>Model: </b>' + modelName +
-                                            '<br>' +
-                                            '<b>Status: </b>' + 'Registration = ' +
-                                            registerResponse.Result +
-                                            '<br>' +
-                                            '<b>Link: </b>' +
-                                            '<a target="_blank" href=' + url + '>' + modelName + '</a>');
-                                    });
-                            });
-
-
-                        }
+                        uploadFile(file, id, author);
                     },
-                    function (error) {
-                        console.log("Upload error: " + error);
+                    function(error) {
+
+                        console.log(error);
+
+                        if( error.reason === "Bucket not found" ) {
+
+                            $scope.viewDataClient.createBucketAsync (
+                                {
+                                    bucketKey : GalleryConfig.BucketName,
+                                    servicesAllowed: {},
+                                    policy: "persistent"
+                                },
+                                function(response) {
+
+                                    uploadFile(file, id, author);
+                                },
+                                function(error) {
+                                    console.log(error);
+                                });
+                        }
                     });
             }
         }

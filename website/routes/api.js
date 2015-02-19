@@ -16,10 +16,10 @@
 // UNINTERRUPTED OR ERROR FREE.
 ///////////////////////////////////////////////////////////////////////////////
 
-var AdnViewDataClient = require(
-    './Autodesk.ADN.Toolkit.ViewDataClient.js');
-var transport = require(
-    'nodemailer-direct-transport');
+var AdnViewDataClient = require('./Autodesk.ADN.Toolkit.ViewDataClient.js');
+var transport = require('nodemailer-direct-transport');
+var credentials = require('../credentials');
+var config = require('../config-server');
 var formidable = require('formidable');
 var nodemailer = require('nodemailer');
 var express = require('express');
@@ -28,28 +28,23 @@ var path = require('path');
 var sync = require('sync');
 var fs = require('fs');
 
-var CONSUMER_KEY = 'tAp1fqjjtcgqS4CKpCYDjAyNbKW4IVCC';
-var CONSUMER_SECRET = 'q2LwUFg3MrYngc8l';
-var BASE_URL = 'https://developer.api.autodesk.com';
-
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
 var server = new Server(
     'localhost',
-    27017,
+    config.MongoDbPort,
     { auto_reconnect: true });
 
-var db = new Db('NodeViewDb', server);
+var db = new Db(config.MongoDbName, server);
 
 var router = express.Router();
 
-var viewDataClient =
-    new AdnViewDataClient(
-        BASE_URL,
-        CONSUMER_KEY,
-        CONSUMER_SECRET);
+var viewDataClient = new AdnViewDataClient(
+    credentials.BaseUrl,
+    credentials.ClientId,
+    credentials.ClientSecret);
 
 module.exports = router;
 
@@ -61,7 +56,7 @@ db.open(function (err, db) {
 
     if (!err) {
 
-        console.log("Connected to 'NodeViewDb' database");
+        console.log("Connected to " + config.MongoDbName + " database");
     }
 });
 
