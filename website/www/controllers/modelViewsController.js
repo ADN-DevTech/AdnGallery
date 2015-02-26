@@ -165,20 +165,14 @@ angular.module('AdnGallery.views',[])
                 'Content-Type',
                 'application/json');
 
-            var _model = {
-                name: model.name,
-                urn: model.urn,
-                views: model.views
-            };
-
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     console.log("Updating model in DB: " +
-                        xhr.responseText);
+                    xhr.responseText);
                 }
             }
 
-            xhr.send(JSON.stringify(_model));
+            xhr.send(JSON.stringify(model));
         }
 
         function showLoadViewDlg() {
@@ -239,7 +233,7 @@ angular.module('AdnGallery.views',[])
 
                             console.log('Suppressing view :' + view.name);
 
-                            for (var j = 0; j < model.views.length; ++j) {
+                            for (var j = 0; j < response.model.views.length; ++j) {
 
                                 if (response.model.views[j].id === view.id) {
                                     response.model.views.splice(j, 1);
@@ -248,7 +242,7 @@ angular.module('AdnGallery.views',[])
                         }
                     }
 
-                    putModel(model);
+                    putModel(response.model);
 
                     $('#itemSuppressDlg').modal('hide');
                 });
@@ -323,4 +317,6 @@ angular.module('AdnGallery.views',[])
             }
         );
     });
+
+
 

@@ -356,8 +356,7 @@ router.put('/model/:id', function (req, res) {
 
     var item = req.body;
 
-    console.log('Updating model: ' + id);
-    console.log(JSON.stringify(item));
+    item._id = new BSON.ObjectID(id);
 
     db.collection('models', function (err, collection) {
         collection.update(
@@ -668,14 +667,14 @@ router.post('/thumbnail', function (req, res) {
     });
 });
 
-
-router.get('/reload', function (req, res) {
+router.get('/migrate', function (req, res) {
 
     var pageQuery = {};
 
     var fieldQuery = {};
 
     db.collection('models', function (err, collection) {
+
         collection.find(fieldQuery, pageQuery)
             .sort({ name: 1 }).toArray(
 
@@ -686,10 +685,20 @@ router.get('/reload', function (req, res) {
                 };
 
                 items.forEach(function(item) {
-                    getThumbnail({
-                        fileId: item.fileId,
-                        _id: item._id
-                    });
+
+                    item.states = [];
+
+                    collection.update(
+                        { '_id': new BSON.ObjectID(item._id) },
+                        item,
+                        { safe: true },
+                        function (err, result) {
+                            if (err) {
+                                console.log('Error updating model: ' + err);
+                            } else {
+                                console.log('' + result + ' document(s) updated');
+                            }
+                        });
                 });
 
                 res.send(response);
