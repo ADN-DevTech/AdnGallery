@@ -18,5 +18,4 @@
 
 var GalleryConfig = {};
 
-GalleryConfig.BucketName = 'adn-viewer-gallery' +
-    'append-your-clientId-here-to-make-bucket-name-unique';
+GalleryConfig.BucketName = 'put-unique-bucket-name-here';

@@ -175,38 +175,33 @@ angular.module('AdnGallery.viewer',
 
             var model = $scope.getCurrentDbModel();
 
-            var div = document.createElement("div");
+            var viewerToolbar = $scope.viewer.getToolbar(true);
 
-            $scope.viewer.clientContainer.appendChild(div);
+            var ctrlGroup = new Autodesk.Viewing.UI.ControlGroup(
+                "Autodesk.ADN.Gallery.Toolbar.Viewer");
 
-            div.style.bottom = "0%";
-            div.style.right = "20%";
-            div.style.zIndex = "2";
-            div.style.position = "absolute";
+            var button = new Autodesk.Viewing.UI.Button(
+                "Autodesk.ADN.Gallery.Toolbar.Button.Embed");
 
-            var toolbar = new Autodesk.Viewing.UI.ToolBar(div);
+            button.icon.style.backgroundImage =
+                "url(public/images/embed.png)";
 
-            var subToolbar = toolbar.addSubToolbar('sub1', false);
+            button.setToolTip("Get embed code");
 
-            var bEmbed = Autodesk.Viewing.UI.ToolBar.createMenuButton(
-                "bEmbed",
-                "Get embed code",
-                function (e) {
+            button.onClick = function (e) {
 
-                    $('#embedCode').text("<iframe \n" +
-                        "width='800' height='480' frameborder='0' \n" +
-                        "allowFullScreen webkitallowfullscreen mozallowfullscreen \n" +
-                        "src='http://" + window.location.host + "/node/gallery/embed/" + model._id + "'> \n" +
-                        "</iframe>");
+                $('#embedCode').text("<iframe \n" +
+                "width='800' height='480' frameborder='0' \n" +
+                "allowFullScreen webkitallowfullscreen mozallowfullscreen \n" +
+                "src='http://" + window.location.host + "/node/gallery/embed/" + model._id + "'> \n" +
+                "</iframe>");
 
-                    $('#embedDlg').modal('show');
-                });
+                $('#embedDlg').modal('show');
+            };
 
-            toolbar.addToSubToolbar("sub1", bEmbed);
+            ctrlGroup.addControl(button);
 
-            subToolbar.setToolImage(
-                bEmbed.id,
-                'public/images/embed.png');
+            viewerToolbar.addControl(ctrlGroup);
         }
 
         ///////////////////////////////////////////////////////////////////////

@@ -43,7 +43,9 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
 
     _self.load = function () {
 
-        _self.createToolbar(_viewer.container);
+        _self.createViewerToolbar();
+
+        _self.createDivToolbar();
 
         $(htmlDlg).appendTo('#appBodyId');
 
@@ -56,42 +58,79 @@ Autodesk.ADN.Viewing.Extension.Toolbar = function (viewer, options) {
 
         $('#demoToolbarId').remove();
 
+        var viewerToolbar = _viewer.getToolbar(true);
+
+        viewerToolbar.removeControl(
+            "Autodesk.ADN.Viewing.Extension.Toolbar.ControlGroup1");
+
         console.log('Autodesk.ADN.Viewing.Extension.Toolbar unloaded');
 
         return true;
     };
 
-    _self.createToolbar = function(parent) {
+    _self.createViewerToolbar = function() {
 
-        var div = document.createElement("div");
+        var viewerToolbar = _viewer.getToolbar(true);
 
-        parent.appendChild(div);
+        var ctrlGroup = new Autodesk.Viewing.UI.ControlGroup(
+            "Autodesk.ADN.Viewing.Extension.Toolbar.ControlGroup1");
 
-        div.style.bottom = '20%';
-        div.style.left = "20%";
-        div.style.zIndex = "2";
-        div.style.position = "absolute";
+        var button = new Autodesk.Viewing.UI.Button(
+            "Autodesk.ADN.Viewing.Extension.Toolbar.Button1");
 
-        var toolbar = new Autodesk.Viewing.UI.ToolBar(div);
+        button.icon.style.backgroundImage =
+            "url(public/images/adsk.24x24.png)";
 
-        var subToolbar = toolbar.addSubToolbar('sub1', false);
+        button.setToolTip("Viewer Toolbar button");
 
-        var bTool = Autodesk.Viewing.UI.ToolBar.createMenuButton(
-            "bTool",
-            "Demo Tool button",
-            function (e) {
-                $('#demoDlg').modal('show');
-            });
+        button.onClick = function (e) {
 
-        toolbar.addToSubToolbar("sub1", bTool);
+            alert("Viewer Toolbar button clicked!");
+        };
 
-        subToolbar.setToolImage(
-            bTool.id,
-            'public/images/adsk.24x24.png');
+        ctrlGroup.addControl(button);
 
-        /*$('#' + bTool.id + 'Button').css({
-            'background-position': '3px 0px'
-        });*/
+        viewerToolbar.addControl(ctrlGroup);
+    }
+
+    _self.createDivToolbar = function() {
+
+        var toolbarDivHtml = '<div id="demoToolbarId"> </div>';
+
+        $(toolbarDivHtml).appendTo(
+            '#' + _viewer.container.id);
+
+        $('#demoToolbarId').css({
+            'top': '20%',
+            'left': '20%',
+            'z-index': '100',
+            'position': 'absolute'
+        });
+
+        var toolbar = new Autodesk.Viewing.UI.ToolBar(true);
+
+        var ctrlGroup = new Autodesk.Viewing.UI.ControlGroup(
+            "Autodesk.ADN.Viewing.Extension.Toolbar.ControlGroup2");
+
+        var button = new Autodesk.Viewing.UI.Button(
+            "Autodesk.ADN.Viewing.Extension.Toolbar.Button2");
+
+        button.icon.style.backgroundImage =
+            "url(public/images/adsk.24x24.png)";
+
+        button.setToolTip("Div Toolbar button");
+
+        button.onClick = function (e) {
+
+            $('#demoDlg').modal('show');
+        };
+
+        ctrlGroup.addControl(button);
+
+        toolbar.addControl(ctrlGroup);
+
+        $('#demoToolbarId')[0].appendChild(
+            toolbar.container);
     }
 };
 

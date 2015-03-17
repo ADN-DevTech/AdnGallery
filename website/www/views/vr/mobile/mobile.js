@@ -41,6 +41,7 @@ angular.module('AdnGallery.mobile', ['ngRoute'])
         function onViewerInitialized(viewer) {
 
             viewer.impl.setLightPreset(0);
+
             viewer.setQualityLevel(false, false);
         }
 
@@ -60,8 +61,17 @@ angular.module('AdnGallery.mobile', ['ngRoute'])
             adnViewerMng.loadDocument(urn, onViewerInitialized);
         }
 
-        loadFromUrn('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWRuLXZpZXdlci1nYWxsZXJ5LzgzNjMtZjBiNy0yMDFmLTM1OTktZDlhZi5zdHA=');
+        var urn = decodeURIComponent(
+            Autodesk.Viewing.Private.getParameterByName("urn"));
+
+        loadFromUrn(urn);
 
     });
 
 
+function test() {
+
+    var controller = angular.element($('#viewerMobile')).scope();
+
+    controller.hello();
+}

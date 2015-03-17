@@ -127,14 +127,16 @@
    // Ammo.js
    //
    ////////////////////////////////////////////////////////////////////////-->
-    <!--script src="components/physics/js/ammo.js"></script-->
+    <script src="https://rawgit.com/kripken/ammo.js/master/builds/ammo.js"></script>
+    <script src="https://rawgit.com/darsain/fpsmeter/master/dist/fpsmeter.min.js"></script>
+    <script src="https://rawgit.com/vitalets/angular-xeditable/master/dist/js/xeditable.min.js"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
-    // Viewer Autodesk ?v=0.1.86
+    // Viewer Autodesk
     //
     ////////////////////////////////////////////////////////////////////////-->
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=0.1.86" type="text/css">
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=0.1.86"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=1.2.3" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=1.2.3"></script>
 
     <!--///////////////////////////////////////////////////////////////////////
     // Viewer ADN
@@ -188,6 +190,11 @@
     //
     ////////////////////////////////////////////////////////////////////////-->
     <script src="config-client.js"></script>
+
+    <script src="https://rawgit.com/kripken/ammo.js/master/builds/ammo.js"></script>
+    <script src="https://rawgit.com/darsain/fpsmeter/master/dist/fpsmeter.min.js"></script>
+    <script src="https://rawgit.com/vitalets/angular-xeditable/master/dist/js/xeditable.min.js"></script>
+
 
 </head>
 <body id="appBodyId" ng-controller="appController">
@@ -1012,7 +1019,7 @@ to improve your experience.</p>
 <![endif]-->
 
 <div id="AppContainerId">
-    <div ng-view>
+    <div id="AppViewId" ng-view>
     </div>
 </div>
 

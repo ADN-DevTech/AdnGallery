@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Autodesk.ADN.Viewing.Extension.Basic
+// DockingPanel viewer extension
 // by Philippe Leefsma, October 2014
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,9 +38,15 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
             this.container.style.top = y + "px";
             this.container.style.left = x + "px";
 
-            this.container.style.width = "auto";
-            this.container.style.height = "auto";
-            this.container.style.resize = "none";
+            this.container.style.width = "200px";
+            this.container.style.height = "300px";
+            this.container.style.resize = "auto";
+
+            /*this.createScrollContainer({
+                left: false,
+                heightAdjustment: 45,
+                marginTop:0
+            });*/
         };
 
         Autodesk.ADN.AdnPanel.prototype = Object.create(
@@ -54,51 +60,58 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
             // Override DockingPanel initialize() to:
             // - create a standard title bar
             // - click anywhere on the panel to move
-            // - create a close element at the bottom right
-            //
+
             this.title = this.createTitleBar(
                 this.titleLabel ||
                 this.container.id);
 
+            this.closer = this.createCloseButton();
+
             this.container.appendChild(this.title);
+            this.title.appendChild(this.closer);
             this.container.appendChild(this.content);
 
             this.initializeMoveHandlers(this.container);
-
-            //this.closer = document.createElement("div");
-
-            //this.closer.className = "AdnPanelClose";
-            //this.closer.textContent = "Close";
-
-            //this.initializeCloseHandler(this.closer);
-
-            //this.container.appendChild(this.closer);
+            this.initializeCloseHandler(this.closer);
         };
 
-        Autodesk.ADN.AdnPanel.prototype.setVisible =
+        /*Autodesk.ADN.AdnPanel.prototype.setVisible =
             function (show, skipTransition) {
 
-                console.log("show=" + show + ", skipTransition=" + skipTransition + ")");
+                console.log("show = " + show + ", skipTransition = " + skipTransition + ")");
 
                 Autodesk.Viewing.UI.DockingPanel.prototype.
                     setVisible.call(
                         this,
                         show,
                         skipTransition);
-        };
+        };*/
 
         var content = document.createElement('div');
 
         content.id = 'adnPanelId';
 
         _panel = new Autodesk.ADN.AdnPanel(
-            _viewer.clientContainer,
-            'adn-panel',
+            _viewer.container,
+            'Stocks',
             'ADN Demo Panel',
             content,
             0, 0);
 
-        $('#adnPanelId').text('Docking Panel Content');
+        $('#adnPanelId').css('color', 'white');
+
+        _self.GetQuoteData(function(response){
+
+            var result = '';
+
+            response.quotes.forEach(function(quote){
+
+                result += '<b>' + quote.symbol + '</b>' + ' = $' +
+                    quote.LastTradePriceOnly + '<br><br>';
+            })
+
+            $('#adnPanelId').html(result);
+        })
 
         _panel.setVisible(true);
 
@@ -117,6 +130,28 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
 
         return true;
     };
+
+    _self.GetQuoteData = function(onSuccess) {
+
+        var url = 'http://query.yahooapis.com/v1/public/yql' +
+            '?format=json' +
+            '&env=http://datatables.org/alltables.env' +
+            '&q='
+
+        var query = 'select * from yahoo.finance.quotes where symbol in ' +
+            '("AAPL", "ADSK","FB", "GOOG", "MSFT")';
+
+        url += encodeURIComponent(query);
+
+        $.getJSON(url, function(data){
+
+            var response = {
+                quotes : data.query.results.quote
+            }
+
+            onSuccess(response);
+        });
+    }
 };
 
 Autodesk.ADN.Viewing.Extension.DockingPanel.prototype =

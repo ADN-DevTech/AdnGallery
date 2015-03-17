@@ -24,43 +24,57 @@
     <!--///////////////////////////////////////////////////////////////////////
     // Viewer
     ////////////////////////////////////////////////////////////////////////-->
-    <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css"/>
-    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
-    <script src="components/viewer/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
-    <script src="components/viewer/js/Autodesk.ADN.Viewing.Extension.API.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://viewing.api.autodesk.com/viewingservice/v1/viewers/style.css?v=1.2.3"/>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=1.2.3"></script>
+    <script src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+    <script src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js//Autodesk.ADN.Viewing.Extension.API.js"></script>
 
     <script>
 
         var adnViewerMng = null;
 
-        function addToolbar(parent, id) {
+        function addToolbar(viewer, id) {
 
-            var div = document.createElement("div");
+            var toolbarDivHtml = '<div id="embedToolbarId"> </div>';
 
-            parent.appendChild(div);
+            viewer.container.id = 'viewerContainerId';
 
-            div.style.top = '20%';
-            div.style.left = "1%";
-            div.style.zIndex = "2";
-            div.style.position = "absolute";
+            $(toolbarDivHtml).appendTo('#' + viewer.container.id);
 
-            var toolbar = new Autodesk.Viewing.UI.ToolBar(div);
+            $('#embedToolbarId').css({
+                'top': '20%',
+                'left': '1%',
+                'z-index': '100',
+                'position': 'absolute'
+            });
 
-            var subToolbar = toolbar.addSubToolbar('sub1', false);
+            var toolbar = new Autodesk.Viewing.UI.ToolBar(true);
 
-            var button = Autodesk.Viewing.UI.ToolBar.createMenuButton(
-                    "bGallery",
-                    "View in Gallery",
-                    function (e) {
-                        window.open('http://' +
-                            window.location.host +
-                            '/node/gallery/#/viewer?id=' + id,
-                            '_blank');
-                    });
+            var ctrlGroup = new Autodesk.Viewing.UI.ControlGroup(
+                    "Autodesk.ADN.Viewing.Extension.Toolbar.Embed");
 
-            toolbar.addToSubToolbar("sub1", button);
+            var button = new Autodesk.Viewing.UI.Button(
+                    "Autodesk.ADN.Viewing.Extension.Toolbar.Embed.Button");
 
-            subToolbar.setToolImage(button.id, 'public/images/adsk.24x24.png');
+            button.icon.style.backgroundImage =
+                    "url(public/images/adsk.24x24.png)";
+
+            button.setToolTip("View on the Gallery");
+
+            button.onClick = function (e) {
+
+                window.open('http://' +
+                    window.location.host +
+                    '/node/gallery/#/viewer?id=' + id,
+                    '_blank');
+            };
+
+            ctrlGroup.addControl(button);
+
+            toolbar.addControl(ctrlGroup);
+
+            $('#embedToolbarId')[0].appendChild(
+                toolbar.container);
         }
 
         function loadFromId(id) {
@@ -79,7 +93,7 @@
 
                         viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
 
-                        addToolbar(viewer.container, id);
+                        addToolbar(viewer, id);
 
                         viewer.addEventListener(
 

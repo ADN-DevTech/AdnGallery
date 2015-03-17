@@ -366,9 +366,8 @@ router.put('/model/:id', function (req, res) {
             function (err, result) {
                 if (err) {
                     console.log('Error updating model: ' + err);
-                    res.send({ 'error': 'An error has occurred' });
+                    res.send({ 'error': err });
                 } else {
-                    console.log('' + result + ' document(s) updated');
                     res.send(item);
                 }
             });

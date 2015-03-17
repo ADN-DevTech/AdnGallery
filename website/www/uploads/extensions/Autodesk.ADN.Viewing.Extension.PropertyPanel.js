@@ -44,6 +44,8 @@ Autodesk.ADN.Viewing.Extension.PropertyPanel = function (viewer, options) {
 
             _panel.setProperties = function (properties) {
 
+                console.log(properties);
+
                 Autodesk.Viewing.Extensions.ViewerPropertyPanel.
                     prototype.setProperties.call(
                     _panel, properties);

@@ -615,12 +615,52 @@ Autodesk.ADN.Viewing.Extension.Physics = function (viewer, options) {
 
         var vertexBuffer = geometry.vb;
 
+        //console.log(geometry);
+
+        var vertices = [];
+
         for(var i=0; i < vertexBuffer.length; i += geometry.vbstride) {
+
+            vertices.push({
+
+                x: vertexBuffer[i],
+                y: vertexBuffer[i+1],
+                z: vertexBuffer[i+2]
+            });
 
             hull.addPoint(new Ammo.btVector3(
                 vertexBuffer[i],
                 vertexBuffer[i+1],
                 vertexBuffer[i+2]));
+        }
+
+        var faceBuffer = mesh.geometry.attributes.index.array;
+
+        for(var i=0; i < faceBuffer.length; i+=3) {
+
+            var v1 = vertices[faceBuffer[i]];
+            var v2 = vertices[faceBuffer[i+1]];
+            var v3 = vertices[faceBuffer[i+2]];
+
+            hull.addPoint(new Ammo.btVector3(
+                (v1.x + v2.x) / 2.0,
+                (v1.y + v2.y) / 2.0,
+                (v1.z + v2.z) / 2.0));
+
+            hull.addPoint(new Ammo.btVector3(
+                (v1.x + v3.x) / 2.0,
+                (v1.y + v3.y) / 2.0,
+                (v1.z + v3.z) / 2.0));
+
+            hull.addPoint(new Ammo.btVector3(
+                (v2.x + v3.x) / 2.0,
+                (v2.y + v3.y) / 2.0,
+                (v2.z + v3.z) / 2.0));
+            
+            hull.addPoint(new Ammo.btVector3(
+                (v1.x + v2.x + v3.x) / 3.0,
+                (v1.y + v2.y + v3.y) / 3.0,
+                (v1.z + v2.z + v3.z) / 3.0));
         }
 
         return hull;
