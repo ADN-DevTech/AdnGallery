@@ -18,4 +18,5 @@
 
 var GalleryConfig = {};
 
-GalleryConfig.BucketName = 'put-unique-bucket-name-here';
+GalleryConfig.BucketName = 'adn-viewer-gallery' +
+    'seiuonlnaseinaldsfwinvsdsss';
