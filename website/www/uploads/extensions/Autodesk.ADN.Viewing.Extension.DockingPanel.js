@@ -29,11 +29,8 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
             Autodesk.Viewing.UI.DockingPanel.call(
                 this,
                 parentContainer,
-                id, '',
+                id, title,
                 {shadow:true});
-
-            // Auto-fit to the content and don't allow resize.
-            // Position at the given coordinates
 
             this.container.style.top = y + "px";
             this.container.style.left = x + "px";
@@ -93,8 +90,8 @@ Autodesk.ADN.Viewing.Extension.DockingPanel = function (viewer, options) {
 
         _panel = new Autodesk.ADN.AdnPanel(
             _viewer.container,
-            'Stocks',
-            'ADN Demo Panel',
+            'AdnStockPanelId',
+            'ADN Stocks Panel',
             content,
             0, 0);
 

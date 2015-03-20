@@ -19,20 +19,23 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
 
         $('<div/>').
             attr('id', 'tweenDivId').
-            append('<button id="gridTransformBtn" ' +
-                'type="button">Grid</button>').
+            append('<button style="width:50px" id="explodeBtn" ' + 'type="button">Explode</button><br>').
+            append('<button style="width:50px" id="gridTransformBtn" ' + 'type="button">Grid</button>').
             appendTo('#' + _viewer.container.id);
 
         $('#tweenDivId').css({
             'top': '5%',
-            'right': '5%',
+            'right': '15%',
             'z-index':'100',
             'position':'absolute',
             'visibility':'visible'
         });
 
-        $('#gridTransformBtn').click(function(){
+        $('#explodeBtn').click(function(){
+            doTweenExplode();
+        })
 
+        $('#gridTransformBtn').click(function(){
             doGridTransform();
         })
 
@@ -46,15 +49,10 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
 
                 var bb =  _self.getBoundingBox(node);
 
-                drawBox(bb.min, bb.max);
-
                 _bbData.push({
 
                     box: bb,
-                    node: node,
-                    sizeX: bb.max.x - bb.min.x,
-                    sizeY: bb.max.y - bb.min.y,
-                    sizeZ: bb.max.z - bb.min.z
+                    node: node
                 });
             });
 
@@ -73,11 +71,6 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
         console.log('Autodesk.ADN.Viewing.Extension.Tween unloaded');
         return true;
     };
-
-    _self.onItemSelected = function (event) {
-
-        console.log(event);
-    }
 
     _self.getBoundingBox = function (node) {
 
@@ -125,7 +118,24 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
             minPt = min(minPt, fragMinPt);
         });
 
-        return { min: minPt, max: maxPt };
+        var center = {
+
+            x: (maxPt.x + minPt.x) * 0.5,
+            y: (maxPt.y + minPt.y) * 0.5,
+            z: (maxPt.z + minPt.z) * 0.5
+        };
+
+        return {
+
+            min: minPt,
+            max: maxPt,
+
+            center: center,
+
+            sizeX: maxPt.x - minPt.x,
+            sizeY: maxPt.y - minPt.y,
+            sizeZ: maxPt.z - minPt.z
+        };
     }
 
     _self.ComputeGridTransform = function (bbData) {
@@ -133,27 +143,56 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
         var transformMap = {};
 
         var xOffset = 0.0;
+        var yOffset = 0.0;
+        var nextyOffset = 0.0;
 
-        bbData.forEach(function(data) {
+        var size = Math.ceil(Math.sqrt(bbData.length));
 
-            var center = {
+        for(var row=0; row < size; ++row) {
 
-                x: (data.box.max.x - data.box.min.x) * 0.5,
-                y: (data.box.max.y - data.box.min.y) * 0.5,
-                z: (data.box.max.z - data.box.min.z) * 0.5
-            };
+            yOffset += nextyOffset;
 
-            transformMap[data.node] = {
+            nextyOffset = 0.0;
 
-                x: xOffset - center.x,
-                y: - center.y,
-                z: - center.z
+            xOffset = 0.0;
+
+            for(var col=0; col < size; ++col) {
+
+                var idx = size * row + col;
+
+                if(idx === bbData.length-1) {
+
+                    return transformMap;
+                }
+
+                var data = bbData[idx];
+
+                var center = {
+
+                    x: (data.box.max.x + data.box.min.x) * 0.5,
+                    y: (data.box.max.y + data.box.min.y) * 0.5,
+                    z: (data.box.max.z + data.box.min.z) * 0.5
+                };
+
+                transformMap[data.node.dbId] = {
+
+                    translation: {
+
+                        x: xOffset - center.x,
+                        y: yOffset - center.y,
+                        z: - center.z
+                    },
+
+                    box: data.box,
+
+                    node: data.node
+                }
+
+                xOffset += data.box.sizeX;
+
+                nextyOffset = Math.max(nextyOffset, data.box.sizeY);
             }
-
-            xOffset += data.box.sizeX;
-        });
-
-        return transformMap;
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -175,20 +214,19 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
             node.fragIds :
             [node.fragIds]);
 
-        console.log(node);
-
         fragIds.forEach(function(fragId) {
 
             var mesh = _viewer.impl.getRenderProxy(
                 _viewer,
                 fragId);
 
-            var pos = _self.getMeshPosition(mesh);
+            //var pos = _self.getMeshPosition(mesh);
 
-            pos = {
-                x: pos.x + translation.x,
-                y: pos.y + translation.y,
-                z: pos.z + translation.z
+            var pos = {
+
+                x: translation.x,
+                y: translation.y,
+                z: translation.z
             };
 
             mesh.matrixWorld.setPosition(pos);
@@ -215,98 +253,67 @@ Autodesk.ADN.Viewing.Extension.Tween = function (viewer, options) {
         };
     }
 
+    function doTweenExplode() {
+
+        var exploder = { explode: 0.0 };
+
+        createjs.Tween.get(
+            exploder, { override:true })
+            .to({ explode: 1.0}, 5000)
+            .addEventListener("change",  function(event) {
+
+                if(event) {
+                    _viewer.explode(event.target.target.explode);
+                }
+
+            }).call(function() {
+                //done
+            });
+    }
+
     function doGridTransform() {
 
         var transformMap = _self.ComputeGridTransform(_bbData);
 
-        //console.log(transformMap);
+        for(var dbId in transformMap) {
 
-        for(var node in transformMap) {
+            var center = transformMap[dbId].box.center;
 
-            _self.translateNode(
-                node,
-                transformMap[node]);
+            var target = {
+
+                x: center.x,
+                y: center.y,
+                z: center.z,
+
+                dbId: dbId
+            }
+
+            var final = transformMap[dbId].translation;
+
+            //_self.translateNode(transformMap[dbId].node, final);
+
+            createjs.Tween.get(
+                target, { override:true })
+                .to({ x: final.x, y: final.y, z: final.z }, 10000)
+                .addEventListener("change",  function(event) {
+
+                    if(event) {
+
+                        var id = event.target.target.dbId;
+
+                        var entry = transformMap[id];
+
+                        _self.translateNode(
+                            entry.node,
+                            event.target.target);
+
+                        _viewer.impl.invalidate(true);
+                    }
+
+                }).call(function() {
+
+                });
         }
-
-        _viewer.impl.invalidate(true);
-    }
-
-    function drawLines(coordsArray, material) {
-
-        for (var i = 0; i < coordsArray.length; i+=2) {
-
-            var start = coordsArray[i];
-            var end = coordsArray[i+1];
-
-            var geometry = new THREE.Geometry();
-
-            geometry.vertices.push(new THREE.Vector3(
-                start.x, start.y, start.z));
-
-            geometry.vertices.push(new THREE.Vector3(
-                end.x, end.y, end.z));
-
-            geometry.computeLineDistances();
-
-            var line = new THREE.Line(geometry, material);
-
-            _viewer.impl.scene.add(line);
-        }
-    }
-
-    function drawBox(min, max) {
-
-        var material = new THREE.LineBasicMaterial({
-            color: 0xffff00,
-            linewidth: 5
-        });
-
-        _viewer.impl.matman().addMaterial(
-            'ADN-Material-Line',
-            material,
-            true);
-
-        drawLines([
-
-            {x: min.x, y: min.y, z: min.z},
-            {x: max.x, y: min.y, z: min.z},
-
-            {x: max.x, y: min.y, z: min.z},
-            {x: max.x, y: min.y, z: max.z},
-
-            {x: max.x, y: min.y, z: max.z},
-            {x: min.x, y: min.y, z: max.z},
-
-            {x: min.x, y: min.y, z: max.z},
-            {x: min.x, y: min.y, z: min.z},
-
-            {x: min.x, y: max.y, z: max.z},
-            {x: max.x, y: max.y, z: max.z},
-
-            {x: max.x, y: max.y, z: max.z},
-            {x: max.x, y: max.y, z: min.z},
-
-            {x: max.x, y: max.y, z: min.z},
-            {x: min.x, y: max.y, z: min.z},
-
-            {x: min.x, y: max.y, z: min.z},
-            {x: min.x, y: max.y, z: max.z},
-
-            {x: min.x, y: min.y, z: min.z},
-            {x: min.x, y: max.y, z: min.z},
-
-            {x: max.x, y: min.y, z: min.z},
-            {x: max.x, y: max.y, z: min.z},
-
-            {x: max.x, y: min.y, z: max.z},
-            {x: max.x, y: max.y, z: max.z},
-
-            {x: min.x, y: min.y, z: max.z},
-            {x: min.x, y: max.y, z: max.z}],
-
-            material);
-
-        _viewer.impl.invalidate(true);
     }
 };
 

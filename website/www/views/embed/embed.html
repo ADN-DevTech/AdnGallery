@@ -29,9 +29,10 @@
     <script src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
     <script src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js//Autodesk.ADN.Viewing.Extension.API.js"></script>
 
+
     <script>
 
-        var adnViewerMng = null;
+        http://localhost:3000/node/gallery/embed?id=5475edb1d0dc7d807f0ec4b2&extIds=_Autodesk.ADN.Viewing.Extension.GithubDemo&viewerConfig=%27{%22viewerType%22:%22Viewer3D%22}%27
 
         function addToolbar(viewer, id) {
 
@@ -83,39 +84,66 @@
 
             $.getJSON(url, function(response){
 
-                adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
-                    'http://' + window.location.host + '/node/gallery/api/token',
-                    document.getElementById('ViewerDiv'));
+                var config = {
+                    environment : 'AutodeskProduction'
+                }
 
-                adnViewerMng.loadDocument(
-                        response.model.urn,
-                    function (viewer) {
+                var viewerFactory = new Autodesk.ADN.Toolkit.Viewer.AdnViewerFactory(
+                    'http://' + window.location.host + '/node/gallery/api/token',
+                    config);
+
+                viewerFactory.getViewablePath (response.model.urn,
+
+                    function(pathInfoCollection) {
+
+                        var viewerConfig = {};
+
+                        var viewerConfigStr = Autodesk.Viewing.Private.getParameterByName("viewerConfig");
+
+                        viewerConfigStr = viewerConfigStr.replaceAll("'", "");
+
+                        if(viewerConfigStr.length > 0)
+                            viewerConfig = JSON.parse(viewerConfigStr);
+
+                        var viewer = viewerFactory.createViewer(
+                            $('#ViewerDiv')[0],
+                            viewerConfig);
 
                         viewer.loadExtension('Autodesk.ADN.Viewing.Extension.API');
+
+                        if(pathInfoCollection.path3d.length > 0)
+                            viewer.load(pathInfoCollection.path3d[0].path);
+
+                        else if(pathInfoCollection.path2d.length > 0)
+                            viewer.load(pathInfoCollection.path2d[0].path);
 
                         addToolbar(viewer, id);
 
                         viewer.addEventListener(
 
-                            Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+                                Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
 
-                            function (event) {
+                                function (event) {
 
-                                var extIdsParam =
-                                    Autodesk.Viewing.Private.getParameterByName("extIds");
+                                    var extIdsParam =
+                                        Autodesk.Viewing.Private.getParameterByName("extIds");
 
-                                var extIds = extIdsParam.split(';');
+                                    var extIds = extIdsParam.split(';');
 
-                                extIds.forEach(function(extId){
+                                    extIds.forEach(function(extId){
 
-                                    loadExtension(extId);
-                                })
-                            });
+                                        loadExtension(viewer, extId);
+                                    })
+                                });
+                    },
+                    function (error) {
+
+                        console.log('Error: ' + error);
                     });
             });
         }
 
-        function loadExtension(extId) {
+        function loadExtension(viewer, extId) {
 
             var url = 'http://' + window.location.host +
                 '/node/gallery/api/extension/' +
@@ -126,18 +154,25 @@
                 var file = response.extensions[0].file;
 
                 jQuery.getScript('/node/gallery/uploads/extensions/' + file)
-                        .done(function () {
+                    .done(function () {
 
-                            adnViewerMng.getViewer().loadExtension(extId);
-                        })
-                        .fail(function(jqxhr, settings, exception) {
+                            viewer.loadExtension(extId);
+                    })
+                    .fail(function(jqxhr, settings, exception) {
 
-                            console.log("Load failed: " + extId);
-                        });
+                        console.log("Load failed: " + extId);
+                    });
             });
         }
 
         $(document).ready(function () {
+
+            String.prototype.replaceAll = function (find, replace) {
+                var str = this;
+                return str.replace(new RegExp(
+                    find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'),
+                    replace);
+            };
 
             var id = Autodesk.Viewing.Private.getParameterByName("id");
 

@@ -1,11 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////////
-// 2D Annotation viewer Extension
-// by Philippe Leefsma, October 2014
+// GithubDemo viewer Extension
+// by Philippe Leefsma, March 2015
 //
 ///////////////////////////////////////////////////////////////////////////////
 AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
 
-Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
+Autodesk.ADN.Viewing.Extension.GithubDemo = function (viewer, options) {
 
     // base constructor
     Autodesk.Viewing.Extension.call(this, viewer, options);
@@ -41,9 +41,131 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
 
         require([
 
-            'https://rawgit.com/DmitryBaranovskiy/raphael/master/raphael-min.js'
+            'https://rawgit.com/DmitryBaranovskiy/raphael/master/raphael-min.js',
+            'https://rawgit.com/CreateJS/TweenJS/master/lib/tweenjs-0.6.0.combined.js'
 
         ], function() {
+
+            var rotate = false;
+            var explode = false;
+            var annotate = false;
+
+
+            $('<div/>').
+                attr('id', 'buttonsDivId').
+                append('<button style="width:50px" id="rotateBtn" type="button">Rotate</button>').
+                append('<br>').
+                append('<button style="width:50px" id="explodeBtn" type="button">Explode</button>').
+                append('<br>').
+                append('<button style="width:50px" id="annotateBtn" type="button">Annotate</button>').
+                appendTo('#' + _viewer.container.id);
+
+            $('#buttonsDivId').css({
+                'top': '25%',
+                'left': '1.5%',
+                'z-index':'100',
+                'position':'absolute'
+            });
+
+            $('#rotateBtn').click(function(){
+
+                rotate = !rotate;
+
+                if(rotate) {
+                    viewer.startRotateMotion(
+                        0.3, viewer.navigation.getWorldUpVector());
+
+                    $('#rotateBtn').css({
+                        'background-color': '#1CF055',
+                        'border-radius': '5px'
+                    });
+                }
+                else {
+                    viewer.stopRotateMotion();
+
+                    $('#rotateBtn').css({
+                        'background-color': '#FFFFFF',
+                        'border-radius': '5px'
+                    });
+                }
+            });
+
+            $('#explodeBtn').click(function(){
+
+                explode = !explode;
+
+                if(explode) {
+                    viewer.startExplodeMotion(
+                        0.2, 0.1, 1.5);
+
+                    $('#explodeBtn').css({
+                        'background-color': '#1CF055',
+                        'border-radius': '5px'
+                    });
+                }
+                else {
+                    viewer.stopExplodeMotion();
+
+                    $('#explodeBtn').css({
+                        'background-color': '#FFFFFF',
+                        'border-radius': '5px'
+                    });
+                }
+
+
+            });
+
+            $('#annotateBtn').click(function(){
+
+                annotate = !annotate;
+
+                if(annotate) {
+
+                    activateAnnotate();
+                }
+                else {
+
+                    deActivateAnnotate();
+                }
+            });
+
+
+            function activateAnnotate() {
+
+                $('#annotateBtn').css({
+                    'background-color': '#1CF055',
+                    'border-radius': '5px'
+                });
+
+                $("#" + _viewer.container.id).
+                    bind("click", _self.onMouseClick);
+
+                _viewer.addEventListener(
+                    Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                    _self.onItemSelected);
+
+                _viewer.setPropertyPanel(null);
+            }
+
+            function deActivateAnnotate() {
+
+                $('#annotateBtn').css({
+                    'background-color': '#FFFFFF',
+                    'border-radius': '5px'
+                });
+
+                var panel = new Autodesk.Viewing.Extensions.ViewerPropertyPanel(
+                    _viewer);
+
+                _viewer.setPropertyPanel(panel);
+
+                $("#" + _viewer.container.id).
+                    unbind("click", _self.onMouseClick);
+
+                _viewer.removeEventListener(
+                    Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                    _self.onItemSelected);
+            }
 
             // context menu stuff
 
@@ -89,13 +211,6 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
                 new Autodesk.ADN.Viewing.Extension.MarkUpContextMenu(
                     _self.viewer));
 
-            $("#" + _viewer.container.id).
-                bind("click", _self.onMouseClick);
-
-            _viewer.addEventListener(
-                Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-                _self.onItemSelected);
-
             _viewer.addEventListener(
                 Autodesk.Viewing.EXPLODE_CHANGE_EVENT,
                 _self.onExplode);
@@ -104,17 +219,7 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
                 _self.overlay = overlay;
             });
 
-            _viewer.onResize = function() {
-
-                // force update
-                var view = _viewer.getCurrentView();
-
-                _viewer.setView(view);
-            }
-
-            _viewer.setPropertyPanel(null);
-
-            console.log("Autodesk.ADN.Viewing.Extension.Annotation loaded");
+            console.log("Autodesk.ADN.Viewing.Extension.GithubDemo loaded");
 
             return true;
         });
@@ -126,23 +231,9 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     ///////////////////////////////////////////////////////////////////////////
     _self.unload = function () {
 
-        _viewer.onResize = null;
-
-        var panel = new Autodesk.Viewing.Extensions.ViewerPropertyPanel(
-            _viewer);
-
-        _viewer.setPropertyPanel(panel);
-
         _viewer.setContextMenu(null);
 
-        $("#" + _viewer.container.id).
-            unbind("click", _self.onMouseClick);
-
-        _viewer.removeEventListener(
-            Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-            _self.onItemSelected);
-
-        console.log("Autodesk.ADN.Viewing.Extension.Annotation unloaded");
+        console.log("Autodesk.ADN.Viewing.Extension.GithubDemo unloaded");
 
         return true;
     };
@@ -652,12 +743,12 @@ Autodesk.ADN.Viewing.Extension.Annotation = function (viewer, options) {
     };
 };
 
-Autodesk.ADN.Viewing.Extension.Annotation.prototype =
+Autodesk.ADN.Viewing.Extension.GithubDemo.prototype =
     Object.create(Autodesk.Viewing.Extension.prototype);
 
-Autodesk.ADN.Viewing.Extension.Annotation.prototype.constructor =
-    Autodesk.ADN.Viewing.Extension.Annotation;
+Autodesk.ADN.Viewing.Extension.GithubDemo.prototype.constructor =
+    Autodesk.ADN.Viewing.Extension.GithubDemo;
 
 Autodesk.Viewing.theExtensionManager.registerExtension(
-    'Autodesk.ADN.Viewing.Extension.Annotation',
-    Autodesk.ADN.Viewing.Extension.Annotation);
+    '_Autodesk.ADN.Viewing.Extension.GithubDemo',
+    Autodesk.ADN.Viewing.Extension.GithubDemo);
