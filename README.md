@@ -4,13 +4,13 @@
 The View & Data Gallery is a demo website implemented using a Node.js back-end and an AngularJs front-end. See the [demo](http://viewer.autodesk.io/node/gallery/#/gallery).
 
 
-##Dependencies
+## Dependencies
 
 This sample uses Node.Js and MongoDb back-end.
 
 This sample depends on the [view anda data API JavaScript library](https://github.com/Developer-Autodesk/library-javascript-view.and.data.api) 
 
-##Setup/Usage Instructions
+## Setup/Usage Instructions
 
 
 * Install [nodejs](https://nodejs.org)
@@ -51,6 +51,6 @@ This sample depends on the [view anda data API JavaScript library](https://githu
 
 That samples are licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
 
-##Written by 
+## Written by 
 
 Philippe Leefsma
