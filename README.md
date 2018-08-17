@@ -1,7 +1,12 @@
-﻿View & Data Gallery
-==========
+# Deprecated
+
+This sample is no longer maintained, please visit [Autodesk-Forge](https://github.com/Autodesk-Forge/) for other samples.
+
+## View & Data Gallery
+
 
 The View & Data Gallery is a demo website implemented using a Node.js back-end and an AngularJs front-end. See the [demo](http://viewer.autodesk.io/node/gallery/#/gallery).
+
 
 
 ##Dependencies
